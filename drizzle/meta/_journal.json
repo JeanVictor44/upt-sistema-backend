@@ -15,6 +15,13 @@
       "when": 1757133024724,
       "tag": "0001_nasty_wolverine",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757133501318,
+      "tag": "0002_oval_red_skull",
+      "breakpoints": true
     }
   ]
 }

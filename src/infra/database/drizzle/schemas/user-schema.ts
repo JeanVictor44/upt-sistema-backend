@@ -13,7 +13,7 @@ export const userSchema = pgTable(
     name: varchar('name', { length: 100 }).notNull(),
     email: varchar('email', { length: 255 }).notNull(),
     password: text('password').notNull(),
-    document: varchar('document', { length: 11 }).notNull(),
+    document: varchar('document', { length: 11 }).notNull().unique(),
     telephone: varchar('telephone', { length: 12 }).notNull(),
     disabledAt: timestamp('disabled_at'),
     role: userRole('role').default('SECRETARY').notNull(),
