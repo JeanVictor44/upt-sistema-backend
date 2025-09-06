@@ -3,8 +3,8 @@ import { char, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 import { UniqueEntityID } from '@core/domain/unique-entity-id'
 
-import { citySchema } from './city-schema'
-import { regionSchema } from './region-schema'
+import { citySchema } from './city.schema'
+import { regionSchema } from './region.schema'
 
 export const neighborhoodSchema = pgTable('neighborhood', {
   id: char('id', { length: 36 })
