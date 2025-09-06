@@ -8,6 +8,13 @@
       "when": 1755656393004,
       "tag": "0000_easy_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757133024724,
+      "tag": "0001_nasty_wolverine",
+      "breakpoints": true
     }
   ]
 }
