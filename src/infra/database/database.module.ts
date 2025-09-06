@@ -1,0 +1,18 @@
+import { Module } from '@nestjs/common'
+import { UsersRepository } from '@root/domain/authentication/applications/repositories/users.repository'
+import { RegionsRepository } from '@root/domain/location/applications/repositories/RegionsRepository'
+
+import { DrizzleModule } from '@infra/database/drizzle/drizzle.module'
+
+import { DrizzleRegionsRepository } from './drizzle/repositories/drizzle-regions.repository'
+import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.repository'
+
+@Module({
+  imports: [DrizzleModule],
+  providers: [
+    { useClass: DrizzleUsersRepository, provide: UsersRepository },
+    { useClass: DrizzleRegionsRepository, provide: RegionsRepository },
+  ],
+  exports: [UsersRepository, RegionsRepository],
+})
+export class DatabaseModule {}
