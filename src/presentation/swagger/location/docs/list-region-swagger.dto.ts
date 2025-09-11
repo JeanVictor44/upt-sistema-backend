@@ -4,7 +4,7 @@ import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-respons
 import { RegionDto } from '../entities/region.dto'
 
 export const ListRegionsSwaggerDto = () => {
-  const name = 'CreateRegion'
+  const name = 'ListRegions'
 
   return function (target: any, key: any, descriptor: any) {
     ApiOperation({

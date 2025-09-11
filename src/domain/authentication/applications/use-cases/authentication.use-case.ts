@@ -43,13 +43,13 @@ export class AuthenticationUseCase {
     const passwordMatch = await this.hashGenerator.compare(password, user.password)
     if (!passwordMatch) return left(new WrongCredentialsError())
 
-    const payload = { sub: user.id.toValue(), name: user.name, role: user.role }
+    const payload = { sub: user.id, name: user.name, role: user.role }
 
     const accessToken = await this.encrypter.encrypt({
       payload,
       expiresIn: '15m',
     })
 
-    return right({ accessToken, user: { id: user.id.toValue(), name: user.name, role: user.role } })
+    return right({ accessToken, user: { id: user.id, name: user.name, role: user.role } })
   }
 }

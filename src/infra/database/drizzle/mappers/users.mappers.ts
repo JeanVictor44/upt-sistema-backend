@@ -1,5 +1,3 @@
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
-
 import { User } from '@domain/authentication/enterprise/entities/user.entity'
 import { UserRole } from '@domain/authentication/enterprise/interfaces/user'
 
@@ -19,13 +17,13 @@ export class UserMappers {
         createdAt: new Date(data.createdAt),
         updatedAt: new Date(data.updatedAt),
       },
-      new UniqueEntityID(data.id),
+      data.id,
     )
   }
 
   static toPersistence(data: User): UserSchemaInsertProps {
     return {
-      id: data.id.toValue(),
+      id: data.id,
       name: data.name,
       email: data.email,
       role: data.role,

@@ -1,6 +1,5 @@
 import { Entity } from '@root/core/domain/Entity'
 
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
 import { Optional } from '@core/logic/Optional'
 
 import { UserProps } from '@domain/authentication/enterprise/interfaces/user'
@@ -70,7 +69,7 @@ export class User extends Entity<UserProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<UserProps, 'createdAt' | 'disabledAt'>, id?: UniqueEntityID) {
+  static create(props: Optional<UserProps, 'createdAt' | 'disabledAt'>, id?: number) {
     return new User(
       {
         name: props.name,

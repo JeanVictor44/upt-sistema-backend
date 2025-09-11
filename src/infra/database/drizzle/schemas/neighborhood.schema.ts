@@ -1,20 +1,16 @@
 import { relations } from 'drizzle-orm'
-import { char, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
-
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
+import { pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 import { citySchema } from './city.schema'
 import { regionSchema } from './region.schema'
 
 export const neighborhoodSchema = pgTable('neighborhood', {
-  id: char('id', { length: 36 })
-    .$defaultFn(() => new UniqueEntityID().toValue())
-    .primaryKey(),
+  id: serial('id').primaryKey(),
   name: varchar('name', { length: 100 }).notNull(),
-  city_id: char('city_id', { length: 36 })
+  cityId: serial('city_id')
     .references(() => citySchema.id)
     .notNull(),
-  region_id: char('region_id', { length: 36 })
+  regionId: serial('region_id')
     .notNull()
     .references(() => regionSchema.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -25,8 +21,12 @@ export const neighborhoodSchema = pgTable('neighborhood', {
 
 export const neighborhoodRelations = relations(neighborhoodSchema, ({ one }) => ({
   city: one(citySchema, {
-    fields: [neighborhoodSchema.city_id],
+    fields: [neighborhoodSchema.cityId],
     references: [citySchema.id],
+  }),
+  region: one(regionSchema, {
+    fields: [neighborhoodSchema.regionId],
+    references: [regionSchema.id],
   }),
 }))
 

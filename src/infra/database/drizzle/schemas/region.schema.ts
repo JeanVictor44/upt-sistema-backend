@@ -1,11 +1,7 @@
-import { char, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
-
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
+import { pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 export const regionSchema = pgTable('region', {
-  id: char('id', { length: 36 })
-    .$defaultFn(() => new UniqueEntityID().toValue())
-    .primaryKey(),
+  id: serial('id').primaryKey(),
   name: varchar('name', { length: 100 }).notNull().unique(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')

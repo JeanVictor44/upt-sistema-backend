@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
 import { DomainEvents } from '@core/events/domain-events'
 import { AsyncMaybe } from '@core/logic/Maybe'
 
@@ -23,9 +22,9 @@ export class DrizzleUsersRepository implements UsersRepository {
     await this.db.insert(userSchema).values(preparedData)
   }
 
-  async findById(id: UniqueEntityID): AsyncMaybe<User> {
+  async findById(id: number): AsyncMaybe<User> {
     const user = await this.db.query.userSchema.findFirst({
-      where: (field, sql) => sql.eq(field.id, id.toValue()),
+      where: (field, sql) => sql.eq(field.id, id),
     })
 
     if (!user) return null
@@ -55,7 +54,7 @@ export class DrizzleUsersRepository implements UsersRepository {
 
   async save(user: User): Promise<void> {
     const raw = UserMappers.toPersistence(user)
-    await this.db.update(userSchema).set(raw).where(eq(userSchema.id, user.id.toValue()))
+    await this.db.update(userSchema).set(raw).where(eq(userSchema.id, user.id))
 
     DomainEvents.dispatchEventsForAggregate(user.id)
   }

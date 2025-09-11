@@ -1,7 +1,5 @@
 import { Region } from '@root/domain/location/enterprise/entities/region.entity'
 
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
-
 import { RegionSchemaSelectProps, RegionSchemaInsertProps } from '@infra/database/drizzle/schemas'
 
 export class RegionMappers {
@@ -12,13 +10,13 @@ export class RegionMappers {
         createdAt: new Date(data.createdAt),
         updatedAt: new Date(data.updatedAt),
       },
-      new UniqueEntityID(data.id),
+      data.id,
     )
   }
 
   static toPersistence(data: Region): RegionSchemaInsertProps {
     return {
-      id: data.id.toValue(),
+      id: data.id,
       name: data.name,
       createdAt: new Date(data.createdAt),
       updatedAt: new Date(data.updatedAt),

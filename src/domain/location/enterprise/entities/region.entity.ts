@@ -1,7 +1,6 @@
 import { Optional } from '@root/core/logic/Optional'
 
 import { Entity } from '@core/domain/Entity'
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
 
 import { RegionProps } from '@domain/location/enterprise/interfaces/region'
 
@@ -22,7 +21,7 @@ export class Region extends Entity<RegionProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<RegionProps, 'createdAt' | 'updatedAt'>, id?: UniqueEntityID) {
+  static create(props: Optional<RegionProps, 'createdAt' | 'updatedAt'>, id?: number) {
     return new Region(
       {
         name: props.name,

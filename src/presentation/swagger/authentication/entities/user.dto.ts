@@ -4,10 +4,10 @@ import { IsDate, IsEmail, IsOptional, IsString, IsUUID } from 'class-validator'
 export class UserDto {
   @ApiProperty({
     description: 'Unique identifier of the user',
-    example: '9652fe9f-a86d-481d-8661-1e499a52f57f',
+    example: 1,
   })
   @IsUUID()
-  id: string
+  id: number
 
   @ApiProperty({
     description: 'Name of the user',

@@ -1,15 +1,11 @@
-import { char, pgEnum, pgTable, text, timestamp, varchar, unique } from 'drizzle-orm/pg-core'
-
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
+import { pgEnum, pgTable, text, timestamp, varchar, unique, serial } from 'drizzle-orm/pg-core'
 
 export const userRole = pgEnum('user_role', ['ADMIN', 'REGION_MANAGER', 'SECRETARY'])
 
 export const userSchema = pgTable(
   'user',
   {
-    id: char('id', { length: 36 })
-      .$defaultFn(() => new UniqueEntityID().toValue())
-      .primaryKey(),
+    id: serial('id').primaryKey(),
     name: varchar('name', { length: 100 }).notNull(),
     email: varchar('email', { length: 255 }).notNull(),
     password: text('password').notNull(),

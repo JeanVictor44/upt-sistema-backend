@@ -1,16 +1,12 @@
 import { relations } from 'drizzle-orm'
-import { char, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
-
-import { UniqueEntityID } from '@core/domain/unique-entity-id'
+import { pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 import { neighborhoodSchema } from './neighborhood.schema'
 
 export const teachingPlaceSchema = pgTable('teaching_place', {
-  id: char('id', { length: 36 })
-    .$defaultFn(() => new UniqueEntityID().toValue())
-    .primaryKey(),
+  id: serial('id').primaryKey(),
   name: varchar('name', { length: 100 }).notNull(),
-  neighborhood_id: char('neighborhood_id', { length: 36 })
+  neighborhoodId: serial('neighborhood_id')
     .notNull()
     .references(() => neighborhoodSchema.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -21,7 +17,7 @@ export const teachingPlaceSchema = pgTable('teaching_place', {
 
 export const teachingPlaceRelations = relations(teachingPlaceSchema, ({ one }) => ({
   neighborhood: one(neighborhoodSchema, {
-    fields: [teachingPlaceSchema.neighborhood_id],
+    fields: [teachingPlaceSchema.neighborhoodId],
     references: [neighborhoodSchema.id],
   }),
 }))

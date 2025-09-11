@@ -1,5 +1,5 @@
 export type EncryptProps = {
-  payload: Record<string, string>
+  payload: Record<number, string>
   expiresIn?: string | number
 }
 
