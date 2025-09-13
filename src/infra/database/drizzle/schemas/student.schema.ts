@@ -1,6 +1,5 @@
 import { date, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
 
-import { classSchema } from './class.schema'
 import { highSchoolStatusSchema } from './highschool-status.schema'
 
 export const studentSchema = pgTable('student', {
@@ -12,9 +11,6 @@ export const studentSchema = pgTable('student', {
   date_birth: date('date_birth'),
   telephone: varchar('telephone', { length: 15 }),
   email: varchar('email', { length: 100 }).unique(),
-  classId: serial('class_id')
-    .notNull()
-    .references(() => classSchema.id),
   highSchoolStatusId: serial('high_school_status')
     .notNull()
     .references(() => highSchoolStatusSchema.id),
