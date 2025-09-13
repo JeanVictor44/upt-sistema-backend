@@ -4,13 +4,13 @@ import { Either, right } from '@core/logic/Either'
 
 import { Region } from '@domain/location/enterprise/entities/region.entity'
 
-import { RegionsRepository } from '../repositories/RegionsRepository'
+import { RegionRepository } from '../repositories/region.repository'
 
 type OutputProps = Either<null, Region[]>
 
 @Injectable()
 export class ListRegionsUseCase {
-  constructor(private readonly regionsRepository: RegionsRepository) {}
+  constructor(private readonly regionsRepository: RegionRepository) {}
 
   async execute(): Promise<OutputProps> {
     const regions = await this.regionsRepository.findAll()

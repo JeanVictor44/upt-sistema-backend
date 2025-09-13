@@ -4,7 +4,9 @@ import { LocationUseCasesModule } from '@root/domain/location/applications/use-c
 import { ResourceUseCasesModule } from '@root/domain/resource/applications/use-cases/resource-use-case.module'
 
 import { SessionController } from './controllers/authentication/session.controller'
+import { CreateCityController } from './controllers/location/create-city.controller'
 import { CreateRegionController } from './controllers/location/create-region.controller'
+import { ListCitiesController } from './controllers/location/list-cities.controller'
 import { ListRegionsController } from './controllers/location/list-regions.controller'
 import { ListClassOptionsController } from './controllers/resources/list-class-options.controller'
 import { ListClassStatusController } from './controllers/resources/list-class-status.controller'
@@ -17,6 +19,8 @@ import { ListStudentStatusController } from './controllers/resources/list-studen
     SessionController,
     CreateRegionController,
     ListRegionsController,
+    ListCitiesController,
+    CreateCityController,
     ListClassOptionsController,
     ListClassStatusController,
     ListStudentStatusController,

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { RegionsRepository } from '@root/domain/location/applications/repositories/RegionsRepository'
+import { RegionRepository } from '@root/domain/location/applications/repositories/region.repository'
 import { Region } from '@root/domain/location/enterprise/entities/region.entity'
+import { eq } from 'drizzle-orm'
 
 import { DATABASE_CONNECTION } from '../database-connection'
 import { RegionMappers } from '../mappers/region.mappers'
@@ -8,7 +9,7 @@ import { regionSchema } from '../schemas'
 import { DrizzleDB } from '../types/drizzle'
 
 @Injectable()
-export class DrizzleRegionsRepository implements RegionsRepository {
+export class DrizzleRegionsRepository implements RegionRepository {
   constructor(@Inject(DATABASE_CONNECTION) private db: DrizzleDB) {}
 
   async create(region: Region): Promise<void> {
@@ -19,7 +20,7 @@ export class DrizzleRegionsRepository implements RegionsRepository {
 
   async findByName(name: string): Promise<Region | null> {
     const region = await this.db.query.regionSchema.findFirst({
-      where: (field, sql) => sql.eq(field.name, name),
+      where: eq(regionSchema.name, name),
     })
 
     if (!region) return null

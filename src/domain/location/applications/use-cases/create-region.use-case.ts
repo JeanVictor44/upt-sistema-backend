@@ -5,7 +5,7 @@ import { Either, left, right } from '@core/logic/Either'
 
 import { Region } from '@domain/location/enterprise/entities/region.entity'
 
-import { RegionsRepository } from '../repositories/RegionsRepository'
+import { RegionRepository } from '../repositories/region.repository'
 
 type InputProps = {
   name: string
@@ -15,7 +15,7 @@ type OutputProps = Either<ResourceAlreadyExistsError, null>
 
 @Injectable()
 export class CreateRegionUseCase {
-  constructor(private readonly regionsRepository: RegionsRepository) {}
+  constructor(private readonly regionsRepository: RegionRepository) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
     const { name } = data
