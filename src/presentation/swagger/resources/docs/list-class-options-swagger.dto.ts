@@ -4,7 +4,7 @@ import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-respons
 
 import { createResourceDto } from '../entities/resource.dto'
 
-const ClassOptionDto = createResourceDto(classOptions, 'Class option name')
+const ClassOptionDto = createResourceDto(classOptions, 'Class option', 'ClassOptionDto')
 
 export const ListClassOptionSwaggerDto = () => {
   const name = 'ListClassOptions'
@@ -12,7 +12,7 @@ export const ListClassOptionSwaggerDto = () => {
   return function (target: any, key: any, descriptor: any) {
     ApiOperation({
       operationId: 'listClassOptions',
-      summary: 'Listagem de opções de turma',
+      summary: 'Listar opções de turma',
       description: 'Permite listar todas as opções padrões de turmas',
     })(target, key, descriptor)
     ApiResponseOk('Opções padrões de turma', ListClassOptionsResponseSwaggerDto, target, key, descriptor)

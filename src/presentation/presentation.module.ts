@@ -7,9 +7,20 @@ import { SessionController } from './controllers/authentication/session.controll
 import { CreateRegionController } from './controllers/location/create-region.controller'
 import { ListRegionsController } from './controllers/location/list-regions.controller'
 import { ListClassOptionsController } from './controllers/resources/list-class-options.controller'
+import { ListClassStatusController } from './controllers/resources/list-class-status.controller'
+import { ListHighshoolStatusController } from './controllers/resources/list-highshool.controller'
+import { ListStudentStatusController } from './controllers/resources/list-student-status.controller'
 
 @Module({
   imports: [AuthenticationUseCasesModule, LocationUseCasesModule, ResourceUseCasesModule],
-  controllers: [SessionController, CreateRegionController, ListRegionsController, ListClassOptionsController],
+  controllers: [
+    SessionController,
+    CreateRegionController,
+    ListRegionsController,
+    ListClassOptionsController,
+    ListClassStatusController,
+    ListStudentStatusController,
+    ListHighshoolStatusController,
+  ],
 })
 export class PresentationsModule {}

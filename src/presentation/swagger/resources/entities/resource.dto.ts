@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEnum, IsUUID } from 'class-validator'
+import { IsEnum, IsNumber } from 'class-validator'
 
-export function createResourceDto<T extends object>(EnumType: T, description: string) {
+function ResourceDtoBase<T extends object>(EnumType: T, description: string) {
   class ResourceDto {
     @ApiProperty({
       description: 'Unique identifier of the resource',
-      example: 1,
+      example: '1',
     })
-    @IsUUID()
+    @IsNumber()
     id: number
 
     @ApiProperty({
@@ -30,6 +30,11 @@ export function createResourceDto<T extends object>(EnumType: T, description: st
     })
     updatedAt: Date
   }
-
   return ResourceDto
+}
+
+export function createResourceDto<T extends object>(EnumType: T, description: string, name: string) {
+  return class extends ResourceDtoBase<T>(EnumType, description) {
+    static name = name
+  }
 }

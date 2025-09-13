@@ -18,7 +18,7 @@ export const CreateRegionSwaggerDto = () => {
   return function (target: any, key: any, descriptor: any) {
     ApiOperation({
       operationId: 'createRegion',
-      summary: 'Criação de um Polo',
+      summary: 'Criar um Polo',
       description: 'Permite cadastro um novo polo no sistema',
     })(target, key, descriptor)
     ConflictResponseDto(name, ['ResourceAlreadyExistsError'], target, key, descriptor)

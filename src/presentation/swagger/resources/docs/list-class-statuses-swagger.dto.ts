@@ -4,7 +4,7 @@ import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-respons
 
 import { createResourceDto } from '../entities/resource.dto'
 
-const ClassStatusDto = createResourceDto(classStatuses, 'Class status name')
+const ClassStatusDto = createResourceDto(classStatuses, 'Class status', 'ClassStatusDto')
 
 export const ListClassStatusesSwaggerDto = () => {
   const name = 'ListClassStatuses'

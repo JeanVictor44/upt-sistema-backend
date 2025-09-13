@@ -1,10 +1,10 @@
 import { ApiOperation, ApiProperty } from '@nestjs/swagger'
-import { classOptions } from '@root/domain/resource/enterprise/interfaces/class-options'
+import { studentStatuses } from '@root/domain/resource/enterprise/interfaces/student-statuses'
 import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-response'
 
 import { createResourceDto } from '../entities/resource.dto'
 
-const StudentStatusDto = createResourceDto(classOptions, 'Student status name')
+const StudentStatusDto = createResourceDto(studentStatuses, 'Student status', 'StudentStatusDto')
 
 export const ListStudentStatusesSwaggerDto = () => {
   const name = 'ListStudentStatuses'
@@ -12,7 +12,7 @@ export const ListStudentStatusesSwaggerDto = () => {
   return function (target: any, key: any, descriptor: any) {
     ApiOperation({
       operationId: 'listStudentStatuses',
-      summary: 'Listar status da matrícula do aluno no programa UPT',
+      summary: 'Listar status da matrícula',
       description: 'Permite listar os status da matrícula do aluno no programa UPT',
     })(target, key, descriptor)
     ApiResponseOk(

@@ -9,7 +9,7 @@ export const ListRegionsSwaggerDto = () => {
   return function (target: any, key: any, descriptor: any) {
     ApiOperation({
       operationId: 'listRegions',
-      summary: 'Listagem de Polos',
+      summary: 'Listar os Polos',
       description: 'Permite listar todos os polos cadastrados no sistema',
     })(target, key, descriptor)
     ApiResponseOk('Polos cadastrados no sistema', ListRegionsResponseSwaggerDto, target, key, descriptor)
