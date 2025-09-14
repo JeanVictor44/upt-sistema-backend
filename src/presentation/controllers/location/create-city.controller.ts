@@ -17,7 +17,7 @@ export class CreateCityController {
   constructor(private createCity: CreateCityUseCase) {}
 
   @ApiBearerAuth()
-  @Post('/city')
+  @Post('/cities')
   @HttpCode(201)
   @CreateCitySwaggerDto()
   async handle(@Body() body: CreateCityBodySwaggerDto): Promise<CreateCityResponseSwaggerDto> {

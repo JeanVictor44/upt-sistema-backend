@@ -13,7 +13,7 @@ export class ListCitiesController {
   constructor(private listCities: ListCitiesUseCase) {}
 
   @ApiBearerAuth()
-  @Get('/city')
+  @Get('/cities')
   @HttpCode(200)
   @ListCitiesSwaggerDto()
   async handle(): Promise<ListCitiesResponseSwaggerDto> {

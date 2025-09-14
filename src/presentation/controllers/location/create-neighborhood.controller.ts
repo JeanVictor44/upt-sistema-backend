@@ -1,29 +1,29 @@
 import { BadRequestException, Body, ConflictException, Controller, HttpCode, Post } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { ResourceAlreadyExistsError } from '@root/core/errors/errors/resource-already-exists-error'
-import { CreateRegionUseCase } from '@root/domain/location/applications/use-cases/create-region.use-case'
+import { CreateNeighborhoodUseCase } from '@root/domain/location/applications/use-cases/create-neighborhood.use-case'
 import {
-  CreateRegionBodySwaggerDto,
-  CreateRegionResponseSwaggerDto,
-  CreateRegionSwaggerDto,
-} from '@root/presentation/swagger/location/docs/create-region-swagger.dto'
+  CreateNeighborhoodBodySwaggerDto,
+  CreateNeighborhoodResponseSwaggerDto,
+  CreateNeighborhoodSwaggerDto,
+} from '@root/presentation/swagger/location/docs/create-neighborhood.dto'
 import { mapDomainErrors } from '@root/shared/utils/mapDomainErrors'
 
 const errorMap = mapDomainErrors([[[ResourceAlreadyExistsError], ConflictException]])
 
 @ApiTags('Location')
 @Controller({ path: '/location', version: '1' })
-export class CreateRegionController {
-  constructor(private createRegion: CreateRegionUseCase) {}
+export class CreateNeighborhoodController {
+  constructor(private createNeighborhood: CreateNeighborhoodUseCase) {}
 
   @ApiBearerAuth()
-  @Post('/regions')
+  @Post('/neighborhoods')
   @HttpCode(201)
-  @CreateRegionSwaggerDto()
-  async handle(@Body() body: CreateRegionBodySwaggerDto): Promise<CreateRegionResponseSwaggerDto> {
-    const { name } = body
+  @CreateNeighborhoodSwaggerDto()
+  async handle(@Body() body: CreateNeighborhoodBodySwaggerDto): Promise<CreateNeighborhoodResponseSwaggerDto> {
+    const { name, cityId, regionId } = body
 
-    const result = await this.createRegion.execute({ name })
+    const result = await this.createNeighborhood.execute({ name, cityId, regionId })
 
     if (result.isLeft()) {
       const error = result.value
@@ -33,7 +33,7 @@ export class CreateRegionController {
     }
 
     return {
-      description: 'Region created successfully',
+      description: 'Neighborhood created successfully',
     }
   }
 }

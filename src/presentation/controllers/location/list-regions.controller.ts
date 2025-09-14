@@ -13,7 +13,7 @@ export class ListRegionsController {
   constructor(private listRegions: ListRegionsUseCase) {}
 
   @ApiBearerAuth()
-  @Get('/region')
+  @Get('/regions')
   @HttpCode(200)
   @ListRegionsSwaggerDto()
   async handle(): Promise<ListRegionsResponseSwaggerDto> {

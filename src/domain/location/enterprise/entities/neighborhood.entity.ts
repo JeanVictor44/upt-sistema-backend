@@ -2,20 +2,18 @@ import { AggregateRoot } from '@root/core/domain/aggregate-root'
 import { Optional } from '@root/core/logic/Optional'
 
 import { NeighborhoodProps } from '../interfaces/neighborhood'
-import { City } from './city.entity'
-import { Region } from './region.entity'
 
 export class Neighborhood extends AggregateRoot<NeighborhoodProps> {
   get name() {
     return this.props.name
   }
 
-  get city(): City {
-    return this.city
+  get cityId(): number {
+    return this.props.cityId
   }
 
-  get region(): Region {
-    return this.region
+  get regionId(): number {
+    return this.props.regionId
   }
 
   get createdAt() {
@@ -34,8 +32,8 @@ export class Neighborhood extends AggregateRoot<NeighborhoodProps> {
     return new Neighborhood(
       {
         name: props.name,
-        city: props.city,
-        region: props.region,
+        cityId: props.cityId,
+        regionId: props.regionId,
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date(),
       },

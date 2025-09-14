@@ -5,8 +5,10 @@ import { ResourceUseCasesModule } from '@root/domain/resource/applications/use-c
 
 import { SessionController } from './controllers/authentication/session.controller'
 import { CreateCityController } from './controllers/location/create-city.controller'
+import { CreateNeighborhoodController } from './controllers/location/create-neighborhood.controller'
 import { CreateRegionController } from './controllers/location/create-region.controller'
 import { ListCitiesController } from './controllers/location/list-cities.controller'
+import { ListNeighborhoodsController } from './controllers/location/list-neighborhoods.controller'
 import { ListRegionsController } from './controllers/location/list-regions.controller'
 import { ListClassOptionsController } from './controllers/resources/list-class-options.controller'
 import { ListClassStatusController } from './controllers/resources/list-class-status.controller'
@@ -25,6 +27,8 @@ import { ListStudentStatusController } from './controllers/resources/list-studen
     ListClassStatusController,
     ListStudentStatusController,
     ListHighshoolStatusController,
+    CreateNeighborhoodController,
+    ListNeighborhoodsController,
   ],
 })
 export class PresentationsModule {}
