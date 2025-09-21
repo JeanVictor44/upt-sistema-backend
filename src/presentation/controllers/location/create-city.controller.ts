@@ -7,9 +7,6 @@ import {
   CreateCityResponseSwaggerDto,
   CreateCitySwaggerDto,
 } from '@root/presentation/swagger/location/docs/create-city-swagger.dtos'
-import { mapDomainErrors } from '@root/shared/utils/mapDomainErrors'
-
-const errorMap = mapDomainErrors([[[ResourceAlreadyExistsError], ConflictException]])
 
 @ApiTags('Location')
 @Controller({ path: '/location', version: '1' })
@@ -27,9 +24,12 @@ export class CreateCityController {
 
     if (result.isLeft()) {
       const error = result.value
-      const handler = errorMap.get(error.constructor as new (...args: any[]) => Error)
-      if (handler) throw handler(error)
-      throw new BadRequestException('Bad request', { description: 'BadRequestError' })
+      switch (error.constructor) {
+        case ResourceAlreadyExistsError:
+          throw new ConflictException(result.value.name, { description: result.value.message })
+        default:
+          throw new BadRequestException('Bad request', { description: 'BadRequestError' })
+      }
     }
 
     return {

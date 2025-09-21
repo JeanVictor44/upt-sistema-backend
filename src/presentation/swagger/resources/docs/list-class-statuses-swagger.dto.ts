@@ -1,5 +1,5 @@
 import { ApiOperation, ApiProperty } from '@nestjs/swagger'
-import { classStatuses } from '@root/domain/resource/enterprise/interfaces/class-statuses'
+import { classStatuses } from '@root/domain/resource/enterprise/interfaces/class-status'
 import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-response'
 
 import { createResourceDto } from '../entities/resource.dto'

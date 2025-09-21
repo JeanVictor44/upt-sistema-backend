@@ -7,6 +7,7 @@ import { DATABASE_CONNECTION } from '../database-connection'
 import { CityMappers } from '../mappers/city.mappers'
 import { citySchema } from '../schemas'
 import { DrizzleDB } from '../types/drizzle'
+import { lower } from '../utils/lower'
 
 @Injectable()
 export class DrizzleCityRepository implements CityRepository {
@@ -20,7 +21,17 @@ export class DrizzleCityRepository implements CityRepository {
 
   async findByName(name: string): Promise<City | null> {
     const city = await this.db.query.citySchema.findFirst({
-      where: eq(citySchema.name, name),
+      where: eq(lower(citySchema.name), name.toLowerCase()),
+    })
+
+    if (!city) return null
+
+    return CityMappers.toDomain(city)
+  }
+
+  async findById(id: number): Promise<City | null> {
+    const city = await this.db.query.citySchema.findFirst({
+      where: eq(citySchema.id, id),
     })
 
     if (!city) return null

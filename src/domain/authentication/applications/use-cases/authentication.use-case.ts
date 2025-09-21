@@ -47,7 +47,7 @@ export class AuthenticationUseCase {
 
     const accessToken = await this.encrypter.encrypt({
       payload,
-      expiresIn: '15m',
+      expiresIn: '7d',
     })
 
     return right({ accessToken, user: { id: user.id, name: user.name, role: user.role } })

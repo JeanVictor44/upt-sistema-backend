@@ -1,5 +1,8 @@
 import { date, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
 
+import { addressSchema } from './address.schema'
+import { ethnicitySchema } from './ethnicity.schema'
+import { genderIdentitySchema } from './gender-identity.schema'
 import { highSchoolStatusSchema } from './highschool-status.schema'
 
 export const studentSchema = pgTable('student', {
@@ -8,9 +11,18 @@ export const studentSchema = pgTable('student', {
   socialName: varchar('social_name', { length: 100 }),
   cpf: varchar('cpf', { length: 11 }).unique(),
   rg: varchar('rg', { length: 10 }).unique(),
-  date_birth: date('date_birth'),
+  dateBirth: date('date_birth'),
   telephone: varchar('telephone', { length: 15 }),
   email: varchar('email', { length: 100 }).unique(),
+  genderIdentityId: serial('gender_identity_id')
+    .notNull()
+    .references(() => genderIdentitySchema.id),
+  ethnicityId: serial('ethnicity_id')
+    .notNull()
+    .references(() => ethnicitySchema.id),
+  addressId: serial('address_id')
+    .notNull()
+    .references(() => addressSchema.id),
   highSchoolStatusId: serial('high_school_status')
     .notNull()
     .references(() => highSchoolStatusSchema.id),

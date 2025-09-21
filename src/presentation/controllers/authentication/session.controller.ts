@@ -15,19 +15,12 @@ import {
   SessionResponseSwaggerDto,
   SessionSwaggerDto,
 } from '@root/presentation/swagger/authentication/docs/session-swagger.dto'
-import { mapDomainErrors } from '@root/shared/utils/mapDomainErrors'
 
 import { InactiveResourceError } from '@core/errors/errors/inactive-resource-error'
 import { ResourceNotFoundError } from '@core/errors/errors/resource-not-found-error'
 
 import { EmailBadFormattedError } from '@domain/authentication/applications/errors/email-bad-formatted-error'
 import { WrongCredentialsError } from '@domain/authentication/applications/errors/wrong-credentials.error'
-
-const errorMap = mapDomainErrors([
-  [[EmailBadFormattedError], BadRequestException],
-  [[ResourceNotFoundError], NotFoundException],
-  [[InactiveResourceError, WrongCredentialsError], UnauthorizedException],
-])
 
 @ApiTags('Authentication')
 @Controller({ path: '/auth', version: '1' })
@@ -45,9 +38,19 @@ export class SessionController {
 
     if (result.isLeft()) {
       const error = result.value
-      const handler = errorMap.get(error.constructor as new (...args: any[]) => Error)
-      if (handler) throw handler(error)
-      throw new BadRequestException('Bad request', { description: 'BadRequestError' })
+      switch (error.constructor) {
+        case EmailBadFormattedError:
+          throw new BadRequestException(result.value.name, { description: result.value.message })
+        case ResourceNotFoundError:
+          throw new NotFoundException(result.value, {
+            description: result.value.message,
+          })
+        case InactiveResourceError:
+        case WrongCredentialsError:
+          throw new UnauthorizedException(result.value.name, { description: result.value.message })
+        default:
+          throw new BadRequestException('Bad request', { description: 'BadRequestError' })
+      }
     }
     return result.value
   }

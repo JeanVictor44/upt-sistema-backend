@@ -7,6 +7,7 @@ import { DATABASE_CONNECTION } from '../database-connection'
 import { RegionMappers } from '../mappers/region.mappers'
 import { regionSchema } from '../schemas'
 import { DrizzleDB } from '../types/drizzle'
+import { lower } from '../utils/lower'
 
 @Injectable()
 export class DrizzleRegionsRepository implements RegionRepository {
@@ -20,7 +21,7 @@ export class DrizzleRegionsRepository implements RegionRepository {
 
   async findByName(name: string): Promise<Region | null> {
     const region = await this.db.query.regionSchema.findFirst({
-      where: eq(regionSchema.name, name),
+      where: eq(lower(regionSchema.name), name.toLowerCase()),
     })
 
     if (!region) return null

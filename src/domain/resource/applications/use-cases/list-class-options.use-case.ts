@@ -3,7 +3,7 @@ import { Resource } from '@root/core/domain/resource'
 
 import { Either, right } from '@core/logic/Either'
 
-import { ClassOption } from '@domain/resource/enterprise/interfaces/class-options'
+import { ClassOption } from '@root/domain/resource/enterprise/interfaces/class-option'
 
 import { ResourceRepository } from '../repositories/resource-repository'
 

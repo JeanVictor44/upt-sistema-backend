@@ -3,15 +3,13 @@ import { Optional } from '@root/core/logic/Optional'
 
 import { TeachingPlaceProps } from '@domain/location/enterprise/interfaces/teaching-place'
 
-import { Neighborhood } from './neighborhood.entity'
-
 export class TeachingPlace extends AggregateRoot<TeachingPlaceProps> {
   get name() {
     return this.props.name
   }
 
-  get neighborhood(): Neighborhood {
-    return this.neighborhood
+  get neighborhoodId(): number {
+    return this.props.neighborhoodId
   }
 
   get createdAt() {
@@ -30,7 +28,7 @@ export class TeachingPlace extends AggregateRoot<TeachingPlaceProps> {
     return new TeachingPlace(
       {
         name: props.name,
-        neighborhood: props.neighborhood,
+        neighborhoodId: props.neighborhoodId,
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date(),
       },

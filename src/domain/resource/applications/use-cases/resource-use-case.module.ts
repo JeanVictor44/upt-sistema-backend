@@ -5,8 +5,8 @@ import { EnvModule } from '@infra/env/env.module'
 
 import { ListClassOptionsUseCase } from './list-class-options.use-case'
 import { ListClassStatusesUseCase } from './list-class-statuses.use-case'
+import { ListEnrollmentStatusesUseCase } from './list-enrollment-statuses.use-case'
 import { ListHighschoolStatusesUseCase } from './list-highschool-statuses.use-case'
-import { ListStudentStatusesUseCase } from './list-student-statuses.use-case'
 
 @Module({
   imports: [DatabaseModule, EnvModule],
@@ -14,13 +14,13 @@ import { ListStudentStatusesUseCase } from './list-student-statuses.use-case'
     ListClassOptionsUseCase,
     ListClassStatusesUseCase,
     ListHighschoolStatusesUseCase,
-    ListStudentStatusesUseCase,
+    ListEnrollmentStatusesUseCase,
   ],
   exports: [
     ListClassOptionsUseCase,
     ListClassStatusesUseCase,
     ListHighschoolStatusesUseCase,
-    ListStudentStatusesUseCase,
+    ListEnrollmentStatusesUseCase,
   ],
 })
 export class ResourceUseCasesModule {}

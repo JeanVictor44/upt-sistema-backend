@@ -9,4 +9,5 @@ export interface FindByCompositeKeysProps {
 export abstract class NeighborhoodRepository {
   abstract create(region: Neighborhood): Promise<void>
   abstract findByCompositeKeys(data: FindByCompositeKeysProps): Promise<Neighborhood | null>
+  abstract findById(id: number): Promise<Neighborhood | null>
 }

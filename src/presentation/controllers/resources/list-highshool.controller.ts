@@ -7,7 +7,7 @@ import {
 } from '@root/presentation/swagger/resources/docs/list-highschool-statuses-swagger'
 import { ResourceViewModel } from '@root/presentation/view-model/resource-view-model'
 
-import { HighschoolStatus } from '@domain/resource/enterprise/interfaces/highschool-statuses'
+import { HighschoolStatus } from '@root/domain/resource/enterprise/interfaces/highschool-status'
 
 @ApiTags('Resources')
 @Controller({ path: '/resources', version: '1' })
@@ -15,7 +15,7 @@ export class ListHighshoolStatusController {
   constructor(private listHighschoolStatuses: ListHighschoolStatusesUseCase) {}
 
   @ApiBearerAuth()
-  @Get('/highschool-status')
+  @Get('/highschool-statuses')
   @HttpCode(200)
   @ListHighschoolStatusesSwaggerDto()
   async handle(): Promise<ListHighschoolStatusesResponseSwaggerDto> {

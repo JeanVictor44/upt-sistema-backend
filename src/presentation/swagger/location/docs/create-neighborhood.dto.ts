@@ -25,7 +25,7 @@ export class CreateNeighborhoodBodySwaggerDto {
   regionId: number
 }
 
-const CRATED_DESCRIPTION = 'Neighborhood created successfully'
+const CREATED_DESCRIPTION = 'Neighborhood created successfully'
 export const CreateNeighborhoodSwaggerDto = () => {
   const name = 'CreateNeighborhood'
 
@@ -36,14 +36,14 @@ export const CreateNeighborhoodSwaggerDto = () => {
       description: 'Permite o cadastro de um novo bairro',
     })(target, key, descriptor)
     ConflictResponseDto(name, ['ResourceAlreadyExistsError'], target, key, descriptor)
-    ApiCreated(CRATED_DESCRIPTION, target, key, descriptor)
+    ApiCreated(CREATED_DESCRIPTION, target, key, descriptor)
     BadRequestResponseDto(name, ['BadRequestError'], target, key, descriptor)
   }
 }
 
 export class CreateNeighborhoodResponseSwaggerDto {
   @ApiProperty({
-    description: CRATED_DESCRIPTION,
+    description: CREATED_DESCRIPTION,
   })
-  description: typeof CRATED_DESCRIPTION
+  description: typeof CREATED_DESCRIPTION
 }

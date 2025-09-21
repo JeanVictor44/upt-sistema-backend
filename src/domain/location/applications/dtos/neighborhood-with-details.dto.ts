@@ -9,4 +9,6 @@ export interface NeighborhoodWithDetailsDTO {
     id: number
     name: string
   }
+  createdAt: Date
+  updatedAt: Date
 }

@@ -11,7 +11,7 @@ export class CreateRegionBodySwaggerDto {
   name: string
 }
 
-const CRATED_DESCRIPTION = 'Region created successfully'
+const CREATED_DESCRIPTION = 'Region created successfully'
 export const CreateRegionSwaggerDto = () => {
   const name = 'CreateRegion'
 
@@ -22,14 +22,14 @@ export const CreateRegionSwaggerDto = () => {
       description: 'Permite cadastro um novo polo no sistema',
     })(target, key, descriptor)
     ConflictResponseDto(name, ['ResourceAlreadyExistsError'], target, key, descriptor)
-    ApiCreated(CRATED_DESCRIPTION, target, key, descriptor)
+    ApiCreated(CREATED_DESCRIPTION, target, key, descriptor)
     BadRequestResponseDto(name, ['BadRequestError'], target, key, descriptor)
   }
 }
 
 export class CreateRegionResponseSwaggerDto {
   @ApiProperty({
-    description: CRATED_DESCRIPTION,
+    description: CREATED_DESCRIPTION,
   })
-  description: typeof CRATED_DESCRIPTION
+  description: typeof CREATED_DESCRIPTION
 }

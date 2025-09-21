@@ -1,7 +1,7 @@
 import { BadRequestException, Controller, Get, HttpCode } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { ListClassOptionsUseCase } from '@root/domain/resource/applications/use-cases/list-class-options.use-case'
-import { ClassOption } from '@root/domain/resource/enterprise/interfaces/class-options'
+import { ClassOption } from '@root/domain/resource/enterprise/interfaces/class-option'
 import {
   ListClassOptionsResponseSwaggerDto,
   ListClassOptionSwaggerDto,

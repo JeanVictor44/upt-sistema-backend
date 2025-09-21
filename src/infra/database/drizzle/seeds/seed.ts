@@ -6,8 +6,8 @@ import * as schema from '../schemas'
 import { DrizzleDB } from '../types/drizzle'
 import { classOptionsSeed } from './class-options.seed'
 import { classStatusSeed } from './class-statuses'
+import { enrollmentStatusSeed } from './enrollment-status.seed'
 import { highschoolStatusSeed } from './highschool-status.seed'
-import { studentStatusSeed } from './student-status.seed'
 
 const pool = new Pool({
   user: process.env.DATABASE_USER,
@@ -23,7 +23,7 @@ const db = drizzle(pool, { schema }) as NodePgDatabase<typeof schema>
 
 type SeedingFunction = (db: DrizzleDB) => Promise<void>
 
-const seeeds: SeedingFunction[] = [classOptionsSeed, classStatusSeed, highschoolStatusSeed, studentStatusSeed]
+const seeeds: SeedingFunction[] = [classOptionsSeed, classStatusSeed, highschoolStatusSeed, enrollmentStatusSeed]
 async function main() {
   console.log('🌱 Starting database seeding...')
   await Promise.all(seeeds.map((seed) => seed(db)))

@@ -10,6 +10,7 @@ import { DATABASE_CONNECTION } from '../database-connection'
 import { NeighborhoodMappers } from '../mappers/neighborhood.mappers'
 import { neighborhoodSchema } from '../schemas'
 import { DrizzleDB } from '../types/drizzle'
+import { lower } from '../utils/lower'
 
 @Injectable()
 export class DrizzleNeighborhoodRepository implements NeighborhoodRepository {
@@ -24,10 +25,20 @@ export class DrizzleNeighborhoodRepository implements NeighborhoodRepository {
   async findByCompositeKeys(data: FindByCompositeKeysProps): Promise<Neighborhood | null> {
     const neighborhood = await this.db.query.neighborhoodSchema.findFirst({
       where: and(
-        eq(neighborhoodSchema.name, data.name),
+        eq(lower(neighborhoodSchema.name), data.name.toLowerCase()),
         eq(neighborhoodSchema.cityId, data.cityId),
         eq(neighborhoodSchema.regionId, data.regionId),
       ),
+    })
+
+    if (!neighborhood) return null
+
+    return NeighborhoodMappers.toDomain(neighborhood)
+  }
+
+  async findById(id: number): Promise<Neighborhood | null> {
+    const neighborhood = await this.db.query.neighborhoodSchema.findFirst({
+      where: eq(neighborhoodSchema.id, id),
     })
 
     if (!neighborhood) return null

@@ -1,13 +1,13 @@
 import { Resource } from '@root/core/domain/resource'
+import { EnrollmentStatus } from '@root/domain/resource/enterprise/interfaces/enrollment-status'
 
-import { ClassOption } from '@domain/resource/enterprise/interfaces/class-options'
-import { ClassStatus } from '@domain/resource/enterprise/interfaces/class-statuses'
-import { HighschoolStatus } from '@domain/resource/enterprise/interfaces/highschool-statuses'
-import { StudentStatus } from '@domain/resource/enterprise/interfaces/student-statuses'
+import { ClassOption } from '@root/domain/resource/enterprise/interfaces/class-option'
+import { ClassStatus } from '@root/domain/resource/enterprise/interfaces/class-status'
+import { HighschoolStatus } from '@root/domain/resource/enterprise/interfaces/highschool-status'
 
 export abstract class ResourceRepository {
   abstract findAllClassOptions(): Promise<Resource<ClassOption>[]>
   abstract findAllClassStatuses(): Promise<Resource<ClassStatus>[]>
   abstract findAllHighschoolStatuses(): Promise<Resource<HighschoolStatus>[]>
-  abstract findAllStudentStatuses(): Promise<Resource<StudentStatus>[]>
+  abstract findAllEnrollmentStatuses(): Promise<Resource<EnrollmentStatus>[]>
 }

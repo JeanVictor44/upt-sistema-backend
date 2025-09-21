@@ -3,7 +3,7 @@ import { Resource } from '@root/core/domain/resource'
 
 import { Either, right } from '@core/logic/Either'
 
-import { ClassStatus } from '@domain/resource/enterprise/interfaces/class-statuses'
+import { ClassStatus } from '@root/domain/resource/enterprise/interfaces/class-status'
 
 import { ResourceRepository } from '../repositories/resource-repository'
 

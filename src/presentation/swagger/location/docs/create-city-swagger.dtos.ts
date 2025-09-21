@@ -11,7 +11,7 @@ export class CreateCityBodySwaggerDto {
   name: string
 }
 
-const CRATED_DESCRIPTION = 'City created successfully'
+const CREATED_DESCRIPTION = 'City created successfully'
 export const CreateCitySwaggerDto = () => {
   const name = 'CreateCity'
 
@@ -22,14 +22,14 @@ export const CreateCitySwaggerDto = () => {
       description: 'Permite cadastro um novo município local da turma/extensão no sistema',
     })(target, key, descriptor)
     ConflictResponseDto(name, ['ResourceAlreadyExistsError'], target, key, descriptor)
-    ApiCreated(CRATED_DESCRIPTION, target, key, descriptor)
+    ApiCreated(CREATED_DESCRIPTION, target, key, descriptor)
     BadRequestResponseDto(name, ['BadRequestError'], target, key, descriptor)
   }
 }
 
 export class CreateCityResponseSwaggerDto {
   @ApiProperty({
-    description: CRATED_DESCRIPTION,
+    description: CREATED_DESCRIPTION,
   })
-  description: typeof CRATED_DESCRIPTION
+  description: typeof CREATED_DESCRIPTION
 }
