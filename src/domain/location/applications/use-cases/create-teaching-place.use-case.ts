@@ -32,10 +32,7 @@ export class CreateTeachingPlaceUseCase {
     })
     if (teachingPlaceExists) return left(new ResourceAlreadyExistsError())
 
-    console.log(neighborhoodId)
-
     const neighborhoodExists = await this.neighborhoodRepository.findById(neighborhoodId)
-    console.log(neighborhoodExists)
     if (!neighborhoodExists) return left(new ResourceNotFoundError())
 
     const teachingPlace = TeachingPlace.create({

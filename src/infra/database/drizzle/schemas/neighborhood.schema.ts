@@ -7,7 +7,7 @@ import { regionSchema } from './region.schema'
 export const neighborhoodSchema = pgTable(
   'neighborhood',
   {
-    id: serial('id').primaryKey(),
+    id: serial('id').primaryKey().notNull(),
     name: varchar('name', { length: 100 }).notNull(),
     cityId: serial('city_id')
       .references(() => citySchema.id)

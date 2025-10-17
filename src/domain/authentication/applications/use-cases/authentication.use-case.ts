@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common'
+import { NotAllowedError } from '@root/core/errors/errors/not-allowed-error'
+import { ResourceRepository } from '@root/domain/resource/applications/repositories/resource-repository'
 import { UserAuthenticatedSwaggerDto } from '@root/presentation/swagger/authentication/docs/session-swagger.dto'
 
 import { InactiveResourceError } from '@core/errors/errors/inactive-resource-error'
@@ -9,13 +11,15 @@ import { HashGenerator } from '@domain/authentication/applications/cryptography/
 import { WrongCredentialsError } from '@domain/authentication/applications/errors/wrong-credentials.error'
 import { UsersRepository } from '@domain/authentication/applications/repositories/users.repository'
 
+import { UserRolesRepository } from '../repositories/user-role.repository'
+
 type InputProps = {
   document: string
   password: string
 }
 
 type OutputProps = Either<
-  InactiveResourceError | WrongCredentialsError,
+  InactiveResourceError | WrongCredentialsError | NotAllowedError,
   {
     accessToken: string
     user: UserAuthenticatedSwaggerDto
@@ -28,6 +32,8 @@ export class AuthenticationUseCase {
     private readonly usersRepository: UsersRepository,
     private readonly hashGenerator: HashGenerator,
     private readonly encrypter: Encrypter,
+    private readonly userRolesRepository: UserRolesRepository,
+    private readonly resourceRepository: ResourceRepository,
   ) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
@@ -36,20 +42,25 @@ export class AuthenticationUseCase {
     const user = await this.usersRepository.findByDocument(document)
     if (!user) return left(new WrongCredentialsError())
 
-    const now = new Date().getTime()
-    const isDisabledButNotExpired = user.disabledAt !== null && new Date(user.disabledAt).getTime() > now
-    if (user.disabledAt && !isDisabledButNotExpired) return left(new InactiveResourceError())
+    if (user.disabledAt) return left(new InactiveResourceError())
 
     const passwordMatch = await this.hashGenerator.compare(password, user.password)
     if (!passwordMatch) return left(new WrongCredentialsError())
 
-    const payload = { sub: user.id, name: user.name, role: user.role }
+    const userRole = await this.userRolesRepository.findActiveRoleByUserId(user.id)
+    console.log(userRole)
+    if (!userRole) return left(new NotAllowedError())
+
+    const role = await this.resourceRepository.findRoleById(userRole.roleId)
+    if (!role) return left(new NotAllowedError())
+
+    const payload = { sub: user.id, name: user.name, role }
 
     const accessToken = await this.encrypter.encrypt({
       payload,
       expiresIn: '7d',
     })
 
-    return right({ accessToken, user: { id: user.id, name: user.name, role: user.role } })
+    return right({ accessToken, user: { id: user.id, name: user.name, role } })
   }
 }

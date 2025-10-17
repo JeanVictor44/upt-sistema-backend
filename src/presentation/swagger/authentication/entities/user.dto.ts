@@ -1,12 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { UserRole } from '@root/domain/authentication/enterprise/interfaces/user'
-import { IsDate, IsEmail, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsDate, IsEmail, IsNumber, IsOptional, IsString } from 'class-validator'
 export class UserDto {
   @ApiProperty({
     description: 'Unique identifier of the user',
     example: 1,
   })
-  @IsUUID()
+  @IsNumber()
   id: number
 
   @ApiProperty({
@@ -38,30 +37,26 @@ export class UserDto {
   telephone: string
 
   @ApiProperty({
-    description: 'Role of the user',
-    enum: UserRole,
-  })
-  role: UserRole
-
-  @ApiProperty({
     description: 'Indicates if the user is disabled or null if not disabled',
     example: '2024-10-01T00:00:00.000Z',
   })
   @IsDate()
   @IsOptional()
-  disabled?: Date
+  disabledAt?: Date
 
   @ApiProperty({
     description: 'Creation date of the user',
     example: '2024-10-01T00:00:00.000Z',
+    type: Date,
   })
   @IsDate()
-  createdAt: number
+  createdAt: Date
 
   @ApiProperty({
     description: 'Update date of the user or null if not updated',
     example: '2024-10-01T00:00:00.000Z',
+    type: Date,
   })
   @IsDate()
-  updatedAt: number
+  updatedAt: Date
 }

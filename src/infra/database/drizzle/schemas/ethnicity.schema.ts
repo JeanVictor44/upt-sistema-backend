@@ -1,9 +1,9 @@
 import { pgEnum, pgTable, serial, timestamp } from 'drizzle-orm/pg-core'
 
-export const ethnicity = pgEnum('ethnicity', ['AMARELA', 'BRANCA', 'INDÍGENA', 'PARDA', 'PRETA', 'OUTRA'])
+export const ethnicity = pgEnum('ethnicities', ['AMARELA', 'BRANCA', 'INDÍGENA', 'PARDA', 'PRETA', 'OUTRA'])
 
 export const ethnicitySchema = pgTable('ethnicity', {
-  id: serial('id').primaryKey(),
+  id: serial('id').primaryKey().notNull(),
   name: ethnicity('name').notNull().unique(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')

@@ -4,11 +4,11 @@ import { classSchema } from './class.schema'
 import { editionSchema } from './edition.schema'
 
 export const classEditionSchema = pgTable('class_edition', {
-  id: serial('id').primaryKey(),
-  edition_id: serial('edition_id')
+  id: serial('id').primaryKey().notNull(),
+  edition_id: integer('edition_id')
     .notNull()
     .references(() => editionSchema.id),
-  classId: serial('class_id')
+  classId: integer('class_id')
     .notNull()
     .references(() => classSchema.id),
   enrolledCount: integer('enrolled_count').notNull(),

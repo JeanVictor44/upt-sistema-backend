@@ -1,15 +1,17 @@
 import { relations } from 'drizzle-orm'
-import { pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 import { neighborhoodSchema } from './neighborhood.schema'
 
 export const teachingPlaceSchema = pgTable('teaching_place', {
-  id: serial('id').primaryKey(),
+  id: serial('id').primaryKey().notNull(),
   name: varchar('name', { length: 100 }).notNull(),
-  neighborhoodId: serial('neighborhood_id')
+  neighborhoodId: integer('neighborhood_id')
     .notNull()
     .references(() => neighborhoodSchema.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+  //   propertyLocationCategoryId: integer('property_location_category_id').notNull(),
+  //   traditionalCommunityName: varchar('traditional_community_name', { length: 100 }),
   updatedAt: timestamp('updated_at')
     .notNull()
     .$onUpdateFn(() => new Date()),

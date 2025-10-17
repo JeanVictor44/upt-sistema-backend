@@ -6,7 +6,7 @@ import { genderIdentitySchema } from './gender-identity.schema'
 import { highSchoolStatusSchema } from './highschool-status.schema'
 
 export const studentSchema = pgTable('student', {
-  id: serial('id').primaryKey(),
+  id: serial('id').primaryKey().notNull(),
   name: varchar('name', { length: 100 }).notNull(),
   socialName: varchar('social_name', { length: 100 }),
   cpf: varchar('cpf', { length: 11 }).unique(),

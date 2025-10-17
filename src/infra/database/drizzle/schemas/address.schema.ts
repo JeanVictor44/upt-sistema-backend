@@ -3,13 +3,13 @@ import { integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-cor
 import { propertyLocationCategorySchema } from './property-location-category.schema'
 
 export const addressSchema = pgTable('adress', {
-  id: serial('id').primaryKey(),
+  id: serial('id').primaryKey().notNull(),
   street: varchar('street', { length: 150 }),
   number: integer('number'),
   neighboorhood: varchar('neighborhood', { length: 100 }),
   city: varchar('city', { length: 100 }),
   zipCode: varchar('zip_code', { length: 8 }),
-  propertyLocationCategoryId: serial('property_location_category_id')
+  propertyLocationCategoryId: integer('property_location_category_id')
     .notNull()
     .references(() => propertyLocationCategorySchema.id),
   traditionalCommunityName: varchar('traditional_community_name', { length: 100 }),

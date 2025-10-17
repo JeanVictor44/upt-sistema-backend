@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
+import { AsyncMaybe } from '@root/core/logic/Maybe'
 import {
   FindByNameAndNeighborhoodProps,
   TeachingPlaceRepository,
@@ -20,6 +21,22 @@ export class DrizzleTeachingPlaceRepository implements TeachingPlaceRepository {
     const preparedData = TeachingPlaceMappers.toPersistence(teachingPlace)
 
     await this.db.insert(teachingPlaceSchema).values(preparedData)
+  }
+
+  async save(teachingPlace: TeachingPlace): Promise<void> {
+    const preparedData = TeachingPlaceMappers.toPersistence(teachingPlace)
+
+    await this.db.update(teachingPlaceSchema).set(preparedData).where(eq(teachingPlaceSchema.id, teachingPlace.id))
+  }
+
+  async findById(id: number): AsyncMaybe<TeachingPlace> {
+    const teachingPlace = await this.db.query.teachingPlaceSchema.findFirst({
+      where: eq(teachingPlaceSchema.id, id),
+    })
+
+    if (!teachingPlace) return null
+
+    return TeachingPlaceMappers.toDomain(teachingPlace)
   }
 
   async findByNameAndNeighborhood({

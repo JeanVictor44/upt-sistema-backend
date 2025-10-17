@@ -18,8 +18,17 @@ export class DrizzleNeighborhoodRepository implements NeighborhoodRepository {
 
   async create(neighborhood: Neighborhood): Promise<void> {
     const preparedData = NeighborhoodMappers.toPersistence(neighborhood)
-
     await this.db.insert(neighborhoodSchema).values(preparedData)
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.db.delete(neighborhoodSchema).where(eq(neighborhoodSchema.id, id))
+  }
+
+  async save(neighborhood: Neighborhood): Promise<void> {
+    const preparedData = NeighborhoodMappers.toPersistence(neighborhood)
+
+    await this.db.update(neighborhoodSchema).set(preparedData).where(eq(neighborhoodSchema.id, neighborhood.id))
   }
 
   async findByCompositeKeys(data: FindByCompositeKeysProps): Promise<Neighborhood | null> {

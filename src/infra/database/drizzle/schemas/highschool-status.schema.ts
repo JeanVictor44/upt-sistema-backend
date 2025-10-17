@@ -3,7 +3,7 @@ import { pgEnum, pgTable, serial, timestamp } from 'drizzle-orm/pg-core'
 export const highschoolStatuses = pgEnum('highschool_statuses', ['CONCLUÍDO', 'EM CURSO'])
 
 export const highSchoolStatusSchema = pgTable('highschool_status', {
-  id: serial('id').primaryKey(),
+  id: serial('id').primaryKey().notNull(),
   name: highschoolStatuses('name').notNull().unique(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')

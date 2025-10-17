@@ -17,9 +17,11 @@ import { UserMappers } from '../mappers/users.mappers'
 export class DrizzleUsersRepository implements UsersRepository {
   constructor(@Inject(DATABASE_CONNECTION) private db: DrizzleDB) {}
 
-  async create(data: User): Promise<void> {
+  async create(data: User): Promise<User> {
     const preparedData = UserMappers.toPersistence(data)
-    await this.db.insert(userSchema).values(preparedData)
+    const user = await this.db.insert(userSchema).values(preparedData).returning()
+
+    return UserMappers.toDomain(user[0])
   }
 
   async findById(id: number): AsyncMaybe<User> {

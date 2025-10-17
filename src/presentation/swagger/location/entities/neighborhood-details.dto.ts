@@ -1,4 +1,4 @@
-import { ApiProperty, PickType } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger'
 import { IsDate, IsNumber, IsString } from 'class-validator'
 
 import { CityDto } from './city.dto'
@@ -33,7 +33,7 @@ export class NeighborhoodDetailsDto {
       id: 1,
       name: 'Simões Filho',
     },
-    type: PickType<CityDto, 'id' | 'name'>,
+    type: CityDto,
   })
   city: City
 

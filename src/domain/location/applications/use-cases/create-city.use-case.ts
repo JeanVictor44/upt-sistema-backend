@@ -23,10 +23,10 @@ export class CreateCityUseCase {
     const cityExists = await this.cityRepository.findByName(name)
     if (cityExists) return left(new ResourceAlreadyExistsError())
 
-    const region = City.create({
+    const city = City.create({
       name,
     })
-    await this.cityRepository.create(region)
+    await this.cityRepository.create(city)
 
     return right(null)
   }

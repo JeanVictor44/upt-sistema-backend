@@ -5,7 +5,7 @@ import { enrollmentStatusSchema } from './enrollment-status.schema'
 import { studentSchema } from './student.schema'
 
 export const enrollmentSchema = pgTable('enrollment', {
-  id: serial('id').primaryKey(),
+  id: serial('id').primaryKey().notNull(),
   studentId: serial('student_id')
     .notNull()
     .references(() => studentSchema.id),

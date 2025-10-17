@@ -1,4 +1,5 @@
 import { ApiOperation, ApiProperty, PickType } from '@nestjs/swagger'
+import { RolesEnum } from '@root/domain/resource/enterprise/interfaces/role'
 import { UserDto } from '@root/presentation/swagger/authentication/entities/user.dto'
 import {
   ApiResponseOk,
@@ -7,6 +8,8 @@ import {
   NotFoundResponseDto,
 } from '@utils/swagger-api-response'
 import { IsString } from 'class-validator'
+
+import { createResourceDto } from '../../resources/entities/resource.dto'
 
 export class SessionBodySwaggerDto extends PickType(UserDto, ['document']) {
   @ApiProperty({
@@ -34,7 +37,15 @@ export const SessionSwaggerDto = () => {
   }
 }
 
-export class UserAuthenticatedSwaggerDto extends PickType(UserDto, ['id', 'name', 'role']) {}
+const RolesDto = createResourceDto(RolesEnum, 'roles', 'RolesDto')
+
+export class UserAuthenticatedSwaggerDto extends PickType(UserDto, ['id', 'name']) {
+  @ApiProperty({
+    description: 'Roles assigned to the user',
+    type: RolesDto,
+  })
+  role: InstanceType<typeof RolesDto>
+}
 
 export class SessionResponseSwaggerDto {
   @ApiProperty({

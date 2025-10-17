@@ -1,5 +1,4 @@
 import { User } from '@domain/authentication/enterprise/entities/user.entity'
-import { UserRole } from '@domain/authentication/enterprise/interfaces/user'
 
 import { UserSchemaInsertProps, UserSchemaSelectProps } from '@infra/database/drizzle/schemas'
 
@@ -9,10 +8,9 @@ export class UserMappers {
       {
         name: data.name,
         email: data.email,
-        role: data.role as UserRole,
         password: data.password,
         document: data.document,
-        disabledAt: data.disabledAt,
+        disabledAt: data.disabledAt || undefined,
         telephone: data.telephone,
         createdAt: new Date(data.createdAt),
         updatedAt: new Date(data.updatedAt),
@@ -26,7 +24,6 @@ export class UserMappers {
       id: data.id,
       name: data.name,
       email: data.email,
-      role: data.role,
       document: data.document,
       disabledAt: data.disabledAt,
       telephone: data.telephone,

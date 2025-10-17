@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { Resource } from '@root/core/domain/resource'
+import { HighschoolStatus } from '@root/domain/resource/enterprise/interfaces/highschool-status'
 
 import { Either, right } from '@core/logic/Either'
-
-import { HighschoolStatus } from '@root/domain/resource/enterprise/interfaces/highschool-status'
 
 import { ResourceRepository } from '../repositories/resource-repository'
 

@@ -8,12 +8,27 @@ export class Neighborhood extends AggregateRoot<NeighborhoodProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
   get cityId(): number {
     return this.props.cityId
   }
 
+  set cityId(cityId: number) {
+    this.props.cityId = cityId
+    this.touch()
+  }
+
   get regionId(): number {
     return this.props.regionId
+  }
+
+  set regionId(regionId: number) {
+    this.props.regionId = regionId
+    this.touch()
   }
 
   get createdAt() {

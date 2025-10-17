@@ -9,6 +9,11 @@ export class City extends Entity<CityProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
   get createdAt() {
     return this.props.createdAt
   }

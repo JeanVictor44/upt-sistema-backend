@@ -1,5 +1,5 @@
 {
-  "id": "f3883305-156b-4b39-8a2b-77df67a9a671",
+  "id": "f0e3eb7f-6064-4129-8e36-70d9564857b6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -49,14 +49,6 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
-        },
-        "role": {
-          "name": "role",
-          "type": "user_role",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'SECRETARY'"
         },
         "created_at": {
           "name": "created_at",
@@ -259,7 +251,17 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "unique_neighborhood": {
+          "name": "unique_neighborhood",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name",
+            "city_id",
+            "region_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -463,8 +465,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.student_status": {
-      "name": "student_status",
+    "public.enrollment_status": {
+      "name": "enrollment_status",
       "schema": "",
       "columns": {
         "id": {
@@ -475,7 +477,7 @@
         },
         "name": {
           "name": "name",
-          "type": "student_statuses",
+          "type": "enrollment_statuses",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
@@ -498,8 +500,284 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "student_status_name_unique": {
-          "name": "student_status_name_unique",
+        "enrollment_status_name_unique": {
+          "name": "enrollment_status_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.gender_identity": {
+      "name": "gender_identity",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "gender_identities",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "gender_identity_name_unique": {
+          "name": "gender_identity_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ethnicity": {
+      "name": "ethnicity",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "ethnicities",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "ethnicity_name_unique": {
+          "name": "ethnicity_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.adress": {
+      "name": "adress",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "street": {
+          "name": "street",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "number": {
+          "name": "number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "neighborhood": {
+          "name": "neighborhood",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zip_code": {
+          "name": "zip_code",
+          "type": "varchar(8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "property_location_category_id": {
+          "name": "property_location_category_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "traditional_community_name": {
+          "name": "traditional_community_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "adress_property_location_category_id_property_location_category_id_fk": {
+          "name": "adress_property_location_category_id_property_location_category_id_fk",
+          "tableFrom": "adress",
+          "tableTo": "property_location_category",
+          "columnsFrom": [
+            "property_location_category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.shift": {
+      "name": "shift",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "shifts",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "shift_name_unique": {
+          "name": "shift_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.property_location_category": {
+      "name": "property_location_category",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "property_location_categories",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "property_location_category_name_unique": {
+          "name": "property_location_category_name_unique",
           "nullsNotDistinct": false,
           "columns": [
             "name"
@@ -532,9 +810,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "edition": {
-          "name": "edition",
-          "type": "integer",
+        "shift_id": {
+          "name": "shift_id",
+          "type": "serial",
           "primaryKey": false,
           "notNull": true
         },
@@ -547,12 +825,6 @@
         "status_id": {
           "name": "status_id",
           "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "number_vacancies": {
-          "name": "number_vacancies",
-          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -578,6 +850,19 @@
           "tableTo": "teaching_place",
           "columnsFrom": [
             "teaching_place_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "class_shift_id_shift_id_fk": {
+          "name": "class_shift_id_shift_id_fk",
+          "tableFrom": "class",
+          "tableTo": "shift",
+          "columnsFrom": [
+            "shift_id"
           ],
           "columnsTo": [
             "id"
@@ -619,15 +904,6 @@
           "nullsNotDistinct": false,
           "columns": [
             "name"
-          ]
-        },
-        "unique_class_per_edition": {
-          "name": "unique_class_per_edition",
-          "nullsNotDistinct": false,
-          "columns": [
-            "edition",
-            "option_id",
-            "teaching_place_id"
           ]
         }
       },
@@ -687,8 +963,20 @@
           "primaryKey": false,
           "notNull": false
         },
-        "class_id": {
-          "name": "class_id",
+        "gender_identity_id": {
+          "name": "gender_identity_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ethnicity_id": {
+          "name": "ethnicity_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address_id": {
+          "name": "address_id",
           "type": "serial",
           "primaryKey": false,
           "notNull": true
@@ -715,12 +1003,38 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "student_class_id_class_id_fk": {
-          "name": "student_class_id_class_id_fk",
+        "student_gender_identity_id_gender_identity_id_fk": {
+          "name": "student_gender_identity_id_gender_identity_id_fk",
           "tableFrom": "student",
-          "tableTo": "class",
+          "tableTo": "gender_identity",
           "columnsFrom": [
-            "class_id"
+            "gender_identity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "student_ethnicity_id_ethnicity_id_fk": {
+          "name": "student_ethnicity_id_ethnicity_id_fk",
+          "tableFrom": "student",
+          "tableTo": "ethnicity",
+          "columnsFrom": [
+            "ethnicity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "student_address_id_adress_id_fk": {
+          "name": "student_address_id_adress_id_fk",
+          "tableFrom": "student",
+          "tableTo": "adress",
+          "columnsFrom": [
+            "address_id"
           ],
           "columnsTo": [
             "id"
@@ -769,18 +1083,224 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+    },
+    "public.edition": {
+      "name": "edition",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "edition_year_unique": {
+          "name": "edition_year_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "year"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.role": {
+      "name": "role",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "roles",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "role_name_unique": {
+          "name": "role_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user_role": {
+      "name": "user_role",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role_id": {
+          "name": "role_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "region_id": {
+          "name": "region_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "class_id": {
+          "name": "class_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_role_user_id_user_id_fk": {
+          "name": "user_role_user_id_user_id_fk",
+          "tableFrom": "user_role",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "user_role_role_id_role_id_fk": {
+          "name": "user_role_role_id_role_id_fk",
+          "tableFrom": "user_role",
+          "tableTo": "role",
+          "columnsFrom": [
+            "role_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "user_role_region_id_region_id_fk": {
+          "name": "user_role_region_id_region_id_fk",
+          "tableFrom": "user_role",
+          "tableTo": "region",
+          "columnsFrom": [
+            "region_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "user_role_class_id_class_id_fk": {
+          "name": "user_role_class_id_class_id_fk",
+          "tableFrom": "user_role",
+          "tableTo": "class",
+          "columnsFrom": [
+            "class_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
-    "public.user_role": {
-      "name": "user_role",
-      "schema": "public",
-      "values": [
-        "ADMIN",
-        "REGION_MANAGER",
-        "SECRETARY"
-      ]
-    },
     "public.class_options": {
       "name": "class_options",
       "schema": "public",
@@ -807,13 +1327,70 @@
         "EM CURSO"
       ]
     },
-    "public.student_statuses": {
-      "name": "student_statuses",
+    "public.enrollment_statuses": {
+      "name": "enrollment_statuses",
       "schema": "public",
       "values": [
         "MATRICULADO",
         "EVADIDO",
         "APROVADO"
+      ]
+    },
+    "public.gender_identities": {
+      "name": "gender_identities",
+      "schema": "public",
+      "values": [
+        "FEMININO - CISGÊNERO",
+        "MASCULINO - CISGÊNERO",
+        "TRANSGÊNERO",
+        "NÃO BINÁRIO",
+        "MULHER TRANS",
+        "HOMEM TRANS"
+      ]
+    },
+    "public.ethnicities": {
+      "name": "ethnicities",
+      "schema": "public",
+      "values": [
+        "AMARELA",
+        "BRANCA",
+        "INDÍGENA",
+        "PARDA",
+        "PRETA",
+        "OUTRA"
+      ]
+    },
+    "public.shifts": {
+      "name": "shifts",
+      "schema": "public",
+      "values": [
+        "MATUTINO",
+        "VESPERTINO",
+        "NOTURNO"
+      ]
+    },
+    "public.property_location_categories": {
+      "name": "property_location_categories",
+      "schema": "public",
+      "values": [
+        "ZONA URBANA - CENTRO",
+        "ZONA URBANA - PERIFERIA",
+        "ZONA RURAL",
+        "QUILOMBO",
+        "ASSENTAMENTO",
+        "ALDEIA INDÍGENA",
+        "FUNDO DE PASTO",
+        "FECHO DE PASTO",
+        "OUTRA"
+      ]
+    },
+    "public.roles": {
+      "name": "roles",
+      "schema": "public",
+      "values": [
+        "ADMIN",
+        "REGION_MANAGER",
+        "SECRETARY"
       ]
     }
   },

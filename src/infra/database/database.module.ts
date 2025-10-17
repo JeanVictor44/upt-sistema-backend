@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { UserRolesRepository } from '@root/domain/authentication/applications/repositories/user-role.repository'
 import { UsersRepository } from '@root/domain/authentication/applications/repositories/users.repository'
 import { EditionRepository } from '@root/domain/edition/applications/repositories/edition-repository'
 import { CityRepository } from '@root/domain/location/applications/repositories/city.repository'
@@ -19,6 +20,7 @@ import { DrizzleRegionsRepository } from './drizzle/repositories/drizzle-regions
 import { DrizzleResourcesRepository } from './drizzle/repositories/drizzle-resources.repository'
 import { DrizzleTeachingPlaceQueryRepository } from './drizzle/repositories/drizzle-teaching-place-query.repository'
 import { DrizzleTeachingPlaceRepository } from './drizzle/repositories/drizzle-teaching-place.repository'
+import { DrizzleUserRole } from './drizzle/repositories/drizzle-user-role.repository'
 import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.repository'
 
 @Module({
@@ -33,6 +35,7 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
     { useClass: DrizzleTeachingPlaceRepository, provide: TeachingPlaceRepository },
     { useClass: DrizzleTeachingPlaceQueryRepository, provide: TeachingPlaceQueryRepository },
     { useClass: DrizzleEditionRepository, provide: EditionRepository },
+    { useClass: DrizzleUserRole, provide: UserRolesRepository },
   ],
   exports: [
     UsersRepository,
@@ -44,6 +47,7 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
     TeachingPlaceRepository,
     TeachingPlaceQueryRepository,
     EditionRepository,
+    UserRolesRepository,
   ],
 })
 export class DatabaseModule {}

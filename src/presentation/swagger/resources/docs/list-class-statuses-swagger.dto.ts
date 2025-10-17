@@ -2,9 +2,32 @@ import { ApiOperation, ApiProperty } from '@nestjs/swagger'
 import { classStatuses } from '@root/domain/resource/enterprise/interfaces/class-status'
 import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-response'
 
-import { createResourceDto } from '../entities/resource.dto'
+export class ClassStatusDto {
+  @ApiProperty({
+    description: 'Unique identifier of the class status',
+    example: 1,
+  })
+  id: number
 
-const ClassStatusDto = createResourceDto(classStatuses, 'Class status', 'ClassStatusDto')
+  @ApiProperty({
+    description: 'Name of the class status',
+    enum: classStatuses,
+    example: classStatuses[0],
+  })
+  name: (typeof classStatuses)[number]
+
+  @ApiProperty({
+    description: 'Timestamp of when the class status was created',
+    example: new Date(),
+  })
+  createdAt: Date
+
+  @ApiProperty({
+    description: 'Timestamp of when the class status was last updated',
+    example: new Date(),
+  })
+  updatedAt: Date
+}
 
 export const ListClassStatusesSwaggerDto = () => {
   const name = 'ListClassStatuses'
@@ -20,12 +43,10 @@ export const ListClassStatusesSwaggerDto = () => {
   }
 }
 
-type ClassStatusDtoType = InstanceType<typeof ClassStatusDto>
-
 export class ListClassStatusesResponseSwaggerDto {
   @ApiProperty({
     type: [ClassStatusDto],
     description: 'List class statuses',
   })
-  results: ClassStatusDtoType[]
+  results: ClassStatusDto[]
 }

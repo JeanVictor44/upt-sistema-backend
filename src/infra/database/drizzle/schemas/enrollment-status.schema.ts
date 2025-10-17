@@ -1,9 +1,9 @@
 import { pgEnum, pgTable, serial, timestamp } from 'drizzle-orm/pg-core'
 
-export const enrollmentStatuses = pgEnum('enrollment_status', ['MATRICULADO', 'EVADIDO', 'APROVADO'])
+export const enrollmentStatuses = pgEnum('enrollment_statuses', ['MATRICULADO', 'EVADIDO', 'APROVADO'])
 
 export const enrollmentStatusSchema = pgTable('enrollment_status', {
-  id: serial('id').primaryKey(),
+  id: serial('id').primaryKey().notNull(),
   name: enrollmentStatuses('name').notNull().unique(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')

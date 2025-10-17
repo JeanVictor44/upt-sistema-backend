@@ -29,10 +29,6 @@ export class User extends Entity<UserProps> {
     this.props.document = document
   }
 
-  get role() {
-    return this.props.role
-  }
-
   get telephone() {
     return this.props.telephone
   }
@@ -49,11 +45,11 @@ export class User extends Entity<UserProps> {
     this.props.password = password
   }
 
-  get disabledAt() {
+  get disabledAt(): Date | undefined {
     return this.props.disabledAt
   }
 
-  set disabledAt(disabledAt: Date | null) {
+  set disabledAt(disabledAt: Date) {
     this.props.disabledAt = disabledAt
   }
 
@@ -76,9 +72,8 @@ export class User extends Entity<UserProps> {
         email: props.email,
         document: props.document,
         telephone: props.telephone,
-        role: props.role,
         password: props.password,
-        disabledAt: props.disabledAt || null,
+        disabledAt: props.disabledAt,
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date(),
       },

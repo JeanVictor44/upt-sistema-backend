@@ -8,8 +8,18 @@ export class TeachingPlace extends AggregateRoot<TeachingPlaceProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
   get neighborhoodId(): number {
     return this.props.neighborhoodId
+  }
+
+  set neighborhoodId(neighborhoodId: number) {
+    this.props.neighborhoodId = neighborhoodId
+    this.touch()
   }
 
   get createdAt() {

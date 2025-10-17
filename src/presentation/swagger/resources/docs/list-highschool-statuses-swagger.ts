@@ -2,10 +2,32 @@ import { ApiOperation, ApiProperty } from '@nestjs/swagger'
 import { highschoolStatuses } from '@root/domain/resource/enterprise/interfaces/highschool-status'
 import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-response'
 
-import { createResourceDto } from '../entities/resource.dto'
+class HighschoolStatusDto {
+  @ApiProperty({
+    description: 'Unique identifier of the gender',
+    example: 1,
+  })
+  id: number
 
-const HighschoolStatusDto = createResourceDto(highschoolStatuses, 'Highschool status', 'HighschoolStatusDto')
+  @ApiProperty({
+    description: 'Name of the gender',
+    enum: highschoolStatuses,
+    example: highschoolStatuses[0],
+  })
+  name: (typeof highschoolStatuses)[number]
 
+  @ApiProperty({
+    description: 'Timestamp of when the gender was created',
+    example: new Date(),
+  })
+  createdAt: Date
+
+  @ApiProperty({
+    description: 'Timestamp of when the gender was last updated',
+    example: new Date(),
+  })
+  updatedAt: Date
+}
 export const ListHighschoolStatusesSwaggerDto = () => {
   const name = 'ListHighschoolStatuses'
 
@@ -20,12 +42,10 @@ export const ListHighschoolStatusesSwaggerDto = () => {
   }
 }
 
-type HighschoolStatusDtoType = InstanceType<typeof HighschoolStatusDto>
-
 export class ListHighschoolStatusesResponseSwaggerDto {
   @ApiProperty({
     type: [HighschoolStatusDto],
     description: 'List highschool statuses',
   })
-  results: HighschoolStatusDtoType[]
+  results: HighschoolStatusDto[]
 }

@@ -5,7 +5,7 @@ import { EnrollmentStatus } from '@root/domain/resource/enterprise/interfaces/en
 import {
   ListEnrollmentResponseSwaggerDto,
   ListEnrollmentStatusesSwaggerDto,
-} from '@root/presentation/swagger/resources/docs/list-student-registration-statuses-swagger'
+} from '@root/presentation/swagger/resources/docs/list-enrollment-statuses-swagger'
 import { ResourceViewModel } from '@root/presentation/view-model/resource-view-model'
 
 @ApiTags('Resources')
