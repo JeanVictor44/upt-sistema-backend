@@ -12,4 +12,5 @@ export abstract class TeachingPlaceRepository {
   abstract save(teachingPlace: TeachingPlace): Promise<void>
   abstract findByNameAndNeighborhood(data: FindByNameAndNeighborhoodProps): Promise<TeachingPlace | null>
   abstract findById(id: number): AsyncMaybe<TeachingPlace>
+  abstract delete(id: number): Promise<void>
 }

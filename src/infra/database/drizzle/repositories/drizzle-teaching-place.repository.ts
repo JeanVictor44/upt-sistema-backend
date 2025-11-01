@@ -54,4 +54,8 @@ export class DrizzleTeachingPlaceRepository implements TeachingPlaceRepository {
 
     return TeachingPlaceMappers.toDomain(teachingPlace)
   }
+
+  async delete(id: number): Promise<void> {
+    await this.db.delete(teachingPlaceSchema).where(eq(teachingPlaceSchema.id, id))
+  }
 }

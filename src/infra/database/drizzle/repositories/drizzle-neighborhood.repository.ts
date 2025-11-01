@@ -54,4 +54,12 @@ export class DrizzleNeighborhoodRepository implements NeighborhoodRepository {
 
     return NeighborhoodMappers.toDomain(neighborhood)
   }
+
+  async findByRegionId(regionId: number): Promise<Neighborhood[]> {
+    const neighborhoods = await this.db.query.neighborhoodSchema.findMany({
+      where: eq(neighborhoodSchema.regionId, regionId),
+    })
+
+    return neighborhoods.map(NeighborhoodMappers.toDomain)
+  }
 }

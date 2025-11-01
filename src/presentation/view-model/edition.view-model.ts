@@ -1,4 +1,4 @@
-import { Edition } from '@root/domain/edition/enterprise/entities/edition.entity'
+import { Edition } from '@root/domain/academic/enterprise/entities/edition.entity'
 
 export class EditionViewModel {
   static toHttp(edition: Edition) {

@@ -3,21 +3,25 @@ import { DatabaseModule } from '@root/infra/database/database.module'
 
 import { EnvModule } from '@infra/env/env.module'
 
-import { CreateCityUseCase } from './create-city.use-case'
-import { CreateNeighborhoodUseCase } from './create-neighborhood.use-case'
-import { CreateRegionUseCase } from './create-region.use-case'
-import { CreateTeachingPlaceUseCase } from './create-teaching-place.use-case'
-import { DeleteCityUseCase } from './delete-city-use-case'
-import { DeleteNeighborhoodUseCase } from './delete-neighborhood.use-case'
-import { DeleteRegionUseCase } from './delete-region.use-case'
-import { EditCityUseCase } from './edit-city.use-case'
-import { EditNeighborhoodUseCase } from './edit-neighborhood.use-case'
-import { EditRegionUseCase } from './edit-region.use-case'
-import { EditTeachingPlaceUseCase } from './edit-teaching-place.use-case'
-import { ListCitiesUseCase } from './list-cities.use-case'
-import { ListNeighborhoodUseCase } from './list-neighborhood.use-case'
-import { ListRegionsUseCase } from './list-regions.use-case'
-import { ListTeachingPlacesUseCase } from './list-teaching-places.use-case'
+import { CreateAddressUseCase } from './address/create-address.use-case'
+import { DeleteAddressUseCase } from './address/delete-address-use-case'
+import { EditAddressUseCase } from './address/edit-address.use-case'
+import { CreateCityUseCase } from './city/create-city.use-case'
+import { DeleteCityUseCase } from './city/delete-city-use-case'
+import { EditCityUseCase } from './city/edit-city.use-case'
+import { ListCitiesUseCase } from './city/list-cities.use-case'
+import { CreateNeighborhoodUseCase } from './neighborhood/create-neighborhood.use-case'
+import { DeleteNeighborhoodUseCase } from './neighborhood/delete-neighborhood.use-case'
+import { EditNeighborhoodUseCase } from './neighborhood/edit-neighborhood.use-case'
+import { ListNeighborhoodUseCase } from './neighborhood/list-neighborhood.use-case'
+import { CreateRegionUseCase } from './region/create-region.use-case'
+import { DeleteRegionUseCase } from './region/delete-region.use-case'
+import { EditRegionUseCase } from './region/edit-region.use-case'
+import { ListRegionsUseCase } from './region/list-regions.use-case'
+import { CreateTeachingPlaceUseCase } from './teaching-place/create-teaching-place.use-case'
+import { DeleteTeachingPlaceUseCase } from './teaching-place/delete-teaching-place.use-case'
+import { EditTeachingPlaceUseCase } from './teaching-place/edit-teaching-place.use-case'
+import { ListTeachingPlacesUseCase } from './teaching-place/list-teaching-places.use-case'
 
 @Module({
   imports: [DatabaseModule, EnvModule],
@@ -37,6 +41,10 @@ import { ListTeachingPlacesUseCase } from './list-teaching-places.use-case'
     EditNeighborhoodUseCase,
     DeleteNeighborhoodUseCase,
     EditTeachingPlaceUseCase,
+    DeleteTeachingPlaceUseCase,
+    CreateAddressUseCase,
+    DeleteAddressUseCase,
+    EditAddressUseCase,
   ],
   exports: [
     CreateRegionUseCase,
@@ -54,6 +62,10 @@ import { ListTeachingPlacesUseCase } from './list-teaching-places.use-case'
     EditNeighborhoodUseCase,
     DeleteNeighborhoodUseCase,
     EditTeachingPlaceUseCase,
+    DeleteTeachingPlaceUseCase,
+    CreateAddressUseCase,
+    DeleteAddressUseCase,
+    EditAddressUseCase,
   ],
 })
 export class LocationUseCasesModule {}

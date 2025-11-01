@@ -13,6 +13,24 @@ export class TeachingPlace extends AggregateRoot<TeachingPlaceProps> {
     this.touch()
   }
 
+  get propertyLocationCategoryId(): number {
+    return this.props.propertyLocationCategoryId
+  }
+
+  set propertyLocationCategoryId(propertyLocationCategoryId: number) {
+    this.props.propertyLocationCategoryId = propertyLocationCategoryId
+    this.touch()
+  }
+
+  get traditionalCommunityName(): string | undefined {
+    return this.props.traditionalCommunityName
+  }
+
+  set traditionalCommunityName(traditionalCommunityName: string | undefined) {
+    this.props.traditionalCommunityName = traditionalCommunityName
+    this.touch()
+  }
+
   get neighborhoodId(): number {
     return this.props.neighborhoodId
   }
@@ -39,6 +57,8 @@ export class TeachingPlace extends AggregateRoot<TeachingPlaceProps> {
       {
         name: props.name,
         neighborhoodId: props.neighborhoodId,
+        propertyLocationCategoryId: props.propertyLocationCategoryId,
+        traditionalCommunityName: props.traditionalCommunityName,
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date(),
       },

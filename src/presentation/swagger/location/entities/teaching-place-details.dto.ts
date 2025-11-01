@@ -3,6 +3,22 @@ import { IsDate, IsNumber, IsString } from 'class-validator'
 
 import { NeighborhoodDetailsDto } from './neighborhood-details.dto'
 
+export class TeachingPlacePropertyLocationCategoryDto {
+  @ApiProperty({
+    description: 'Unique identifier of the property location category',
+    example: 2,
+  })
+  @IsNumber()
+  id: number
+
+  @ApiProperty({
+    description: 'Name of the property location category',
+    example: 'Urbano',
+  })
+  @IsString()
+  name: string
+}
+
 export class TeachingPlaceDetailsDto {
   @ApiProperty({
     description: 'Unique identifier of the teaching place',
@@ -34,6 +50,23 @@ export class TeachingPlaceDetailsDto {
     },
   })
   neighborhood: NeighborhoodDetailsDto
+
+  @ApiProperty({
+    description: 'Property location category identifier',
+    example: 2,
+    type: TeachingPlacePropertyLocationCategoryDto,
+  })
+  propertyLocationCategory: TeachingPlacePropertyLocationCategoryDto
+
+  @ApiProperty({
+    description: 'Traditional community name of the teaching place',
+    example: 'Comunidade Quilombola do Rio dos Macacos',
+    required: false,
+    type: String,
+    nullable: true,
+  })
+  @IsString()
+  traditionalCommunityName?: string | undefined
 
   @ApiProperty({
     description: 'Creation date of the neighborhood',

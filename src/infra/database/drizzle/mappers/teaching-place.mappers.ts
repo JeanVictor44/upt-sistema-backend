@@ -10,6 +10,8 @@ export class TeachingPlaceMappers {
         neighborhoodId: data.neighborhoodId,
         createdAt: new Date(data.createdAt),
         updatedAt: new Date(data.updatedAt),
+        propertyLocationCategoryId: data.propertyLocationCategoryId,
+        traditionalCommunityName: data.traditionalCommunityName || undefined,
       },
       data.id,
     )
@@ -20,6 +22,8 @@ export class TeachingPlaceMappers {
       id: data.id,
       name: data.name,
       neighborhoodId: data.neighborhoodId,
+      propertyLocationCategoryId: data.propertyLocationCategoryId,
+      traditionalCommunityName: data.traditionalCommunityName,
       createdAt: new Date(data.createdAt),
       updatedAt: new Date(data.updatedAt),
     }

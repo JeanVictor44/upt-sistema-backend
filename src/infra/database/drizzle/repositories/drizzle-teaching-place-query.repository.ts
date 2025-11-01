@@ -12,6 +12,7 @@ export class DrizzleTeachingPlaceQueryRepository implements TeachingPlaceQueryRe
   async findAllWithDetails(): Promise<TeachingPlaceWithDetailsDTO[]> {
     const teachingPlaces = await this.db.query.teachingPlaceSchema.findMany({
       with: {
+        propertyLocationCategory: true,
         neighborhood: {
           with: {
             city: true,
@@ -24,6 +25,11 @@ export class DrizzleTeachingPlaceQueryRepository implements TeachingPlaceQueryRe
     return teachingPlaces.map((teachingPlace) => ({
       id: teachingPlace.id,
       name: teachingPlace.name,
+      propertyLocationCategory: {
+        id: teachingPlace.propertyLocationCategory.id,
+        name: teachingPlace.propertyLocationCategory.name,
+      },
+      traditionalCommunityName: teachingPlace.traditionalCommunityName ?? undefined,
       neighborhood: {
         id: teachingPlace.neighborhood.id,
         name: teachingPlace.neighborhood.name,

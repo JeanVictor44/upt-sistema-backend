@@ -48,7 +48,7 @@ export class AuthenticationUseCase {
     if (!passwordMatch) return left(new WrongCredentialsError())
 
     const userRole = await this.userRolesRepository.findActiveRoleByUserId(user.id)
-    console.log(userRole)
+
     if (!userRole) return left(new NotAllowedError())
 
     const role = await this.resourceRepository.findRoleById(userRole.roleId)

@@ -1,4 +1,4 @@
-import { date, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { date, integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 import { addressSchema } from './address.schema'
 import { ethnicitySchema } from './ethnicity.schema'
@@ -9,21 +9,19 @@ export const studentSchema = pgTable('student', {
   id: serial('id').primaryKey().notNull(),
   name: varchar('name', { length: 100 }).notNull(),
   socialName: varchar('social_name', { length: 100 }),
-  cpf: varchar('cpf', { length: 11 }).unique(),
+  cpf: varchar('cpf', { length: 11 }).unique().notNull(),
   rg: varchar('rg', { length: 10 }).unique(),
   dateBirth: date('date_birth'),
   telephone: varchar('telephone', { length: 15 }),
   email: varchar('email', { length: 100 }).unique(),
-  genderIdentityId: serial('gender_identity_id')
+  genderIdentityId: integer('gender_identity_id')
     .notNull()
     .references(() => genderIdentitySchema.id),
-  ethnicityId: serial('ethnicity_id')
+  ethnicityId: integer('ethnicity_id')
     .notNull()
     .references(() => ethnicitySchema.id),
-  addressId: serial('address_id')
-    .notNull()
-    .references(() => addressSchema.id),
-  highSchoolStatusId: serial('high_school_status')
+  addressId: integer('address_id').references(() => addressSchema.id),
+  highSchoolStatusId: integer('high_school_status')
     .notNull()
     .references(() => highSchoolStatusSchema.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),

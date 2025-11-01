@@ -5,7 +5,7 @@ import { editionSchema } from './edition.schema'
 
 export const classEditionSchema = pgTable('class_edition', {
   id: serial('id').primaryKey().notNull(),
-  edition_id: integer('edition_id')
+  editionId: integer('edition_id')
     .notNull()
     .references(() => editionSchema.id),
   classId: integer('class_id')

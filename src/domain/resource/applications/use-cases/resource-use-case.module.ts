@@ -10,6 +10,7 @@ import { ListEthnicitiesUseCase } from './list-ethnicity.use-case'
 import { ListGenderIdentitiesUseCase } from './list-gender.use-case'
 import { ListHighschoolStatusesUseCase } from './list-highschool-statuses.use-case'
 import { ListPropertyLocationsUseCase } from './list-property-location-category.user-case'
+import { ListShiftsUseCase } from './list-shifts.use-case'
 
 @Module({
   imports: [DatabaseModule, EnvModule],
@@ -21,6 +22,7 @@ import { ListPropertyLocationsUseCase } from './list-property-location-category.
     ListEthnicitiesUseCase,
     ListGenderIdentitiesUseCase,
     ListPropertyLocationsUseCase,
+    ListShiftsUseCase,
   ],
   exports: [
     ListClassOptionsUseCase,
@@ -30,6 +32,7 @@ import { ListPropertyLocationsUseCase } from './list-property-location-category.
     ListEthnicitiesUseCase,
     ListGenderIdentitiesUseCase,
     ListPropertyLocationsUseCase,
+    ListShiftsUseCase,
   ],
 })
 export class ResourceUseCasesModule {}

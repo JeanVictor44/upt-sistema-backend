@@ -1,5 +1,5 @@
 {
-  "id": "f0e3eb7f-6064-4129-8e36-70d9564857b6",
+  "id": "bf34c073-b6d8-4449-bef4-07459cd10b02",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -197,13 +197,13 @@
         },
         "city_id": {
           "name": "city_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "region_id": {
           "name": "region_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -284,7 +284,7 @@
         },
         "neighborhood_id": {
           "name": "neighborhood_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -294,6 +294,18 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "property_location_category_id": {
+          "name": "property_location_category_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "traditional_community_name": {
+          "name": "traditional_community_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
         },
         "updated_at": {
           "name": "updated_at",
@@ -648,9 +660,9 @@
         },
         "property_location_category_id": {
           "name": "property_location_category_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "traditional_community_name": {
           "name": "traditional_community_name",
@@ -806,25 +818,25 @@
         },
         "teaching_place_id": {
           "name": "teaching_place_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "shift_id": {
           "name": "shift_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "option_id": {
           "name": "option_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "status_id": {
           "name": "status_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -937,7 +949,7 @@
           "name": "cpf",
           "type": "varchar(11)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "rg": {
           "name": "rg",
@@ -965,25 +977,25 @@
         },
         "gender_identity_id": {
           "name": "gender_identity_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "ethnicity_id": {
           "name": "ethnicity_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "address_id": {
           "name": "address_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "high_school_status": {
           "name": "high_school_status",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -1189,27 +1201,27 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "role_id": {
           "name": "role_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "region_id": {
           "name": "region_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "class_id": {
-          "name": "class_id",
-          "type": "serial",
+        "class_edition_id": {
+          "name": "class_edition_id",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "start_date": {
           "name": "start_date",
@@ -1279,12 +1291,179 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "user_role_class_id_class_id_fk": {
-          "name": "user_role_class_id_class_id_fk",
+        "user_role_class_edition_id_class_edition_id_fk": {
+          "name": "user_role_class_edition_id_class_edition_id_fk",
           "tableFrom": "user_role",
+          "tableTo": "class_edition",
+          "columnsFrom": [
+            "class_edition_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.class_edition": {
+      "name": "class_edition",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "edition_id": {
+          "name": "edition_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "class_id": {
+          "name": "class_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "enrolled_count": {
+          "name": "enrolled_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "class_edition_edition_id_edition_id_fk": {
+          "name": "class_edition_edition_id_edition_id_fk",
+          "tableFrom": "class_edition",
+          "tableTo": "edition",
+          "columnsFrom": [
+            "edition_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "class_edition_class_id_class_id_fk": {
+          "name": "class_edition_class_id_class_id_fk",
+          "tableFrom": "class_edition",
           "tableTo": "class",
           "columnsFrom": [
             "class_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.enrollment": {
+      "name": "enrollment",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "enrollment_date": {
+          "name": "enrollment_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_id": {
+          "name": "status_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "class_edition_id": {
+          "name": "class_edition_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_exempt": {
+          "name": "is_exempt",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "enrollment_student_id_student_id_fk": {
+          "name": "enrollment_student_id_student_id_fk",
+          "tableFrom": "enrollment",
+          "tableTo": "student",
+          "columnsFrom": [
+            "student_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "enrollment_status_id_enrollment_status_id_fk": {
+          "name": "enrollment_status_id_enrollment_status_id_fk",
+          "tableFrom": "enrollment",
+          "tableTo": "enrollment_status",
+          "columnsFrom": [
+            "status_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "enrollment_class_edition_id_class_edition_id_fk": {
+          "name": "enrollment_class_edition_id_class_edition_id_fk",
+          "tableFrom": "enrollment",
+          "tableTo": "class_edition",
+          "columnsFrom": [
+            "class_edition_id"
           ],
           "columnsTo": [
             "id"

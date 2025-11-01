@@ -9,9 +9,9 @@ export const addressSchema = pgTable('adress', {
   neighboorhood: varchar('neighborhood', { length: 100 }),
   city: varchar('city', { length: 100 }),
   zipCode: varchar('zip_code', { length: 8 }),
-  propertyLocationCategoryId: integer('property_location_category_id')
-    .notNull()
-    .references(() => propertyLocationCategorySchema.id),
+  propertyLocationCategoryId: integer('property_location_category_id').references(
+    () => propertyLocationCategorySchema.id,
+  ),
   traditionalCommunityName: varchar('traditional_community_name', { length: 100 }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')

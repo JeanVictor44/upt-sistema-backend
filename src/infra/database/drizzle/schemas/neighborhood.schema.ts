@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { pgTable, serial, timestamp, varchar, unique } from 'drizzle-orm/pg-core'
+import { pgTable, serial, timestamp, varchar, unique, integer } from 'drizzle-orm/pg-core'
 
 import { citySchema } from './city.schema'
 import { regionSchema } from './region.schema'
@@ -9,10 +9,10 @@ export const neighborhoodSchema = pgTable(
   {
     id: serial('id').primaryKey().notNull(),
     name: varchar('name', { length: 100 }).notNull(),
-    cityId: serial('city_id')
+    cityId: integer('city_id')
       .references(() => citySchema.id)
       .notNull(),
-    regionId: serial('region_id')
+    regionId: integer('region_id')
       .notNull()
       .references(() => regionSchema.id),
     createdAt: timestamp('created_at').notNull().defaultNow(),

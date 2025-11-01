@@ -1,6 +1,11 @@
 export interface TeachingPlaceWithDetailsDTO {
   id: number
   name: string
+  propertyLocationCategory: {
+    id: number
+    name: string
+  }
+  traditionalCommunityName?: string | undefined
   neighborhood: {
     id: number
     name: string

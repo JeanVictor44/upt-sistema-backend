@@ -12,4 +12,5 @@ export abstract class NeighborhoodRepository {
   abstract save(region: Neighborhood): Promise<void>
   abstract findByCompositeKeys(data: FindByCompositeKeysProps): Promise<Neighborhood | null>
   abstract findById(id: number): Promise<Neighborhood | null>
+  abstract findByRegionId(regionId: number): Promise<Neighborhood[]>
 }

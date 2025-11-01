@@ -2,7 +2,7 @@ import { ApiOperation, ApiProperty } from '@nestjs/swagger'
 import { propertyLocationCategories } from '@root/domain/resource/enterprise/interfaces/property-location-category'
 import { ApiResponseOk, BadRequestResponseDto } from '@utils/swagger-api-response'
 
-class PropertyLocationCategoryDto {
+export class PropertyLocationCategoryDto {
   @ApiProperty({
     description: 'Unique identifier of the gender',
     example: 1,

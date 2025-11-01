@@ -5,6 +5,11 @@ export class TeachingPlaceViewModel {
     return {
       id: teachingPlace.id,
       name: teachingPlace.name,
+      propertyLocationCategory: {
+        id: teachingPlace.propertyLocationCategory.id,
+        name: teachingPlace.propertyLocationCategory.name,
+      },
+      traditionalCommunityName: teachingPlace.traditionalCommunityName,
       neighborhood: {
         id: teachingPlace.neighborhood.id,
         name: teachingPlace.neighborhood.name,
