@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common'
 import { Resource } from '@root/core/domain/resource'
-import { ClassOption } from '@root/domain/resource/enterprise/interfaces/class-option'
 
 import { Either, right } from '@core/logic/Either'
 
+import { Roles } from '../../enterprise/interfaces/role'
 import { ResourceRepository } from '../repositories/resource-repository'
 
-type OutputProps = Either<null, Resource<ClassOption>[]>
+type OutputProps = Either<null, Resource<Roles>[]>
 
 @Injectable()
-export class ListClassOptionsUseCase {
+export class ListRolesUseCase {
   constructor(private readonly resourceRepository: ResourceRepository) {}
 
   async execute(): Promise<OutputProps> {
-    const classOptions = await this.resourceRepository.findAllClassOptions()
+    const roles = await this.resourceRepository.findAllRoles()
 
-    return right(classOptions)
+    return right(roles)
   }
 }

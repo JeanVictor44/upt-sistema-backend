@@ -25,6 +25,8 @@ import { EditStudentController } from './controllers/academic/student/edit-stude
 import { ListStudentsController } from './controllers/academic/student/list-student.controller'
 import { CreateUserRoleController } from './controllers/authentication/create-user-role.controller'
 import { CreateUserController } from './controllers/authentication/create-user.controller'
+import { EditUserController } from './controllers/authentication/edit-user.controller'
+import { ListeUsersController } from './controllers/authentication/list-users.controller'
 import { SessionController } from './controllers/authentication/session.controller'
 import { CreateAddressController } from './controllers/location/address/create-address.controller'
 import { EditAddressController } from './controllers/location/address/edit-address.controller'
@@ -51,6 +53,7 @@ import { ListEthnicitiesController } from './controllers/resources/list-ethnicit
 import { ListGendersController } from './controllers/resources/list-genders.controller'
 import { ListHighshoolStatusController } from './controllers/resources/list-highshool.controller'
 import { ListPropertyLocationsController } from './controllers/resources/list-property-location-categories.controller'
+import { ListRolesController } from './controllers/resources/list-roles.controller'
 import { ListShiftsController } from './controllers/resources/list-shifts.controller'
 
 @Module({
@@ -104,6 +107,9 @@ import { ListShiftsController } from './controllers/resources/list-shifts.contro
     CreateEnrollmentController,
     EditEnrollmentController,
     ListStudentsEnrollmentClassEditionController,
+    ListeUsersController,
+    ListRolesController,
+    EditUserController,
   ],
 })
 export class PresentationsModule {}

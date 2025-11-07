@@ -4,18 +4,19 @@ import {
   Controller,
   HttpCode,
   NotFoundException,
-  Post,
+  Param,
+  Put,
   UnauthorizedException,
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import { CreateUserUseCase } from '@root/domain/authentication/applications/use-cases/create-user-use-case'
+import { EditUserUseCase } from '@root/domain/authentication/applications/use-cases/edit-user-use-case'
 import { CurrentUser } from '@root/presentation/auth/current-user-decorator'
 import { UserPayload } from '@root/presentation/auth/jwt.strategy'
 import {
-  CreateUserBodySwaggerDto,
-  CreateUserResponseSwaggerDto,
-  CreateUserSwaggerDto,
-} from '@root/presentation/swagger/authentication/docs/create-user-swagger.dto'
+  EditUserBodySwaggerDto,
+  EditUserResponseSwaggerDto,
+  EditUserSwaggerDto,
+} from '@root/presentation/swagger/authentication/docs/edit-user-swagger.dto'
 import { UserViewModel } from '@root/presentation/view-model/user.view-model'
 
 import { InactiveResourceError } from '@core/errors/errors/inactive-resource-error'
@@ -25,24 +26,26 @@ import { EmailBadFormattedError } from '@domain/authentication/applications/erro
 
 @ApiTags('Authentication')
 @Controller({ path: '/users', version: '1' })
-export class CreateUserController {
-  constructor(private createUser: CreateUserUseCase) {}
+export class EditUserController {
+  constructor(private editUser: EditUserUseCase) {}
 
   @ApiBearerAuth()
-  @Post()
+  @Put('/:id')
   @HttpCode(201)
-  @CreateUserSwaggerDto()
+  @EditUserSwaggerDto()
   async handle(
     @CurrentUser() user: UserPayload,
-    @Body() body: CreateUserBodySwaggerDto,
-  ): Promise<CreateUserResponseSwaggerDto> {
+    @Body() body: EditUserBodySwaggerDto,
+    @Param('id') id: number,
+  ): Promise<EditUserResponseSwaggerDto> {
     const { document, password, email, name, telephone } = body
     const { sub } = user
 
-    const result = await this.createUser.execute({
+    const result = await this.editUser.execute({
       userActionId: sub,
+      id,
       document,
-      password,
+      password: password ?? '',
       email,
       name,
       telephone,

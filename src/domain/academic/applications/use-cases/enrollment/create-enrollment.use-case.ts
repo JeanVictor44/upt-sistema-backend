@@ -49,7 +49,7 @@ export class CreateEnrollmentUseCase {
       classEditionId,
       enrollmentDate: new Date().toISOString().split('T')[0],
       isExempt: false,
-      statusId: 0,
+      statusId: 1,
     })
 
     await this.enrollmentRepository.create(enrollment)

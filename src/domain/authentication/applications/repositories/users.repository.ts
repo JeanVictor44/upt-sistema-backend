@@ -7,5 +7,6 @@ export abstract class UsersRepository {
   abstract findById(id: number): AsyncMaybe<User>
   abstract findByEmail(email: string): AsyncMaybe<User>
   abstract findByDocument(document: string): AsyncMaybe<User>
-  abstract save(user: User): Promise<void>
+  abstract save(user: User): Promise<User>
+  abstract findAll(): Promise<User[]>
 }

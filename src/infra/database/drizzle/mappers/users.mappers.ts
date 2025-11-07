@@ -3,7 +3,13 @@ import { User } from '@domain/authentication/enterprise/entities/user.entity'
 import { UserSchemaInsertProps, UserSchemaSelectProps } from '@infra/database/drizzle/schemas'
 
 export class UserMappers {
-  static toDomain(data: UserSchemaSelectProps): User {
+  static toDomain(
+    data: UserSchemaSelectProps & {
+      roleId?: number | null
+      classEditionId?: number | null
+      regionId?: number | null
+    },
+  ): User {
     return User.create(
       {
         name: data.name,
@@ -14,6 +20,9 @@ export class UserMappers {
         telephone: data.telephone,
         createdAt: new Date(data.createdAt),
         updatedAt: new Date(data.updatedAt),
+        roleId: data.roleId || undefined,
+        classEditionId: data.classEditionId || undefined,
+        regionId: data.regionId || undefined,
       },
       data.id,
     )

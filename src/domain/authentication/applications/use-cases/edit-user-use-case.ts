@@ -13,6 +13,7 @@ import { AuthorizationService } from '../services/authorization-service'
 
 type InputProps = {
   userActionId: number
+  id: number
   name: string
   email: string
   telephone: string
@@ -23,7 +24,7 @@ type InputProps = {
 type OutputProps = Either<ResourceNotFoundError | ResourceAlreadyExistsError | InactiveResourceError, User>
 
 @Injectable()
-export class CreateUserUseCase {
+export class EditUserUseCase {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly authorizationService: AuthorizationService,
@@ -31,27 +32,27 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
-    const { name, email, telephone, document, password, userActionId } = data
+    const { name, email, telephone, document, password, userActionId, id } = data
 
     const authorizedResult = await this.authorizationService.isAuthorized(userActionId, [RolesEnum.ADMIN])
     if (authorizedResult.isLeft()) return left(authorizedResult.value)
 
+    const user = await this.usersRepository.findById(id)
+    if (!user) return left(new ResourceNotFoundError())
+
     const userAlreadyExists = await this.usersRepository.findByEmail(email)
-    if (userAlreadyExists) return left(new ResourceAlreadyExistsError())
+    if (userAlreadyExists && userAlreadyExists.id != id) return left(new ResourceAlreadyExistsError())
 
     const documentAlreadyExists = await this.usersRepository.findByDocument(document)
     if (documentAlreadyExists) return left(new ResourceAlreadyExistsError())
 
-    const hashedPassword = await this.hashGenerator.hash(password)
-    const newUser = User.create({
-      name,
-      email,
-      telephone,
-      document,
-      password: hashedPassword,
-    })
+    user.name = name
+    user.email = email
+    user.telephone = telephone
+    user.document = document
+    user.password = password ? await this.hashGenerator.hash(password) : user.password
 
-    const userEntity = await this.usersRepository.create(newUser)
+    const userEntity = await this.usersRepository.save(user)
 
     return right(userEntity)
   }

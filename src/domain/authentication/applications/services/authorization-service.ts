@@ -27,7 +27,7 @@ export class AuthorizationService {
     const userRole = await this.userRolesRepository.findActiveRoleByUserId(userActionId)
     if (!userRole) return left(new NotAllowedError())
 
-    const role = await this.resourceRepository.findRoleById(userRole.id)
+    const role = await this.resourceRepository.findRoleById(userRole.roleId)
     if (!role) return left(new NotAllowedError())
 
     if (!allowedRoles.includes(role.name)) {

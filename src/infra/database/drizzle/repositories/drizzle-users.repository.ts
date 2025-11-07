@@ -1,14 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 
-import { DomainEvents } from '@core/events/domain-events'
 import { AsyncMaybe } from '@core/logic/Maybe'
 
 import { UsersRepository } from '@domain/authentication/applications/repositories/users.repository'
 import { User } from '@domain/authentication/enterprise/entities/user.entity'
 
 import { DATABASE_CONNECTION } from '@infra/database/drizzle/database-connection'
-import { userSchema } from '@infra/database/drizzle/schemas'
+import { userRoleSchema, userSchema } from '@infra/database/drizzle/schemas'
 import { DrizzleDB } from '@infra/database/drizzle/types/drizzle'
 
 import { UserMappers } from '../mappers/users.mappers'
@@ -22,6 +21,22 @@ export class DrizzleUsersRepository implements UsersRepository {
     const user = await this.db.insert(userSchema).values(preparedData).returning()
 
     return UserMappers.toDomain(user[0])
+  }
+
+  async findAll(): Promise<User[]> {
+    const users = await this.db
+      .select()
+      .from(userSchema)
+      .innerJoin(userRoleSchema, eq(userSchema.id, userRoleSchema.userId))
+
+    return users.map(({ user, user_role }) =>
+      UserMappers.toDomain({
+        ...user,
+        roleId: user_role.roleId,
+        classEditionId: user_role.classEditionId,
+        regionId: user_role.regionId,
+      }),
+    )
   }
 
   async findById(id: number): AsyncMaybe<User> {
@@ -54,10 +69,10 @@ export class DrizzleUsersRepository implements UsersRepository {
     return UserMappers.toDomain(user)
   }
 
-  async save(user: User): Promise<void> {
+  async save(user: User): Promise<User> {
     const raw = UserMappers.toPersistence(user)
-    await this.db.update(userSchema).set(raw).where(eq(userSchema.id, user.id))
+    const userUpdated = await this.db.update(userSchema).set(raw).where(eq(userSchema.id, user.id)).returning()
 
-    DomainEvents.dispatchEventsForAggregate(user.id)
+    return UserMappers.toDomain(userUpdated[0])
   }
 }

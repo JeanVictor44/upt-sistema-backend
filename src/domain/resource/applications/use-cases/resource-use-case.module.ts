@@ -10,6 +10,7 @@ import { ListEthnicitiesUseCase } from './list-ethnicity.use-case'
 import { ListGenderIdentitiesUseCase } from './list-gender.use-case'
 import { ListHighschoolStatusesUseCase } from './list-highschool-statuses.use-case'
 import { ListPropertyLocationsUseCase } from './list-property-location-category.user-case'
+import { ListRolesUseCase } from './list-roles.use-case'
 import { ListShiftsUseCase } from './list-shifts.use-case'
 
 @Module({
@@ -23,6 +24,7 @@ import { ListShiftsUseCase } from './list-shifts.use-case'
     ListGenderIdentitiesUseCase,
     ListPropertyLocationsUseCase,
     ListShiftsUseCase,
+    ListRolesUseCase,
   ],
   exports: [
     ListClassOptionsUseCase,
@@ -33,6 +35,7 @@ import { ListShiftsUseCase } from './list-shifts.use-case'
     ListGenderIdentitiesUseCase,
     ListPropertyLocationsUseCase,
     ListShiftsUseCase,
+    ListRolesUseCase,
   ],
 })
 export class ResourceUseCasesModule {}

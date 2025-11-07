@@ -4,4 +4,5 @@ export enum RolesEnum {
   SECRETARY = 'SECRETARY',
 }
 
+export const roles: Roles[] = Object.values(RolesEnum)
 export type Roles = `${RolesEnum}`

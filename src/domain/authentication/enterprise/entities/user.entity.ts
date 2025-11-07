@@ -61,6 +61,18 @@ export class User extends Entity<UserProps> {
     return this.props.updatedAt || new Date()
   }
 
+  get roleId() {
+    return this.props.roleId
+  }
+
+  get classEditionId() {
+    return this.props.classEditionId
+  }
+
+  get regionId() {
+    return this.props.regionId
+  }
+
   public touch() {
     this.props.updatedAt = new Date()
   }
@@ -72,6 +84,9 @@ export class User extends Entity<UserProps> {
         email: props.email,
         document: props.document,
         telephone: props.telephone,
+        roleId: props.roleId,
+        classEditionId: props.classEditionId,
+        regionId: props.regionId,
         password: props.password,
         disabledAt: props.disabledAt,
         createdAt: props.createdAt || new Date(),

@@ -32,7 +32,6 @@ export class CreateAddressController {
 
     if (result.isLeft()) {
       const error = result.value
-      console.log(error)
 
       switch (error.constructor) {
         case ResourceAlreadyExistsError:

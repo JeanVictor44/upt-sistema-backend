@@ -5,7 +5,7 @@ import {
   UnauthorizedResponseDto,
   NotFoundResponseDto,
 } from '@utils/swagger-api-response'
-import { IsNumber } from 'class-validator'
+import { IsNumber, IsOptional } from 'class-validator'
 
 export class CreateUserRoleBodySwaggerDto {
   @ApiProperty({
@@ -21,6 +21,7 @@ export class CreateUserRoleBodySwaggerDto {
     required: false,
   })
   @IsNumber()
+  @IsOptional()
   classEditionId?: number
 
   @ApiProperty({
@@ -29,6 +30,7 @@ export class CreateUserRoleBodySwaggerDto {
     required: false,
   })
   @IsNumber()
+  @IsOptional()
   regionId?: number
 }
 

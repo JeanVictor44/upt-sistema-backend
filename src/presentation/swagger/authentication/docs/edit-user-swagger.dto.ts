@@ -1,9 +1,9 @@
 import { ApiCreatedResponse, ApiOperation, ApiProperty } from '@nestjs/swagger'
 import { UserDto } from '@root/presentation/swagger/authentication/entities/user.dto'
 import { BadRequestResponseDto, UnauthorizedResponseDto, NotFoundResponseDto } from '@utils/swagger-api-response'
-import { IsString } from 'class-validator'
+import { IsOptional, IsString } from 'class-validator'
 
-export class CreateUserBodySwaggerDto {
+export class EditUserBodySwaggerDto {
   @ApiProperty({ example: 'Ione Santana Machado' })
   @IsString()
   name: string
@@ -22,21 +22,22 @@ export class CreateUserBodySwaggerDto {
 
   @ApiProperty({ example: '123456789' })
   @IsString()
-  password: string
+  @IsOptional()
+  password?: string
 }
 
-export const CreateUserSwaggerDto = () => {
-  const name = 'CreateUser'
+export const EditUserSwaggerDto = () => {
+  const name = 'EditUser'
 
   return function (target: any, key: any, descriptor: any) {
     ApiOperation({
-      operationId: 'createUser',
-      summary: 'Criar usuário',
-      description: 'Cria um novo usuário no sistema. Requer autenticação com token de um usuário com papel ADMIN.',
+      operationId: 'editUser',
+      summary: 'Editar usuário',
+      description: 'Editar um usuário no sistema. Requer autenticação com token de um usuário com papel ADMIN.',
     })(target, key, descriptor)
     ApiCreatedResponse({
-      type: CreateUserResponseSwaggerDto,
-      description: 'Usuário criado com sucesso',
+      type: EditUserResponseSwaggerDto,
+      description: 'Usuário editado com sucesso',
     })(target, key, descriptor)
     BadRequestResponseDto(name, ['BadRequestError', 'EmailBadFormattedError'], target, key, descriptor)
     UnauthorizedResponseDto(name, ['InactiveResourceError', 'WrongCredentialsError'], target, key, descriptor)
@@ -44,7 +45,7 @@ export const CreateUserSwaggerDto = () => {
   }
 }
 
-export class CreateUserResponseSwaggerDto {
+export class EditUserResponseSwaggerDto {
   @ApiProperty({
     description: 'User information',
     type: UserDto,

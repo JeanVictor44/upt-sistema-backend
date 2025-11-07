@@ -8,9 +8,18 @@ import { AuthorizationService } from '../services/authorization-service'
 import { AuthenticationUseCase } from './authentication.use-case'
 import { CreateUserRoleUseCase } from './create-user-role.use-case'
 import { CreateUserUseCase } from './create-user-use-case'
+import { EditUserUseCase } from './edit-user-use-case'
+import { ListUsersUseCase } from './list-users.use-case'
 @Module({
   imports: [DatabaseModule, CryptographyModule, EnvModule],
-  providers: [AuthenticationUseCase, AuthorizationService, CreateUserRoleUseCase, CreateUserUseCase],
-  exports: [AuthenticationUseCase, CreateUserRoleUseCase, CreateUserUseCase],
+  providers: [
+    AuthenticationUseCase,
+    AuthorizationService,
+    CreateUserRoleUseCase,
+    CreateUserUseCase,
+    ListUsersUseCase,
+    EditUserUseCase,
+  ],
+  exports: [AuthenticationUseCase, CreateUserRoleUseCase, CreateUserUseCase, ListUsersUseCase, EditUserUseCase],
 })
 export class AuthenticationUseCasesModule {}
