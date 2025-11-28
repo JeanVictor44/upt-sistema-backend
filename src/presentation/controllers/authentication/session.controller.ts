@@ -52,6 +52,13 @@ export class SessionController {
           throw new BadRequestException('Bad request', { description: 'BadRequestError' })
       }
     }
-    return result.value
+    return {
+      accessToken: result.value.accessToken,
+      user: {
+        id: result.value.user.id,
+        name: result.value.user.name,
+        role: result.value.user.role,
+      },
+    }
   }
 }

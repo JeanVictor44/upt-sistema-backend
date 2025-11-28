@@ -24,6 +24,19 @@ export class DrizzleEnrollmentRepository implements EnrollmentRepository {
     await this.db.insert(enrollmentSchema).values(preparedData)
   }
 
+  async findAllByStudentId(studentId: number): Promise<Enrollment[]> {
+    const enrollments = await this.db
+      .select(getTableColumns(enrollmentSchema))
+      .from(enrollmentSchema)
+      .where(eq(enrollmentSchema.studentId, studentId))
+
+    return enrollments.map(EnrollmentMappers.toDomain)
+  }
+
+  async deleteAllByStudentId(studentId: number): Promise<void> {
+    await this.db.delete(enrollmentSchema).where(eq(enrollmentSchema.studentId, studentId))
+  }
+
   async save(enrollment: Enrollment): Promise<void> {
     const preparedData = EnrollmentMappers.toPersistence(enrollment)
 
@@ -39,7 +52,7 @@ export class DrizzleEnrollmentRepository implements EnrollmentRepository {
       .select(getTableColumns(enrollmentSchema))
       .from(enrollmentSchema)
       .innerJoin(classEditionSchema, eq(enrollmentSchema.classEditionId, classEditionSchema.id))
-      .innerJoin(editionSchema, eq(classEditionSchema.id, editionSchema.id))
+      .innerJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
       .where(and(eq(enrollmentSchema.studentId, studentId), eq(editionSchema.year, year)))
 
     if (!enrollment[0]) return null

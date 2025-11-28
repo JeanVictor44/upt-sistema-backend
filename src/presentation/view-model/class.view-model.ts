@@ -30,18 +30,7 @@ export class ClassViewModel {
         createdAt: classResult.teachingPlace.neighborhood.createdAt,
         updatedAt: classResult.teachingPlace.neighborhood.updatedAt,
       },
-      shift: {
-        id: classResult.shift.id,
-        name: classResult.shift.name,
-      },
-      option: {
-        id: classResult.option.id,
-        name: classResult.option.name,
-      },
-      status: {
-        id: classResult.status.id,
-        name: classResult.status.name,
-      },
+
       createdAt: classResult.createdAt,
       updatedAt: classResult.updatedAt,
     }

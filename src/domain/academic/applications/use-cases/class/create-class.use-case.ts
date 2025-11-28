@@ -9,10 +9,7 @@ import { ClassRepository } from '../../repositories/class-repository'
 
 type InputProps = {
   name: string
-  shiftId: number
-  optionId: number
   teachingPlaceId: number
-  statusId: number
 }
 
 type OutputProps = Either<ResourceAlreadyExistsError | ResourceNotFoundError, null>
@@ -22,12 +19,11 @@ export class CreateClassUseCase {
   constructor(private readonly classRepository: ClassRepository) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
-    const { name, optionId, shiftId, teachingPlaceId, statusId } = data
+    const { name, teachingPlaceId } = data
 
     const classExists = await this.classRepository.findByCompositeKeys({
       name,
-      optionId,
-      shiftId,
+
       teachingPlaceId,
     })
 
@@ -35,10 +31,7 @@ export class CreateClassUseCase {
 
     const newClass = Class.create({
       name,
-      optionId,
-      shiftId,
       teachingPlaceId,
-      statusId,
     })
 
     await this.classRepository.create(newClass)

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { eq } from 'drizzle-orm'
+import { and, eq, getTableColumns, isNull } from 'drizzle-orm'
 
 import { AsyncMaybe } from '@core/logic/Maybe'
 
@@ -7,7 +7,15 @@ import { UsersRepository } from '@domain/authentication/applications/repositorie
 import { User } from '@domain/authentication/enterprise/entities/user.entity'
 
 import { DATABASE_CONNECTION } from '@infra/database/drizzle/database-connection'
-import { userRoleSchema, userSchema } from '@infra/database/drizzle/schemas'
+import {
+  classEditionSchema,
+  classSchema,
+  editionSchema,
+  regionSchema,
+  roleSchema,
+  userRoleSchema,
+  userSchema,
+} from '@infra/database/drizzle/schemas'
 import { DrizzleDB } from '@infra/database/drizzle/types/drizzle'
 
 import { UserMappers } from '../mappers/users.mappers'
@@ -25,18 +33,97 @@ export class DrizzleUsersRepository implements UsersRepository {
 
   async findAll(): Promise<User[]> {
     const users = await this.db
-      .select()
+      .select({
+        user: getTableColumns(userSchema),
+        user_role: {
+          id: roleSchema.id,
+          name: roleSchema.name,
+        },
+        classEdition: {
+          id: classEditionSchema.id,
+          name: classSchema.name,
+          year: editionSchema.year,
+        },
+        region: {
+          id: regionSchema.id,
+          name: regionSchema.name,
+        },
+      })
       .from(userSchema)
-      .innerJoin(userRoleSchema, eq(userSchema.id, userRoleSchema.userId))
+      .leftJoin(userRoleSchema, and(eq(userSchema.id, userRoleSchema.userId), isNull(userRoleSchema.endDate)))
+      .leftJoin(classEditionSchema, eq(classEditionSchema.id, userRoleSchema.classEditionId))
+      .leftJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
+      .leftJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
+      .leftJoin(regionSchema, eq(regionSchema.id, userRoleSchema.regionId))
+      .leftJoin(roleSchema, eq(userRoleSchema.roleId, roleSchema.id))
 
-    return users.map(({ user, user_role }) =>
-      UserMappers.toDomain({
-        ...user,
-        roleId: user_role.roleId,
-        classEditionId: user_role.classEditionId,
-        regionId: user_role.regionId,
+    const usersWithHistory = await Promise.all(
+      users.map(async ({ user, user_role, classEdition, region }) => {
+        const rolesHistory = await this.db
+          .select({
+            role: roleSchema.name,
+            classEdition: {
+              id: classEditionSchema.id,
+              name: classSchema.name,
+              year: editionSchema.year,
+            },
+            region: {
+              id: regionSchema.id,
+              name: regionSchema.name,
+            },
+            startDate: userRoleSchema.startDate,
+            endDate: userRoleSchema.endDate,
+          })
+          .from(userRoleSchema)
+          .innerJoin(roleSchema, eq(userRoleSchema.roleId, roleSchema.id))
+          .leftJoin(classEditionSchema, eq(classEditionSchema.id, userRoleSchema.classEditionId))
+          .leftJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
+          .leftJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
+          .leftJoin(regionSchema, eq(regionSchema.id, userRoleSchema.regionId))
+          .where(eq(userRoleSchema.userId, user.id))
+
+        return UserMappers.toDomain({
+          ...user,
+          role: {
+            id: user_role?.id,
+            name: user_role?.name,
+          },
+          classEdition: classEdition.id
+            ? {
+                id: classEdition.id || undefined,
+                name: classEdition.name || undefined,
+                year: classEdition.year || undefined,
+              }
+            : undefined,
+          region: region?.id
+            ? {
+                id: region.id,
+                name: region.name,
+              }
+            : undefined,
+          rolesHistory: rolesHistory.map((roleHistoryItem) => ({
+            role: roleHistoryItem.role,
+            classEdition: roleHistoryItem.classEdition.id
+              ? {
+                  id: roleHistoryItem.classEdition.id || undefined,
+                  name: roleHistoryItem.classEdition.name || undefined,
+                  year: roleHistoryItem.classEdition.year || undefined,
+                }
+              : undefined,
+            region: roleHistoryItem.region?.id
+              ? {
+                  id: roleHistoryItem.region.id,
+                  name: roleHistoryItem.region.name,
+                }
+              : undefined,
+            startDate: roleHistoryItem.startDate,
+            endDate: roleHistoryItem.endDate || undefined,
+          })),
+        })
       }),
     )
+
+    return usersWithHistory
   }
 
   async findById(id: number): AsyncMaybe<User> {
@@ -71,7 +158,14 @@ export class DrizzleUsersRepository implements UsersRepository {
 
   async save(user: User): Promise<User> {
     const raw = UserMappers.toPersistence(user)
-    const userUpdated = await this.db.update(userSchema).set(raw).where(eq(userSchema.id, user.id)).returning()
+    const userUpdated = await this.db
+      .update(userSchema)
+      .set({
+        ...raw,
+        disabledAt: raw.disabledAt ? raw.disabledAt : null,
+      })
+      .where(eq(userSchema.id, user.id))
+      .returning()
 
     return UserMappers.toDomain(userUpdated[0])
   }

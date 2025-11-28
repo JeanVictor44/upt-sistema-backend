@@ -4,9 +4,33 @@ export type UserProps = {
   document: string
   telephone: string
   password: string
-  roleId?: number
-  classEditionId?: number
-  regionId?: number
+  role?: {
+    id?: number
+    name?: string
+  }
+  classEdition?: {
+    id?: number
+    name?: string
+    year?: number
+  }
+  region?: {
+    id?: number
+    name?: string
+  }
+  rolesHistory?: {
+    role?: string
+    classEdition?: {
+      id?: number
+      name?: string
+      year?: number
+    }
+    region?: {
+      id?: number
+      name?: string
+    }
+    startDate?: Date
+    endDate?: Date
+  }[]
   disabledAt?: Date
   createdAt: Date
   updatedAt?: Date

@@ -27,9 +27,9 @@ export class CreateClassController {
   @HttpCode(201)
   @CreateClassSwaggerDto()
   async handle(@Body() body: CreateClassBodySwaggerDto): Promise<CreateClassResponseSwaggerDto> {
-    const { name, optionId, shiftId, statusId, teachingPlaceId } = body
+    const { name, teachingPlaceId } = body
 
-    const result = await this.createClass.execute({ name, optionId, shiftId, statusId, teachingPlaceId })
+    const result = await this.createClass.execute({ name, teachingPlaceId })
 
     if (result.isLeft()) {
       const error = result.value

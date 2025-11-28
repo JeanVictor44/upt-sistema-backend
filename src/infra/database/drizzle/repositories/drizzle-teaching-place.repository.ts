@@ -26,7 +26,13 @@ export class DrizzleTeachingPlaceRepository implements TeachingPlaceRepository {
   async save(teachingPlace: TeachingPlace): Promise<void> {
     const preparedData = TeachingPlaceMappers.toPersistence(teachingPlace)
 
-    await this.db.update(teachingPlaceSchema).set(preparedData).where(eq(teachingPlaceSchema.id, teachingPlace.id))
+    await this.db
+      .update(teachingPlaceSchema)
+      .set({
+        ...preparedData,
+        traditionalCommunityName: teachingPlace.traditionalCommunityName || null,
+      })
+      .where(eq(teachingPlaceSchema.id, teachingPlace.id))
   }
 
   async findById(id: number): AsyncMaybe<TeachingPlace> {

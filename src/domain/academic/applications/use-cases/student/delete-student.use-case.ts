@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '@root/core/errors/errors/resource-not-fou
 
 import { Either, left, right } from '@core/logic/Either'
 
+import { EnrollmentRepository } from '../../repositories/enrollment.repository'
 import { StudentRepository } from '../../repositories/student-repository'
 
 type InputProps = {
@@ -18,7 +19,10 @@ type OutputProps = Either<
 
 @Injectable()
 export class DeleteStudentUseCase {
-  constructor(private readonly studentRepository: StudentRepository) {}
+  constructor(
+    private readonly studentRepository: StudentRepository,
+    private readonly enrollmentRepository: EnrollmentRepository,
+  ) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
     const { id } = data
@@ -26,6 +30,7 @@ export class DeleteStudentUseCase {
     const student = await this.studentRepository.findById(id)
     if (!student) return left(new ResourceNotFoundError())
 
+    await this.enrollmentRepository.deleteAllByStudentId(student.id)
     await this.studentRepository.delete(student.id)
 
     return right({ addressId: student.addressId })

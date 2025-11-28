@@ -15,6 +15,30 @@ export class ClassEdition extends Entity<ClassEditionProps> {
     return this.props.enrolledCount
   }
 
+  get shiftId() {
+    return this.props.shiftId
+  }
+
+  get optionId() {
+    return this.props.optionId
+  }
+
+  get statusId() {
+    return this.props.statusId
+  }
+
+  set shiftId(shiftId: number) {
+    this.props.shiftId = shiftId
+  }
+
+  set optionId(optionId: number) {
+    this.props.optionId = optionId
+  }
+
+  set statusId(statusId: number) {
+    this.props.statusId = statusId
+  }
+
   set classId(classId: number) {
     this.props.classId = classId
   }
@@ -45,6 +69,9 @@ export class ClassEdition extends Entity<ClassEditionProps> {
         classId: props.classId,
         editionId: props.editionId,
         enrolledCount: props.enrolledCount,
+        optionId: props.optionId,
+        shiftId: props.shiftId,
+        statusId: props.statusId,
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date(),
       },

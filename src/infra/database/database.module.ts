@@ -4,9 +4,11 @@ import { ClassEditionRepository } from '@root/domain/academic/applications/repos
 import { ClassQueryRepository } from '@root/domain/academic/applications/repositories/class-query-repository'
 import { ClassRepository } from '@root/domain/academic/applications/repositories/class-repository'
 import { EditionRepository } from '@root/domain/academic/applications/repositories/edition-repository'
+import { EnrollmentQueryRepository } from '@root/domain/academic/applications/repositories/enrollment-query-repository'
 import { EnrollmentRepository } from '@root/domain/academic/applications/repositories/enrollment.repository'
 import { StudentQueryRepository } from '@root/domain/academic/applications/repositories/student-query-repository'
 import { StudentRepository } from '@root/domain/academic/applications/repositories/student-repository'
+import { AnalyticsQueryRepository } from '@root/domain/analytics/applications/repositories/analytics-repository-query'
 import { UserRolesRepository } from '@root/domain/authentication/applications/repositories/user-role.repository'
 import { UsersRepository } from '@root/domain/authentication/applications/repositories/users.repository'
 import { AddressRepository } from '@root/domain/location/applications/repositories/address.repository'
@@ -21,12 +23,14 @@ import { ResourceRepository } from '@root/domain/resource/applications/repositor
 import { DrizzleModule } from '@infra/database/drizzle/drizzle.module'
 
 import { DrizzleAddressRepository } from './drizzle/repositories/drizzle-address.repository'
+import { DrizzleAnalyticsQueryRepository } from './drizzle/repositories/drizzle-analytics.repository'
 import { DrizzleCityRepository } from './drizzle/repositories/drizzle-city.repository'
 import { DrizzleClassEditionQueryRepository } from './drizzle/repositories/drizzle-class-edition-query.repository'
 import { DrizzleClassEditionRepository } from './drizzle/repositories/drizzle-class-edition.repository'
 import { DrizzleClassQueryRepository } from './drizzle/repositories/drizzle-class-query.repository'
 import { DrizzleClassRepository } from './drizzle/repositories/drizzle-class.repository'
 import { DrizzleEditionRepository } from './drizzle/repositories/drizzle-edition.repository'
+import { DrizzleEnrollmentQueryRepository } from './drizzle/repositories/drizzle-enrollment-query.repository'
 import { DrizzleEnrollmentRepository } from './drizzle/repositories/drizzle-enrollment.repository'
 import { DrizzleNeighborhoodQueryRepository } from './drizzle/repositories/drizzle-neighborhood-query.repository'
 import { DrizzleNeighborhoodRepository } from './drizzle/repositories/drizzle-neighborhood.repository'
@@ -63,6 +67,14 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
       useClass: DrizzleEnrollmentRepository,
       provide: EnrollmentRepository,
     },
+    {
+      useClass: DrizzleEnrollmentQueryRepository,
+      provide: EnrollmentQueryRepository,
+    },
+    {
+      useClass: DrizzleAnalyticsQueryRepository,
+      provide: AnalyticsQueryRepository,
+    },
   ],
   exports: [
     UsersRepository,
@@ -83,6 +95,8 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
     StudentQueryRepository,
     AddressRepository,
     EnrollmentRepository,
+    EnrollmentQueryRepository,
+    AnalyticsQueryRepository,
   ],
 })
 export class DatabaseModule {}

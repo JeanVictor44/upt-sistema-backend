@@ -7,6 +7,13 @@ import { EnvService } from '@infra/env/env.service'
 
 const tokenPayloadSchema = z.object({
   sub: z.number(),
+  name: z.string(),
+  role: z.object({
+    id: z.number(),
+    name: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+  }),
 })
 
 export type UserPayload = z.infer<typeof tokenPayloadSchema>

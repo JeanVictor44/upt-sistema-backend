@@ -3,6 +3,7 @@ import { ResourceAlreadyExistsError } from '@root/core/errors/errors/resource-al
 import { ResourceNotFoundError } from '@root/core/errors/errors/resource-not-found-error'
 import { EditionRepository } from '@root/domain/academic/applications/repositories/edition-repository'
 import { Enrollment } from '@root/domain/academic/enterprise/entities/enrollment.entity'
+import { enrollmentStatuses } from '@root/infra/database/drizzle/schemas'
 
 import { Either, left, right } from '@core/logic/Either'
 
@@ -44,12 +45,13 @@ export class CreateEnrollmentUseCase {
     })
     if (isEnrolledThisYear) return left(new ResourceAlreadyExistsError())
 
+    const statusEnrollmentId = enrollmentStatuses.enumValues.findIndex((status) => status === 'MATRICULADO') + 1
     const enrollment = Enrollment.create({
       studentId,
       classEditionId,
       enrollmentDate: new Date().toISOString().split('T')[0],
       isExempt: false,
-      statusId: 1,
+      statusId: statusEnrollmentId,
     })
 
     await this.enrollmentRepository.create(enrollment)

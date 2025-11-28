@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common'
 import { AcademicUseCasesModule } from '@root/domain/academic/applications/use-cases/academic-use-case.module'
+import { AnalyticsUseCasesModule } from '@root/domain/analytics/applications/use-cases/analytics-use-case.module'
 import { AuthenticationUseCasesModule } from '@root/domain/authentication/applications/use-cases/authentication-use-case.module'
 import { LocationUseCasesModule } from '@root/domain/location/applications/use-cases/location-use-case.module'
 import { ResourceUseCasesModule } from '@root/domain/resource/applications/use-cases/resource-use-case.module'
+
+import { DrizzleModule } from '@infra/database/drizzle/drizzle.module'
 
 import { CreateClassEditionController } from './controllers/academic/class-edition/create-class-edition.controller'
 import { DeleteClassEditionController } from './controllers/academic/class-edition/delete-class-edition.controller'
@@ -18,14 +21,24 @@ import { EditEditionController } from './controllers/academic/edition/edit-editi
 import { ListEditionsController } from './controllers/academic/edition/list-editions.controller'
 import { CreateEnrollmentController } from './controllers/academic/enrollment/create-enrollment.controller'
 import { EditEnrollmentController } from './controllers/academic/enrollment/edit-enrollment.controller'
+import { ExportEnrollmentReportController } from './controllers/academic/enrollment/export-enrollment-report.controller'
 import { ListStudentsEnrollmentClassEditionController } from './controllers/academic/enrollment/list-students-enrollment-class-edition.controller'
 import { CreateStudentController } from './controllers/academic/student/create-student.controller'
 import { DeleteStudentController } from './controllers/academic/student/delete-student.controller'
 import { EditStudentController } from './controllers/academic/student/edit-student.controller'
 import { ListStudentsController } from './controllers/academic/student/list-student.controller'
+import { FindBigNumbersController } from './controllers/analytics/find-big-numbers.controller'
+import { FindDistributionByEthnicityController } from './controllers/analytics/find-distribution-by-ethnicity.controller'
+import { FindDistributionByGenderIdentityController } from './controllers/analytics/find-distribution-by-gender-identity.controller'
+import { FindDistributionByPropertyLocationController } from './controllers/analytics/find-distribution-by-property-location.controller'
+import { FindDistributionByShiftController } from './controllers/analytics/find-distribution-by-shift.controller'
+import { FindEnrollmentEvolutionController } from './controllers/analytics/find-enrollment-evolution.controller'
+import { FindTopClassEditionsEnrollmentController } from './controllers/analytics/find-top-class-editions-enrollment.controller'
 import { CreateUserRoleController } from './controllers/authentication/create-user-role.controller'
 import { CreateUserController } from './controllers/authentication/create-user.controller'
+import { EditUserRoleController } from './controllers/authentication/edit-user-role.controller'
 import { EditUserController } from './controllers/authentication/edit-user.controller'
+import { ListeRegionManagersController } from './controllers/authentication/list-region-managers.controller'
 import { ListeUsersController } from './controllers/authentication/list-users.controller'
 import { SessionController } from './controllers/authentication/session.controller'
 import { CreateAddressController } from './controllers/location/address/create-address.controller'
@@ -55,9 +68,18 @@ import { ListHighshoolStatusController } from './controllers/resources/list-high
 import { ListPropertyLocationsController } from './controllers/resources/list-property-location-categories.controller'
 import { ListRolesController } from './controllers/resources/list-roles.controller'
 import { ListShiftsController } from './controllers/resources/list-shifts.controller'
+import { ExcelGeneratorService } from './services/excel-generator.service'
 
 @Module({
-  imports: [AuthenticationUseCasesModule, LocationUseCasesModule, ResourceUseCasesModule, AcademicUseCasesModule],
+  imports: [
+    DrizzleModule,
+    AuthenticationUseCasesModule,
+    LocationUseCasesModule,
+    ResourceUseCasesModule,
+    AcademicUseCasesModule,
+    AnalyticsUseCasesModule,
+  ],
+  providers: [ExcelGeneratorService],
   controllers: [
     ListClassStatusController,
     ListClassOptionsController,
@@ -106,10 +128,20 @@ import { ListShiftsController } from './controllers/resources/list-shifts.contro
     EditAddressController,
     CreateEnrollmentController,
     EditEnrollmentController,
+    ExportEnrollmentReportController,
     ListStudentsEnrollmentClassEditionController,
     ListeUsersController,
     ListRolesController,
     EditUserController,
+    EditUserRoleController,
+    ListeRegionManagersController,
+    FindBigNumbersController,
+    FindDistributionByShiftController,
+    FindTopClassEditionsEnrollmentController,
+    FindDistributionByGenderIdentityController,
+    FindDistributionByEthnicityController,
+    FindDistributionByPropertyLocationController,
+    FindEnrollmentEvolutionController,
   ],
 })
 export class PresentationsModule {}

@@ -43,7 +43,7 @@ export class EditTeachingPlaceUseCase {
     teachingPlace.name = name
     teachingPlace.neighborhoodId = neighborhoodId
     teachingPlace.propertyLocationCategoryId = data.propertyLocationCategoryId
-    teachingPlace.traditionalCommunityName = data.traditionalCommunityName
+    teachingPlace.traditionalCommunityName = data.traditionalCommunityName || undefined
     await this.teachingPlaceRepository.save(teachingPlace)
 
     return right(null)

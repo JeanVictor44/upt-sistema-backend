@@ -11,6 +11,7 @@ export class User extends Entity<UserProps> {
 
   set name(name: string) {
     this.props.name = name
+    this.touch()
   }
 
   get email() {
@@ -19,6 +20,7 @@ export class User extends Entity<UserProps> {
 
   set email(email: string) {
     this.props.email = email
+    this.touch()
   }
 
   get document() {
@@ -27,6 +29,7 @@ export class User extends Entity<UserProps> {
 
   set document(document: string) {
     this.props.document = document
+    this.touch()
   }
 
   get telephone() {
@@ -35,6 +38,7 @@ export class User extends Entity<UserProps> {
 
   set telephone(telephone: string) {
     this.props.telephone = telephone
+    this.touch()
   }
 
   get password() {
@@ -43,14 +47,16 @@ export class User extends Entity<UserProps> {
 
   set password(password: string) {
     this.props.password = password
+    this.touch()
   }
 
   get disabledAt(): Date | undefined {
     return this.props.disabledAt
   }
 
-  set disabledAt(disabledAt: Date) {
+  set disabledAt(disabledAt: Date | undefined) {
     this.props.disabledAt = disabledAt
+    this.touch()
   }
 
   get createdAt() {
@@ -61,16 +67,20 @@ export class User extends Entity<UserProps> {
     return this.props.updatedAt || new Date()
   }
 
-  get roleId() {
-    return this.props.roleId
+  get role() {
+    return this.props.role
   }
 
-  get classEditionId() {
-    return this.props.classEditionId
+  get classEdition() {
+    return this.props.classEdition
   }
 
-  get regionId() {
-    return this.props.regionId
+  get region() {
+    return this.props.region
+  }
+
+  get rolesHistory() {
+    return this.props.rolesHistory
   }
 
   public touch() {
@@ -84,11 +94,12 @@ export class User extends Entity<UserProps> {
         email: props.email,
         document: props.document,
         telephone: props.telephone,
-        roleId: props.roleId,
-        classEditionId: props.classEditionId,
-        regionId: props.regionId,
+        role: props.role,
+        classEdition: props.classEdition,
+        region: props.region,
         password: props.password,
         disabledAt: props.disabledAt,
+        rolesHistory: props.rolesHistory,
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date(),
       },

@@ -54,13 +54,34 @@ export class AuthenticationUseCase {
     const role = await this.resourceRepository.findRoleById(userRole.roleId)
     if (!role) return left(new NotAllowedError())
 
-    const payload = { sub: user.id, name: user.name, role }
+    const payload = {
+      sub: user.id,
+      name: user.name,
+      role: {
+        id: role.id,
+        name: role.name,
+        createdAt: role.createdAt,
+        updatedAt: role.updatedAt,
+      },
+    }
 
     const accessToken = await this.encrypter.encrypt({
       payload,
-      expiresIn: '7d',
+      expiresIn: '30d',
     })
 
-    return right({ accessToken, user: { id: user.id, name: user.name, role } })
+    return right({
+      accessToken,
+      user: {
+        id: user.id,
+        name: user.name,
+        role: {
+          id: role.id,
+          name: role.name,
+          createdAt: role.createdAt,
+          updatedAt: role.updatedAt,
+        },
+      },
+    })
   }
 }

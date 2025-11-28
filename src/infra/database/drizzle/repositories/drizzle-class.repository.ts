@@ -35,8 +35,6 @@ export class DrizzleClassRepository implements ClassRepository {
     const classResult = await this.db.query.classSchema.findFirst({
       where: and(
         eq(lower(classSchema.name), data.name.toLowerCase()),
-        eq(classSchema.optionId, data.optionId),
-        eq(classSchema.shiftId, data.shiftId),
         eq(classSchema.teachingPlaceId, data.teachingPlaceId),
       ),
     })

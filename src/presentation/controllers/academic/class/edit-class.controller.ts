@@ -28,9 +28,9 @@ export class EditClassController {
   @HttpCode(201)
   @EditClassSwaggerDto()
   async handle(@Body() body: EditClassBodySwaggerDto, @Param('id') id: number): Promise<EditClassResponseSwaggerDto> {
-    const { name, optionId, shiftId, statusId, teachingPlaceId } = body
+    const { name, teachingPlaceId } = body
 
-    const result = await this.editClass.execute({ name, id, optionId, shiftId, statusId, teachingPlaceId })
+    const result = await this.editClass.execute({ name, id, teachingPlaceId })
 
     if (result.isLeft()) {
       const error = result.value

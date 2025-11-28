@@ -8,7 +8,9 @@ import { AuthorizationService } from '../services/authorization-service'
 import { AuthenticationUseCase } from './authentication.use-case'
 import { CreateUserRoleUseCase } from './create-user-role.use-case'
 import { CreateUserUseCase } from './create-user-use-case'
+import { EditUserRoleUseCase } from './edit-user-role.use-case'
 import { EditUserUseCase } from './edit-user-use-case'
+import { ListRegionManagersUseCase } from './list-region-managers.use-case'
 import { ListUsersUseCase } from './list-users.use-case'
 @Module({
   imports: [DatabaseModule, CryptographyModule, EnvModule],
@@ -19,7 +21,17 @@ import { ListUsersUseCase } from './list-users.use-case'
     CreateUserUseCase,
     ListUsersUseCase,
     EditUserUseCase,
+    EditUserRoleUseCase,
+    ListRegionManagersUseCase,
   ],
-  exports: [AuthenticationUseCase, CreateUserRoleUseCase, CreateUserUseCase, ListUsersUseCase, EditUserUseCase],
+  exports: [
+    AuthenticationUseCase,
+    CreateUserRoleUseCase,
+    CreateUserUseCase,
+    ListUsersUseCase,
+    EditUserUseCase,
+    EditUserRoleUseCase,
+    ListRegionManagersUseCase,
+  ],
 })
 export class AuthenticationUseCasesModule {}

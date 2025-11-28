@@ -11,6 +11,9 @@ type InputProps = {
   editionId: number
   classId: number
   enrolledCount: number
+  shiftId: number
+  optionId: number
+  statusId: number
 }
 
 type OutputProps = Either<ResourceAlreadyExistsError | ResourceNotFoundError, null>
@@ -35,6 +38,9 @@ export class EditClassEditionUseCase {
     classEdition.classId = classId
     classEdition.editionId = editionId
     classEdition.enrolledCount = enrolledCount
+    classEdition.optionId = data.optionId
+    classEdition.shiftId = data.shiftId
+    classEdition.statusId = data.statusId
 
     await this.classEditionRepository.save(classEdition)
     return right(null)

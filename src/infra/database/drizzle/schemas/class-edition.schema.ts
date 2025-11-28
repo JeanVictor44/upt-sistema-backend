@@ -1,13 +1,28 @@
 import { integer, pgTable, serial, timestamp } from 'drizzle-orm/pg-core'
 
+import { classOptionSchema } from './class-option.schema'
+import { classStatusSchema } from './class-status.schema'
 import { classSchema } from './class.schema'
 import { editionSchema } from './edition.schema'
+import { shiftSchema } from './shift.schema'
 
 export const classEditionSchema = pgTable('class_edition', {
   id: serial('id').primaryKey().notNull(),
   editionId: integer('edition_id')
     .notNull()
     .references(() => editionSchema.id),
+  shiftId: integer('shift_id')
+    .default(1)
+    .notNull()
+    .references(() => shiftSchema.id),
+  optionId: integer('option_id')
+    .default(1)
+    .notNull()
+    .references(() => classOptionSchema.id),
+  statusId: integer('status_id')
+    .default(1)
+    .notNull()
+    .references(() => classStatusSchema.id),
   classId: integer('class_id')
     .notNull()
     .references(() => classSchema.id),

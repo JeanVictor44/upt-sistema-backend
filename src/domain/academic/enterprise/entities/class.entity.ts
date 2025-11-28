@@ -13,34 +13,12 @@ export class Class extends Entity<ClassProps> {
     return this.props.teachingPlaceId
   }
 
-  get shiftId() {
-    return this.props.shiftId
-  }
-  get optionId() {
-    return this.props.optionId
-  }
-  get statusId() {
-    return this.props.statusId
-  }
-
   set name(name: string) {
     this.props.name = name
   }
 
   set teachingPlaceId(teachingPlaceId: number) {
     this.props.teachingPlaceId = teachingPlaceId
-  }
-
-  set shiftId(shiftId: number) {
-    this.props.shiftId = shiftId
-  }
-
-  set optionId(optionId: number) {
-    this.props.optionId = optionId
-  }
-
-  set statusId(statusId: number) {
-    this.props.statusId = statusId
   }
 
   get createdAt() {
@@ -59,9 +37,6 @@ export class Class extends Entity<ClassProps> {
     return new Class(
       {
         name: props.name,
-        optionId: props.optionId,
-        shiftId: props.shiftId,
-        statusId: props.statusId,
         teachingPlaceId: props.teachingPlaceId,
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date(),

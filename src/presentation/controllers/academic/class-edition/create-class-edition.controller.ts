@@ -27,9 +27,16 @@ export class CreateClassEditionController {
   @HttpCode(201)
   @CreateClassEditionSwaggerDto()
   async handle(@Body() body: CreateClassEditionBodySwaggerDto): Promise<CreateClassEditionResponseSwaggerDto> {
-    const { classId, editionId, enrolledCount } = body
+    const { classId, editionId, enrolledCount, optionId, shiftId, statusId } = body
 
-    const result = await this.createClassEdition.execute({ classId, editionId, enrolledCount })
+    const result = await this.createClassEdition.execute({
+      classId,
+      editionId,
+      enrolledCount,
+      optionId,
+      shiftId,
+      statusId,
+    })
 
     if (result.isLeft()) {
       const error = result.value

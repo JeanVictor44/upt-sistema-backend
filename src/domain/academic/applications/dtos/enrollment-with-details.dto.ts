@@ -1,5 +1,6 @@
 export interface EnrollmentWithDetailsDTO {
   id: number
+  statusId: number
   classEdition: {
     id: number
     enrolledCount: number

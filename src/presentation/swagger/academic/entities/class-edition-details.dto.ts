@@ -1,11 +1,73 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { ClassWithDetailsDTO } from '@root/domain/academic/applications/dtos/class-with-details.dto'
 import { Type } from 'class-transformer'
-import { IsDate, IsNumber } from 'class-validator'
+import { IsDate, IsNumber, IsString } from 'class-validator'
 
 import { ClassDetailsDto } from './class-details.dto'
 import { EditionDto } from './edition.dto'
 
+interface Shift {
+  id: number
+  name: string
+}
+
+interface Option {
+  id: number
+  name: string
+}
+
+interface Status {
+  id: number
+  name: string
+}
+
+export class StatusDto {
+  @ApiProperty({
+    description: 'Unique identifier of the status',
+    example: 1,
+  })
+  @IsNumber()
+  id: number
+
+  @ApiProperty({
+    description: 'Name of the status',
+    example: 'ATIVA',
+  })
+  @IsString()
+  name: string
+}
+
+export class OptionDto {
+  @ApiProperty({
+    description: 'Unique identifier of the option',
+    example: 1,
+  })
+  @IsNumber()
+  id: number
+
+  @ApiProperty({
+    description: 'Name of the option',
+    example: 'A',
+  })
+  @IsString()
+  name: string
+}
+
+export class ShiftDto {
+  @ApiProperty({
+    description: 'Unique identifier of the shift',
+    example: 1,
+  })
+  @IsNumber()
+  id: number
+
+  @ApiProperty({
+    description: 'Name of the shift',
+    example: 'MATUTINO',
+  })
+  @IsString()
+  name: string
+}
 export class ClassEditionDetailsDto {
   @ApiProperty({
     description: 'Unique identifier of the status',
@@ -27,6 +89,36 @@ export class ClassEditionDetailsDto {
   })
   @Type(() => EditionDto)
   edition: EditionDto
+
+  @ApiProperty({
+    description: 'Shift of the class',
+    example: {
+      id: 1,
+      name: 'MATUTINO',
+    },
+    type: ShiftDto,
+  })
+  shift: Shift
+
+  @ApiProperty({
+    description: 'Option of the class',
+    example: {
+      id: 1,
+      name: 'A',
+    },
+    type: OptionDto,
+  })
+  option: Option
+
+  @ApiProperty({
+    description: 'Status of the class',
+    example: {
+      id: 1,
+      name: 'ATIVA',
+    },
+    type: StatusDto,
+  })
+  status: Status
 
   @ApiProperty({
     description: 'Enrolled count in the class edition',

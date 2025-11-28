@@ -5,9 +5,33 @@ import { UserSchemaInsertProps, UserSchemaSelectProps } from '@infra/database/dr
 export class UserMappers {
   static toDomain(
     data: UserSchemaSelectProps & {
-      roleId?: number | null
-      classEditionId?: number | null
-      regionId?: number | null
+      role?: {
+        id?: number
+        name?: string
+      }
+      classEdition?: {
+        id?: number
+        name?: string
+        year?: number
+      }
+      region?: {
+        id?: number
+        name?: string
+      }
+      rolesHistory?: {
+        role?: string
+        classEdition?: {
+          id?: number
+          name?: string
+          year?: number
+        }
+        region?: {
+          id?: number
+          name?: string
+        }
+        startDate?: Date
+        endDate?: Date
+      }[]
     },
   ): User {
     return User.create(
@@ -20,9 +44,10 @@ export class UserMappers {
         telephone: data.telephone,
         createdAt: new Date(data.createdAt),
         updatedAt: new Date(data.updatedAt),
-        roleId: data.roleId || undefined,
-        classEditionId: data.classEditionId || undefined,
-        regionId: data.regionId || undefined,
+        rolesHistory: data.rolesHistory || [],
+        role: data.role || undefined,
+        classEdition: data.classEdition || undefined,
+        region: data.region || undefined,
       },
       data.id,
     )
@@ -34,7 +59,7 @@ export class UserMappers {
       name: data.name,
       email: data.email,
       document: data.document,
-      disabledAt: data.disabledAt,
+      disabledAt: data.disabledAt ? data.disabledAt : undefined,
       telephone: data.telephone,
       password: data.password,
       createdAt: new Date(data.createdAt),

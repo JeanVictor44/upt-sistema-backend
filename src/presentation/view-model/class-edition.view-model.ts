@@ -6,6 +6,18 @@ export class ClassEditionViewModel {
     return {
       id: classEdtiion.id,
       class: ClassViewModel.toHttp(classEdtiion.class),
+      shift: {
+        id: classEdtiion.shift.id,
+        name: classEdtiion.shift.name,
+      },
+      option: {
+        id: classEdtiion.option.id,
+        name: classEdtiion.option.name,
+      },
+      status: {
+        id: classEdtiion.status.id,
+        name: classEdtiion.status.name,
+      },
       enrolledCount: classEdtiion.enrolledCount,
       edition: classEdtiion.edition,
       createdAt: classEdtiion.createdAt,

@@ -16,32 +16,11 @@ export class EditClassBodySwaggerDto {
   name: string
 
   @ApiProperty({
-    description: 'shift id of the class',
-    example: 1,
-  })
-  @IsNumber()
-  shiftId: number
-
-  @ApiProperty({
-    description: 'optional id of the class',
-    example: 1,
-  })
-  @IsNumber()
-  optionId: number
-
-  @ApiProperty({
     description: 'teaching place id of the class',
     example: 1,
   })
   @IsNumber()
   teachingPlaceId: number
-
-  @ApiProperty({
-    description: 'status id of the class',
-    example: 1,
-  })
-  @IsNumber()
-  statusId: number
 }
 
 const EDITED_DESCRIPTION = 'Class edited successfully'

@@ -1,6 +1,6 @@
 import { ApiOperation, ApiProperty } from '@nestjs/swagger'
 import { ApiCreated, BadRequestResponseDto, ConflictResponseDto } from '@utils/swagger-api-response'
-import { IsNumber, IsString } from 'class-validator'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
 
 export class CreateTeachingPlaceBodySwaggerDto {
   @ApiProperty({
@@ -25,6 +25,7 @@ export class CreateTeachingPlaceBodySwaggerDto {
     nullable: true,
   })
   @IsString()
+  @IsOptional()
   traditionalCommunityName?: string | undefined
 
   @ApiProperty({

@@ -23,6 +23,27 @@ export class EditClassEditionBodySwaggerDto {
   editionId: number
 
   @ApiProperty({
+    description: 'shift id of the class',
+    example: 1,
+  })
+  @IsNumber()
+  shiftId: number
+
+  @ApiProperty({
+    description: 'optional id of the class',
+    example: 1,
+  })
+  @IsNumber()
+  optionId: number
+
+  @ApiProperty({
+    description: 'status id of the class',
+    example: 1,
+  })
+  @IsNumber()
+  statusId: number
+
+  @ApiProperty({
     description: 'Count of enrolled students',
     type: Number,
   })

@@ -38,7 +38,7 @@ export class EditUserController {
     @Body() body: EditUserBodySwaggerDto,
     @Param('id') id: number,
   ): Promise<EditUserResponseSwaggerDto> {
-    const { document, password, email, name, telephone } = body
+    const { document, password, email, name, telephone, disabledAt } = body
     const { sub } = user
 
     const result = await this.editUser.execute({
@@ -49,6 +49,7 @@ export class EditUserController {
       email,
       name,
       telephone,
+      disabledAt,
     })
 
     if (result.isLeft()) {

@@ -228,6 +228,14 @@ export class EnrollmentDto {
   classEdition: ClassEditionDto
 
   @ApiProperty({
+    description: 'Status of the enrollment',
+    example: 1,
+    type: Number,
+  })
+  @IsNumber()
+  statusId: number
+
+  @ApiProperty({
     description: 'Whether the student is exempt from fees',
     example: false,
   })

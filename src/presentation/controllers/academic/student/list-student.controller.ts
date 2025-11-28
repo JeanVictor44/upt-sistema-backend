@@ -1,6 +1,8 @@
 import { BadRequestException, Controller, Get, HttpCode } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { ListStudentsUseCase } from '@root/domain/academic/applications/use-cases/student/list-students.use-case'
+import { CurrentUser } from '@root/presentation/auth/current-user-decorator'
+import { UserPayload } from '@root/presentation/auth/jwt.strategy'
 import {
   ListStudentsResponseSwaggerDto,
   ListStudentsSwaggerDto,
@@ -16,8 +18,10 @@ export class ListStudentsController {
   @Get('/students')
   @HttpCode(200)
   @ListStudentsSwaggerDto()
-  async handle(): Promise<ListStudentsResponseSwaggerDto> {
-    const result = await this.listStudents.execute()
+  async handle(@CurrentUser() user: UserPayload): Promise<ListStudentsResponseSwaggerDto> {
+    const result = await this.listStudents.execute({
+      userId: user.sub,
+    })
 
     if (result.isLeft()) {
       throw new BadRequestException('Bad request', { description: 'BadRequestError' })

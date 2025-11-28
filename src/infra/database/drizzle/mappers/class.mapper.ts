@@ -7,9 +7,6 @@ export class ClassMappers {
     return Class.create(
       {
         name: data.name,
-        optionId: data.optionId,
-        shiftId: data.shiftId,
-        statusId: data.statusId,
         teachingPlaceId: data.teachingPlaceId,
         createdAt: new Date(data.createdAt),
         updatedAt: new Date(data.updatedAt),
@@ -22,9 +19,6 @@ export class ClassMappers {
     return {
       id: data.id,
       name: data.name,
-      optionId: data.optionId,
-      shiftId: data.shiftId,
-      statusId: data.statusId,
       teachingPlaceId: data.teachingPlaceId,
       createdAt: new Date(data.createdAt),
       updatedAt: new Date(data.updatedAt),

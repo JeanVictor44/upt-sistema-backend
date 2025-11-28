@@ -8,9 +8,38 @@ export class UserViewModel {
       email: user.email,
       document: user.document,
       telephone: user.telephone,
-      roleId: user.props.roleId,
-      classEditionId: user.props.classEditionId,
-      regionId: user.props.regionId,
+      role: {
+        id: user.role?.id,
+        name: user.role?.name,
+      },
+      classEdition: {
+        id: user.classEdition?.id,
+        name: user.classEdition?.name,
+        year: user.classEdition?.year,
+      },
+      region: {
+        id: user.region?.id,
+        name: user.region?.name,
+      },
+      rolesHistory:
+        user.rolesHistory?.map((roleHistoryItem) => ({
+          role: roleHistoryItem?.role,
+          classEdition: roleHistoryItem?.classEdition
+            ? {
+                id: roleHistoryItem.classEdition.id,
+                name: roleHistoryItem.classEdition.name,
+                year: roleHistoryItem.classEdition.year,
+              }
+            : undefined,
+          region: roleHistoryItem.region
+            ? {
+                id: roleHistoryItem.region.id,
+                name: roleHistoryItem.region.name,
+              }
+            : undefined,
+          startDate: roleHistoryItem.startDate,
+          endDate: roleHistoryItem.endDate || undefined,
+        })) || [],
       disabledAt: user.disabledAt,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

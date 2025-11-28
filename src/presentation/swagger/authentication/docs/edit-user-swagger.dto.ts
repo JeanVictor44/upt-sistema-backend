@@ -20,10 +20,14 @@ export class EditUserBodySwaggerDto {
   @IsString()
   telephone: string
 
-  @ApiProperty({ example: '123456789' })
+  @ApiProperty({ example: '123456789', required: false })
   @IsString()
   @IsOptional()
   password?: string
+
+  @ApiProperty({ example: '2024-12-31T23:59:59.000Z', required: false })
+  @IsOptional()
+  disabledAt?: Date
 }
 
 export const EditUserSwaggerDto = () => {

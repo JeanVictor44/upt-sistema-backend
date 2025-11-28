@@ -10,6 +10,9 @@ type InputProps = {
   editionId: number
   classId: number
   enrolledCount: number
+  optionId: number
+  shiftId: number
+  statusId: number
 }
 
 type OutputProps = Either<ResourceAlreadyExistsError, null>
@@ -19,7 +22,7 @@ export class CreateClassEditionUseCase {
   constructor(private readonly classEditionRepository: ClassEditionRepository) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
-    const { classId, editionId, enrolledCount } = data
+    const { classId, editionId, enrolledCount, optionId, shiftId, statusId } = data
 
     const classEditionExists = await this.classEditionRepository.findByCompositeKeys({
       classId,
@@ -31,6 +34,9 @@ export class CreateClassEditionUseCase {
       classId,
       editionId,
       enrolledCount,
+      optionId,
+      shiftId,
+      statusId,
     })
     await this.classEditionRepository.create(classEdition)
 

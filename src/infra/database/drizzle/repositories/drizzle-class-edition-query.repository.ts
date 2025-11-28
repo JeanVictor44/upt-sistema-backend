@@ -73,8 +73,8 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
       .from(classEditionSchema)
       .innerJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
       .innerJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
-      .innerJoin(classOptionSchema, eq(classSchema.optionId, classOptionSchema.id))
-      .innerJoin(classStatusSchema, eq(classSchema.statusId, classStatusSchema.id))
+      .innerJoin(classOptionSchema, eq(classEditionSchema.optionId, classOptionSchema.id))
+      .innerJoin(classStatusSchema, eq(classEditionSchema.statusId, classStatusSchema.id))
       .innerJoin(teachingPlaceSchema, eq(classSchema.teachingPlaceId, teachingPlaceSchema.id))
       .innerJoin(
         propertyLocationCategorySchema,
@@ -83,7 +83,7 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
       .innerJoin(neighborhoodSchema, eq(teachingPlaceSchema.neighborhoodId, neighborhoodSchema.id))
       .innerJoin(citySchema, eq(neighborhoodSchema.cityId, citySchema.id))
       .innerJoin(regionSchema, eq(neighborhoodSchema.regionId, regionSchema.id))
-      .innerJoin(shiftSchema, eq(classSchema.shiftId, shiftSchema.id))
+      .innerJoin(shiftSchema, eq(classEditionSchema.shiftId, shiftSchema.id))
 
     return classes.map((cls) => ({
       id: cls.id,
@@ -94,21 +94,21 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
         createdAt: cls.edition.createdAt,
         updatedAt: cls.edition.updatedAt,
       },
+      option: {
+        id: cls.option.id,
+        name: cls.option.name,
+      },
+      status: {
+        id: cls.status.id,
+        name: cls.status.name,
+      },
+      shift: {
+        id: cls.shift.id,
+        name: cls.shift.name,
+      },
       class: {
         id: cls.classId,
         name: cls.name,
-        option: {
-          id: cls.option.id,
-          name: cls.option.name,
-        },
-        status: {
-          id: cls.status.id,
-          name: cls.status.name,
-        },
-        shift: {
-          id: cls.shift.id,
-          name: cls.shift.name,
-        },
         teachingPlace: {
           id: cls.teachingPlace.id,
           name: cls.teachingPlace.name,

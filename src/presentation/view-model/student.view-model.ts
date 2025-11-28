@@ -1,7 +1,9 @@
 import type { StudentWithDetailsDTO } from '@root/domain/academic/applications/dtos/student-with-details.dto'
 
+import { ListStudentsResponseSwaggerDto } from '../swagger/academic/docs/student/list-student-swagger.dto'
+
 export class StudentViewModel {
-  static toHttp(student: StudentWithDetailsDTO) {
+  static toHttp(student: StudentWithDetailsDTO): ListStudentsResponseSwaggerDto['results'][0] {
     return {
       id: student.id,
       name: student.name,
@@ -34,6 +36,7 @@ export class StudentViewModel {
         id: enrollment.id,
         isExempt: enrollment.isExempt,
         enrollmentDate: enrollment.enrollmentDate,
+        statusId: enrollment.statusId,
         classEdition: {
           id: enrollment.classEdition.id,
           enrolledCount: enrollment.classEdition.enrolledCount,

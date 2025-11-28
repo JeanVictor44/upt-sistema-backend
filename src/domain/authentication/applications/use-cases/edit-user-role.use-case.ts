@@ -39,14 +39,17 @@ export class EditUserRoleUseCase {
     if (!userToUpdate) return left(new ResourceNotFoundError())
     if (userToUpdate.disabledAt) return left(new InactiveResourceError())
 
-    const userAlreadyHasRole = await this.userRolesRepository.findActiveRoleByUserId(userId)
-    if (userAlreadyHasRole) return left(new ResourceAlreadyExistsError())
-
     const userRole = await this.userRolesRepository.findActiveRoleByUserId(userId)
+
+    if (userRole?.roleId === roleId && userRole?.classEditionId === classEditionId && userRole?.regionId === regionId) {
+      return right(null)
+    }
+
     if (userRole) {
       userRole.expireUserRole()
       await this.userRolesRepository.save(userRole)
     }
+
     const newUserRole = UserRole.create({
       userId,
       roleId,

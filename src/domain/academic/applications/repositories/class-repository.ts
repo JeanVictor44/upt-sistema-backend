@@ -5,8 +5,6 @@ import { Class } from '../../enterprise/entities/class.entity'
 export interface FindByCompositeKeysProps {
   name: string
   teachingPlaceId: number
-  shiftId: number
-  optionId: number
 }
 
 export abstract class ClassRepository {

@@ -1,7 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { StudentWithDetailsDTO } from '@root/domain/academic/applications/dtos/student-with-details.dto'
-import { StudentQueryRepository } from '@root/domain/academic/applications/repositories/student-query-repository'
-import { eq, count } from 'drizzle-orm'
+import {
+  FindAllStudentsWithDetailsParams,
+  StudentQueryRepository,
+} from '@root/domain/academic/applications/repositories/student-query-repository'
+import { eq, count, or, not, exists, SQL, and, desc } from 'drizzle-orm'
 
 import { DATABASE_CONNECTION } from '../database-connection'
 import {
@@ -13,8 +16,10 @@ import {
   ethnicitySchema,
   genderIdentitySchema,
   highSchoolStatusSchema,
+  neighborhoodSchema,
   propertyLocationCategorySchema,
   studentSchema,
+  teachingPlaceSchema,
 } from '../schemas'
 import { DrizzleDB } from '../types/drizzle'
 
@@ -22,9 +27,20 @@ import { DrizzleDB } from '../types/drizzle'
 export class DrizzleStudentQueryRepository implements StudentQueryRepository {
   constructor(@Inject(DATABASE_CONNECTION) private db: DrizzleDB) {}
 
-  async findAllWithDetails(): Promise<StudentWithDetailsDTO[]> {
-    const students = await this.db
-      .select({
+  async findAllWithDetails({
+    classEditionId,
+    regionId,
+  }: FindAllStudentsWithDetailsParams): Promise<StudentWithDetailsDTO[]> {
+    // Busca a última edição cadastrada (maior ano)
+    const [lastEdition] = await this.db
+      .select({ id: editionSchema.id })
+      .from(editionSchema)
+      .orderBy(desc(editionSchema.year))
+      .limit(1)
+
+    // Monta a query base
+    let query = this.db
+      .selectDistinct({
         id: studentSchema.id,
         name: studentSchema.name,
         socialName: studentSchema.socialName,
@@ -70,6 +86,70 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
         propertyLocationCategorySchema,
         eq(propertyLocationCategorySchema.id, addressSchema.propertyLocationCategoryId),
       )
+      .leftJoin(enrollmentSchema, eq(enrollmentSchema.studentId, studentSchema.id))
+
+    if (regionId || classEditionId || lastEdition) {
+      query = query
+        .leftJoin(classEditionSchema, eq(classEditionSchema.id, enrollmentSchema.classEditionId))
+        .leftJoin(editionSchema, eq(editionSchema.id, classEditionSchema.editionId))
+    }
+
+    if (regionId) {
+      query = query
+        .leftJoin(classSchema, eq(classSchema.id, classEditionSchema.classId))
+        .leftJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, classSchema.teachingPlaceId))
+        .leftJoin(neighborhoodSchema, eq(neighborhoodSchema.id, teachingPlaceSchema.neighborhoodId))
+    }
+
+    // Monta a cláusula where
+    const whereConditions: SQL<unknown>[] = []
+
+    // Se não há filtros, é um usuário ADMIN - retorna todos os estudantes
+    const isAdmin = !classEditionId && !regionId
+
+    if (isAdmin) {
+      // Admin vê todos os estudantes sem restrição
+      // Não adiciona nenhuma condição de filtro
+    } else {
+      // Para usuários com filtros, aplica as regras de negócio
+
+      // Sempre inclui estudantes sem nenhuma matrícula
+      whereConditions.push(
+        not(exists(this.db.select().from(enrollmentSchema).where(eq(enrollmentSchema.studentId, studentSchema.id)))),
+      )
+
+      // Sempre inclui estudantes que não possuem matrícula na última edição
+      if (lastEdition) {
+        whereConditions.push(
+          not(
+            exists(
+              this.db
+                .select()
+                .from(enrollmentSchema)
+                .innerJoin(classEditionSchema, eq(classEditionSchema.id, enrollmentSchema.classEditionId))
+                .where(
+                  and(
+                    eq(enrollmentSchema.studentId, studentSchema.id),
+                    eq(classEditionSchema.editionId, lastEdition.id),
+                  ),
+                ),
+            ),
+          ),
+        )
+      }
+
+      // Adiciona filtro por classEditionId se fornecido
+      if (classEditionId) {
+        whereConditions.push(eq(enrollmentSchema.classEditionId, classEditionId))
+      }
+
+      // Adiciona filtro por regionId se fornecido
+      if (regionId) {
+        whereConditions.push(eq(neighborhoodSchema.regionId, regionId))
+      }
+    }
+
+    const students = whereConditions.length > 0 ? await query.where(or(...whereConditions)) : await query
 
     const studentsWithEnrollments = await Promise.all(
       students.map(async (student) => {
@@ -78,6 +158,7 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
             id: enrollmentSchema.id,
             isExempt: enrollmentSchema.isExempt,
             enrollmentDate: enrollmentSchema.enrollmentDate,
+            statusId: enrollmentSchema.statusId,
             classEdition: {
               id: classEditionSchema.id,
               className: classSchema.name,
@@ -106,6 +187,7 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
               id: enrollment.id,
               isExempt: enrollment.isExempt,
               enrollmentDate: enrollment.enrollmentDate,
+              statusId: enrollment.statusId,
               classEdition: {
                 id: enrollment.classEdition.id,
                 enrolledCount: countResult.count,
