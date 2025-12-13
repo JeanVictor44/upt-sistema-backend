@@ -67,7 +67,7 @@ export class AuthenticationUseCase {
 
     const accessToken = await this.encrypter.encrypt({
       payload,
-      expiresIn: '30d',
+      expiresIn: 30 * 24 * 60 * 60,
     })
 
     return right({

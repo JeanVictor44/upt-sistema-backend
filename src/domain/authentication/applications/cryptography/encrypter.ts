@@ -1,6 +1,6 @@
 export type EncryptProps = {
   payload: Record<number, string>
-  expiresIn?: string | number
+  expiresIn?: number
 }
 
 export abstract class Encrypter {
