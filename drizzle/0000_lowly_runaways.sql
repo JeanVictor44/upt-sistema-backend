@@ -138,9 +138,6 @@ CREATE TABLE "class" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(100) NOT NULL,
 	"teaching_place_id" integer NOT NULL,
-	"shift_id" integer NOT NULL,
-	"option_id" integer NOT NULL,
-	"status_id" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp NOT NULL,
 	CONSTRAINT "class_name_unique" UNIQUE("name")
@@ -197,6 +194,9 @@ CREATE TABLE "user_role" (
 CREATE TABLE "class_edition" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"edition_id" integer NOT NULL,
+	"shift_id" integer DEFAULT 1 NOT NULL,
+	"option_id" integer DEFAULT 1 NOT NULL,
+	"status_id" integer DEFAULT 1 NOT NULL,
 	"class_id" integer NOT NULL,
 	"enrolled_count" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
@@ -217,9 +217,6 @@ ALTER TABLE "neighborhood" ADD CONSTRAINT "neighborhood_region_id_region_id_fk" 
 ALTER TABLE "teaching_place" ADD CONSTRAINT "teaching_place_neighborhood_id_neighborhood_id_fk" FOREIGN KEY ("neighborhood_id") REFERENCES "public"."neighborhood"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "adress" ADD CONSTRAINT "adress_property_location_category_id_property_location_category_id_fk" FOREIGN KEY ("property_location_category_id") REFERENCES "public"."property_location_category"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "class" ADD CONSTRAINT "class_teaching_place_id_teaching_place_id_fk" FOREIGN KEY ("teaching_place_id") REFERENCES "public"."teaching_place"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "class" ADD CONSTRAINT "class_shift_id_shift_id_fk" FOREIGN KEY ("shift_id") REFERENCES "public"."shift"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "class" ADD CONSTRAINT "class_option_id_class_option_id_fk" FOREIGN KEY ("option_id") REFERENCES "public"."class_option"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "class" ADD CONSTRAINT "class_status_id_class_status_id_fk" FOREIGN KEY ("status_id") REFERENCES "public"."class_status"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "student" ADD CONSTRAINT "student_gender_identity_id_gender_identity_id_fk" FOREIGN KEY ("gender_identity_id") REFERENCES "public"."gender_identity"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "student" ADD CONSTRAINT "student_ethnicity_id_ethnicity_id_fk" FOREIGN KEY ("ethnicity_id") REFERENCES "public"."ethnicity"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "student" ADD CONSTRAINT "student_address_id_adress_id_fk" FOREIGN KEY ("address_id") REFERENCES "public"."adress"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
@@ -229,6 +226,9 @@ ALTER TABLE "user_role" ADD CONSTRAINT "user_role_role_id_role_id_fk" FOREIGN KE
 ALTER TABLE "user_role" ADD CONSTRAINT "user_role_region_id_region_id_fk" FOREIGN KEY ("region_id") REFERENCES "public"."region"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_role" ADD CONSTRAINT "user_role_class_edition_id_class_edition_id_fk" FOREIGN KEY ("class_edition_id") REFERENCES "public"."class_edition"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "class_edition" ADD CONSTRAINT "class_edition_edition_id_edition_id_fk" FOREIGN KEY ("edition_id") REFERENCES "public"."edition"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "class_edition" ADD CONSTRAINT "class_edition_shift_id_shift_id_fk" FOREIGN KEY ("shift_id") REFERENCES "public"."shift"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "class_edition" ADD CONSTRAINT "class_edition_option_id_class_option_id_fk" FOREIGN KEY ("option_id") REFERENCES "public"."class_option"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "class_edition" ADD CONSTRAINT "class_edition_status_id_class_status_id_fk" FOREIGN KEY ("status_id") REFERENCES "public"."class_status"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "class_edition" ADD CONSTRAINT "class_edition_class_id_class_id_fk" FOREIGN KEY ("class_id") REFERENCES "public"."class"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "enrollment" ADD CONSTRAINT "enrollment_student_id_student_id_fk" FOREIGN KEY ("student_id") REFERENCES "public"."student"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "enrollment" ADD CONSTRAINT "enrollment_status_id_enrollment_status_id_fk" FOREIGN KEY ("status_id") REFERENCES "public"."enrollment_status"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

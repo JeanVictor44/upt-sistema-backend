@@ -1,7 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ClassEditionWithDetailsDTO } from '@root/domain/academic/applications/dtos/class-edition-with-details.dto'
-import { ClassEditionQueryRepository } from '@root/domain/academic/applications/repositories/class-edition-query-repository'
-import { eq } from 'drizzle-orm'
+import {
+  ClassEditionQueryRepository,
+  findAllClassEditionsWithDetailsProps,
+} from '@root/domain/academic/applications/repositories/class-edition-query-repository'
+import { and, eq, inArray } from 'drizzle-orm'
 
 import { DATABASE_CONNECTION } from '../database-connection'
 import {
@@ -23,7 +26,7 @@ import { DrizzleDB } from '../types/drizzle'
 export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepository {
   constructor(@Inject(DATABASE_CONNECTION) private db: DrizzleDB) {}
 
-  async findAllWithDetails(): Promise<ClassEditionWithDetailsDTO[]> {
+  async findAllWithDetails(data: findAllClassEditionsWithDetailsProps): Promise<ClassEditionWithDetailsDTO[]> {
     const classes = await this.db
       .select({
         id: classEditionSchema.id,
@@ -71,6 +74,12 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
         updatedAt: classEditionSchema.updatedAt,
       })
       .from(classEditionSchema)
+      .where(
+        and(
+          data?.classEditionIds?.length ? inArray(classEditionSchema.id, data.classEditionIds) : undefined,
+          data?.regionId ? eq(regionSchema.id, data.regionId) : undefined,
+        ),
+      )
       .innerJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
       .innerJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
       .innerJoin(classOptionSchema, eq(classEditionSchema.optionId, classOptionSchema.id))

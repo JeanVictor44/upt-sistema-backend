@@ -1,20 +1,59 @@
 import { Injectable } from '@nestjs/common'
 import { ResourceAlreadyExistsError } from '@root/core/errors/errors/resource-already-exists-error'
+import { ResourceNotFoundError } from '@root/core/errors/errors/resource-not-found-error'
+import { UserRolesRepository } from '@root/domain/authentication/applications/repositories/user-role.repository'
+import { UsersRepository } from '@root/domain/authentication/applications/repositories/users.repository'
+import { convertRoleIdToName } from '@root/utils/convert-role-id-to-name'
 
-import { Either, right } from '@core/logic/Either'
+import { Either, left, right } from '@core/logic/Either'
 
 import { ClassEditionWithDetailsDTO } from '../../dtos/class-edition-with-details.dto'
 import { ClassEditionQueryRepository } from '../../repositories/class-edition-query-repository'
 
-type OutputProps = Either<ResourceAlreadyExistsError, ClassEditionWithDetailsDTO[]>
+type InputProps = {
+  userId: number
+}
+type OutputProps = Either<ResourceAlreadyExistsError | ResourceNotFoundError, ClassEditionWithDetailsDTO[]>
 
 @Injectable()
 export class ListClassEditionsUseCase {
-  constructor(private readonly classEditionRepository: ClassEditionQueryRepository) {}
+  constructor(
+    private readonly classEditionRepository: ClassEditionQueryRepository,
+    private readonly usersRepository: UsersRepository,
+    private readonly userRolesRepository: UserRolesRepository,
+  ) {}
 
-  async execute(): Promise<OutputProps> {
-    const classEditions = await this.classEditionRepository.findAllWithDetails()
+  async execute(data: InputProps): Promise<OutputProps> {
+    const user = await this.usersRepository.findById(data.userId)
+    if (!user) return left(new ResourceNotFoundError())
 
-    return right(classEditions)
+    const userRole = await this.userRolesRepository.findActiveRoleByUserId(data.userId)
+    if (!userRole) return left(new ResourceNotFoundError())
+
+    const role = convertRoleIdToName(userRole.roleId)
+
+    const isAdmin = role === 'ADMIN'
+    if (isAdmin) {
+      const classEditions = await this.classEditionRepository.findAllWithDetails()
+      return right(classEditions)
+    }
+
+    const isRegionManager = role === 'REGION_MANAGER'
+    if (isRegionManager) {
+      const classEditions = await this.classEditionRepository.findAllWithDetails({
+        regionId: userRole.regionId,
+      })
+      return right(classEditions)
+    }
+
+    const isSecretary = role === 'SECRETARY'
+    if (isSecretary) {
+      const classEditions = await this.classEditionRepository.findAllWithDetails({
+        classEditionIds: [userRole.classEditionId!],
+      })
+      return right(classEditions)
+    }
+
+    return right([])
   }
 }
