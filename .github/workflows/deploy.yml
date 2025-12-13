@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /opt/apps/backend
+            cd /opt/app/backend
 
             docker pull ghcr.io/jeanvictor44/upt-sistema-backend:latest
 
