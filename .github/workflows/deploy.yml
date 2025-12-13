@@ -1,27 +1,43 @@
-- name: Checkout
-  uses: actions/checkout@v4
+name: Deploy Backend
 
-- name: Login GHCR
-  uses: docker/login-action@v3
-  with:
-    registry: ghcr.io
-    username: ${{ github.actor }}
-    password: ${{ secrets.GITHUB_TOKEN }}
+on:
+  push:
+    tags:
+      - "v*"
 
-- name: Set lower case owner
-  run: |
-    echo "OWNER_LC=${OWNER,,}" >> $GITHUB_ENV
-  env:
-    OWNER: ${{ github.repository_owner }}
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
 
-- name: Build image
-  run: |
-    docker build \
-      -t ghcr.io/${OWNER_LC}/upt-sistema-backend:${{ github.ref_name }} \
-      -t ghcr.io/${OWNER_LC}/upt-sistema-backend:latest \
-      .
+    permissions:
+      contents: read
+      packages: write
 
-- name: Push image
-  run: |
-    docker push ghcr.io/${OWNER_LC}/upt-sistema-backend:${{ github.ref_name }}
-    docker push ghcr.io/${OWNER_LC}/upt-sistema-backend:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set lower case owner
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >> $GITHUB_ENV
+        env:
+          OWNER: ${{ github.repository_owner }}
+
+      - name: Build image
+        run: |
+          docker build \
+            -t ghcr.io/${OWNER_LC}/upt-sistema-backend:${{ github.ref_name }} \
+            -t ghcr.io/${OWNER_LC}/upt-sistema-backend:latest \
+            .
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/${OWNER_LC}/upt-sistema-backend:${{ github.ref_name }}
+          docker push ghcr.io/${OWNER_LC}/upt-sistema-backend:latest
