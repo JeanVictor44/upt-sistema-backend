@@ -1,7 +1,7 @@
 // src/infra/database/drizzle/run-migrations.ts
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
-import path from 'path'
+import * as path from 'path'
 import { Pool } from 'pg'
 import 'dotenv/config'
 
@@ -12,7 +12,7 @@ async function run() {
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
     database: process.env.DATABASE_NAME,
-    ssl: process.env.NODE_ENV === 'production' ? false : { rejectUnauthorized: false },
+    ssl: false, // 🔥 correto para Postgres local / docker
   })
 
   const db = drizzle(pool)
@@ -20,10 +20,9 @@ async function run() {
   try {
     console.log('🚀 Running migrations...')
 
-    const migrationsFolder =
-      process.env.NODE_ENV === 'production'
-        ? path.join(__dirname, '../../../../drizzle')
-        : path.join(__dirname, '../../../../drizzle')
+    const migrationsFolder = path.join(__dirname, '../../../../drizzle')
+
+    console.log('📂 Migrations folder:', migrationsFolder)
 
     await migrate(db, { migrationsFolder })
 
