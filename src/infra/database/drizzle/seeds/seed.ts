@@ -20,9 +20,7 @@ const pool = new Pool({
   database: process.env.DATABASE_NAME,
   password: process.env.DATABASE_PASS,
   port: parseInt(process.env.DATABASE_PORT!),
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: false,
 })
 const db = drizzle(pool, { schema }) as NodePgDatabase<typeof schema>
 
