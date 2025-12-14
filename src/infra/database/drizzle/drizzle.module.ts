@@ -18,7 +18,7 @@ import * as schema from './schemas'
           database: envs.get('DATABASE_NAME'),
           password: envs.get('DATABASE_PASS'),
           port: parseInt(envs.get('DATABASE_PORT')!),
-          ssl: false,
+          ssl: process.env.NODE_ENV === 'production' ? false : { rejectUnauthorized: false },
         })
         return drizzle(pool, { schema }) as NodePgDatabase<typeof schema>
       },
