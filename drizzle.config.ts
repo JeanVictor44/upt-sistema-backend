@@ -11,6 +11,6 @@ export default defineConfig({
     database: process.env.DATABASE_NAME!,
     password: process.env.DATABASE_PASS!,
     port: parseInt(process.env.DATABASE_PORT!),
-    ssl:false
+    ssl: false,
   },
 })
