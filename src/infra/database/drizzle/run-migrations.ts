@@ -20,9 +20,10 @@ async function run() {
   try {
     console.log('🚀 Running migrations...')
 
-    const migrationsFolder = path.join(__dirname, '../../../../drizzle')
-
-    console.log('📂 Migrations folder:', migrationsFolder)
+    const migrationsFolder =
+      process.env.NODE_ENV === 'production'
+        ? path.join(__dirname, '../../../../../../drizzle')
+        : path.join(__dirname, '../../../../drizzle')
 
     await migrate(db, { migrationsFolder })
 

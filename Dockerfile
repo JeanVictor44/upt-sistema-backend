@@ -27,6 +27,9 @@ RUN npm ci --omit=dev
 # Copia o build gerado
 COPY --from=builder /app/dist ./dist
 
+# Copia as migrações do Drizzle
+COPY --from=builder /app/drizzle ./drizzle
+
 EXPOSE 3333
 
 CMD ["node", "dist/src/main.js"]
