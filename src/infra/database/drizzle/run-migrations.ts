@@ -20,10 +20,16 @@ async function run() {
   try {
     console.log('🚀 Running migrations...')
 
+    // Em produção: /app/drizzle (copiado no Dockerfile)
+    // Em dev: __dirname/../../../../../drizzle
     const migrationsFolder =
       process.env.NODE_ENV === 'production'
-        ? path.join(__dirname, '../../../../../../drizzle')
+        ? path.join(process.cwd(), 'drizzle')
         : path.join(__dirname, '../../../../drizzle')
+
+    console.log('📂 Migrations folder:', migrationsFolder)
+    console.log('📂 Working directory:', process.cwd())
+    console.log('📂 __dirname:', __dirname)
 
     await migrate(db, { migrationsFolder })
 
