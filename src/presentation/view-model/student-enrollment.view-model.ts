@@ -13,6 +13,12 @@ export class StudentEnrollmentViewModel {
         id: studentEnrollment.enrollmentStatus.id,
         name: studentEnrollment.enrollmentStatus.name,
       },
+      attendances: studentEnrollment.attendances.map((attendance) => ({
+        id: attendance.id,
+        month: attendance.month,
+        year: attendance.year,
+        isPresent: attendance.isPresent,
+      })),
       enrollmentDate: studentEnrollment.enrollmentDate,
       isExempt: studentEnrollment.isExempt,
       createdAt: studentEnrollment.createdAt,

@@ -23,6 +23,7 @@ import { CreateEnrollmentController } from './controllers/academic/enrollment/cr
 import { EditEnrollmentController } from './controllers/academic/enrollment/edit-enrollment.controller'
 import { ExportEnrollmentReportController } from './controllers/academic/enrollment/export-enrollment-report.controller'
 import { ListStudentsEnrollmentClassEditionController } from './controllers/academic/enrollment/list-students-enrollment-class-edition.controller'
+import { EditStudentAttendanceController } from './controllers/academic/student-attendance/edit-student-attendance.controller'
 import { CreateStudentController } from './controllers/academic/student/create-student.controller'
 import { DeleteStudentController } from './controllers/academic/student/delete-student.controller'
 import { EditStudentController } from './controllers/academic/student/edit-student.controller'
@@ -142,6 +143,7 @@ import { ExcelGeneratorService } from './services/excel-generator.service'
     FindDistributionByEthnicityController,
     FindDistributionByPropertyLocationController,
     FindEnrollmentEvolutionController,
+    EditStudentAttendanceController,
   ],
 })
 export class PresentationsModule {}

@@ -2,57 +2,58 @@ import { Entity } from '@root/core/domain/Entity'
 
 import { Optional } from '@core/logic/Optional'
 
-import { ClassEditionProps } from '../interfaces/class-edition'
+import { StudentAttendanceProps } from '../interfaces/student-attendance'
 
-export class ClassEdition extends Entity<ClassEditionProps> {
-  get classId() {
-    return this.props.classId
-  }
-  get editionId() {
-    return this.props.editionId
-  }
-  get enrolledCount() {
-    return this.props.enrolledCount
+export class StudentAttendance extends Entity<StudentAttendanceProps> {
+  get enrollmentId() {
+    return this.props.enrollmentId
   }
 
-  get shiftId() {
-    return this.props.shiftId
+  set enrollmentId(value: number) {
+    this.props.enrollmentId = value
   }
 
-  get optionId() {
-    return this.props.optionId
+  get isPresent() {
+    return this.props.isPresent
   }
 
-  get statusId() {
-    return this.props.statusId
+  set isPresent(value: boolean) {
+    this.props.isPresent = value
+    this.touch()
   }
 
-  set shiftId(shiftId: number) {
-    this.props.shiftId = shiftId
+  get markedAt() {
+    return this.props.markedAt
   }
 
-  set optionId(optionId: number) {
-    this.props.optionId = optionId
+  set markedAt(value: Date) {
+    this.props.markedAt = value
+    this.touch()
   }
 
-  set statusId(statusId: number) {
-    this.props.statusId = statusId
+  get markedByUserId() {
+    return this.props.markedByUserId
   }
 
-  set classId(classId: number) {
-    this.props.classId = classId
+  set markedByUserId(value: number) {
+    this.props.markedByUserId = value
+    this.touch()
   }
 
-  set editionId(editionId: number) {
-    this.props.editionId = editionId
+  get month() {
+    return this.props.month
   }
 
-  set enrolledCount(enrolledCount: number) {
-    this.props.enrolledCount = enrolledCount
+  set month(value: number) {
+    this.props.month = value
   }
 
-  get createdAt() {
-    return this.props.createdAt
+  get year() {
+    return this.props.year
+  }
+
+  set year(value: number) {
+    this.props.year = value
   }
 
   get updatedAt() {
@@ -63,17 +64,16 @@ export class ClassEdition extends Entity<ClassEditionProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<ClassEditionProps, 'createdAt' | 'updatedAt'>, id?: number) {
-    return new ClassEdition(
+  static create(props: Optional<StudentAttendanceProps, 'updatedAt'>, id?: number) {
+    return new StudentAttendance(
       {
-        classId: props.classId,
-        editionId: props.editionId,
-        enrolledCount: props.enrolledCount,
-        optionId: props.optionId,
-        shiftId: props.shiftId,
-        statusId: props.statusId,
-        createdAt: props.createdAt || new Date(),
-        updatedAt: props.updatedAt || new Date(),
+        enrollmentId: props.enrollmentId,
+        year: props.year,
+        month: props.month,
+        isPresent: props.isPresent,
+        markedByUserId: props.markedByUserId,
+        markedAt: props.markedAt,
+        updatedAt: props.updatedAt,
       },
       id,
     )

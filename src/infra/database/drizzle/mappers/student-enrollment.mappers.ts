@@ -15,6 +15,7 @@ export class StudentEnrollmentMappers {
       isExempt: data.isExempt,
       createdAt: new Date(data.createdAt),
       updatedAt: data.updatedAt ? new Date(data.updatedAt) : undefined,
+      attendances: data.attendances,
     })
   }
 }

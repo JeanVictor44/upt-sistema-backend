@@ -17,6 +17,7 @@ import { CreateEnrollmentUseCase } from './enrollment/create-enrollment.use-case
 import { EditEnrollmentUseCase } from './enrollment/edit-enrollment.use-case'
 import { ExportEnrollmentReportUseCase } from './enrollment/export-enrollment-report.use-case'
 import { ListStudentsEnrollmentClassEditionUseCase } from './enrollment/list-students-enrollment-class-edition.use-case'
+import { EditStudentAttendanceUseCase } from './student-attendance/edit-student-attendance.use-case'
 import { CreateStudentUseCase } from './student/create-student.use-case'
 import { DeleteStudentUseCase } from './student/delete-student.use-case'
 import { EditStudentUseCase } from './student/edit-student.use-case'
@@ -45,6 +46,7 @@ import { ListStudentsUseCase } from './student/list-students.use-case'
     EditEnrollmentUseCase,
     ExportEnrollmentReportUseCase,
     ListStudentsEnrollmentClassEditionUseCase,
+    EditStudentAttendanceUseCase,
   ],
   exports: [
     CreateEditionUseCase,
@@ -67,6 +69,7 @@ import { ListStudentsUseCase } from './student/list-students.use-case'
     EditEnrollmentUseCase,
     ExportEnrollmentReportUseCase,
     ListStudentsEnrollmentClassEditionUseCase,
+    EditStudentAttendanceUseCase,
   ],
 })
 export class AcademicUseCasesModule {}

@@ -19,6 +19,38 @@ export class EnrollmentStatusDto {
   name: string
 }
 
+export class StudentAttendanceDto {
+  @ApiProperty({
+    description: 'Unique identifier of the attendance record',
+    example: 1,
+  })
+  @IsNumber()
+  id: number
+
+  @ApiProperty({
+    description: 'Attendance Month',
+    example: 3,
+    type: Number,
+  })
+  @IsNumber()
+  month: number
+
+  @ApiProperty({
+    description: 'Attendance Year',
+    example: 2025,
+    type: Number,
+  })
+  @IsNumber()
+  year: number
+
+  @ApiProperty({
+    description: 'Whether the student was present',
+    type: Boolean,
+  })
+  @IsBoolean()
+  isPresent: boolean
+}
+
 export class StudentEnrollmentDto {
   @ApiProperty({
     description: 'Unique identifier of the student',
@@ -67,6 +99,13 @@ export class StudentEnrollmentDto {
   @IsString()
   @IsOptional()
   telephone?: string
+
+  @ApiProperty({
+    description: 'List of student attendances',
+    type: [StudentAttendanceDto],
+  })
+  @Type(() => StudentAttendanceDto)
+  attendances: StudentAttendanceDto[]
 
   @ApiProperty({
     description: 'Enrollment status details',

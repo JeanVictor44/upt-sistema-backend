@@ -8,6 +8,13 @@
       "when": 1765228051828,
       "tag": "0000_lowly_runaways",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1766197683554,
+      "tag": "0001_lethal_yellowjacket",
+      "breakpoints": true
     }
   ]
 }

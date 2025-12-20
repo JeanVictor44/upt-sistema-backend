@@ -13,7 +13,7 @@ export const studentAttendanceSchema = pgTable(
     year: integer('year').notNull(),
     month: integer('month').notNull(),
     isPresent: boolean('is_present').notNull(),
-    markedBy: integer('marked_by')
+    markedByUserId: integer('marked_by_user_id')
       .notNull()
       .references(() => userSchema.id),
     markedAt: timestamp('marked_at').notNull().defaultNow(),
@@ -21,7 +21,7 @@ export const studentAttendanceSchema = pgTable(
       .notNull()
       .$onUpdateFn(() => new Date()),
   },
-  (table) => [unique('student_monthly_attendance_unique_constraint').on(table.enrollmentId, table.year, table.month)],
+  (table) => [unique('unique_student_attendance').on(table.enrollmentId, table.year, table.month)],
 )
 
 export type StudentAttendanceschemaInsertProps = typeof studentAttendanceSchema.$inferInsert

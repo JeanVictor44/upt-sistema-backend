@@ -12,6 +12,10 @@ export class StudentEnrollment extends Entity<StudentEnrollmentProps> {
     return this.props.enrollmentId
   }
 
+  get attendances() {
+    return this.props.attendances
+  }
+
   set studentId(value: number) {
     this.props.studentId = value
     this.touch()
@@ -92,6 +96,7 @@ export class StudentEnrollment extends Entity<StudentEnrollmentProps> {
       enrollmentId: props.enrollmentId,
       studentId: props.studentId,
       isExempt: props.isExempt,
+      attendances: props.attendances,
       createdAt: props.createdAt || new Date(),
       updatedAt: props.updatedAt || new Date(),
     })

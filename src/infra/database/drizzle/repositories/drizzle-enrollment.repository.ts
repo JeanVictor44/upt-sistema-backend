@@ -5,13 +5,16 @@ import {
   FindByYearProps,
 } from '@root/domain/academic/applications/repositories/enrollment.repository'
 import { Enrollment } from '@root/domain/academic/enterprise/entities/enrollment.entity'
+import { StudentAttendance } from '@root/domain/academic/enterprise/entities/student-attendance.entity'
 import { StudentEnrollment } from '@root/domain/academic/enterprise/entities/student-enrollment.entity'
 import { and, eq, getTableColumns } from 'drizzle-orm'
 
 import { DATABASE_CONNECTION } from '../database-connection'
 import { EnrollmentMappers } from '../mappers/enrollment.mappers'
+import { StudentAttendanceMappers } from '../mappers/student-attendance.mappers'
 import { StudentEnrollmentMappers } from '../mappers/student-enrollment.mappers'
 import { classEditionSchema, editionSchema, enrollmentSchema, enrollmentStatusSchema, studentSchema } from '../schemas'
+import { studentAttendanceSchema } from '../schemas/student-attendance.schema'
 import { DrizzleDB } from '../types/drizzle'
 
 @Injectable()
@@ -89,6 +92,23 @@ export class DrizzleEnrollmentRepository implements EnrollmentRepository {
       .innerJoin(enrollmentStatusSchema, eq(enrollmentSchema.statusId, enrollmentStatusSchema.id))
       .where(eq(enrollmentSchema.classEditionId, classEditionId))
 
+    const studentAttendances = new Map<number, StudentAttendance[]>()
+
+    await Promise.all(
+      enrollmentsStudent.map(async (data) => {
+        if (!studentAttendances.has(data.enrollment.id)) {
+          const studentAttendancesDb = await this.db
+            .select()
+            .from(studentAttendanceSchema)
+            .where(eq(studentAttendanceSchema.enrollmentId, data.enrollment.id))
+
+          const attendances = studentAttendancesDb.map((attendance) => StudentAttendanceMappers.toDomain(attendance))
+
+          studentAttendances.set(data.enrollment.id, attendances)
+        }
+      }),
+    )
+
     return enrollmentsStudent.map((studentEnrollment) =>
       StudentEnrollmentMappers.toDomain({
         studentId: studentEnrollment.student.id,
@@ -102,6 +122,7 @@ export class DrizzleEnrollmentRepository implements EnrollmentRepository {
           id: studentEnrollment.enrollment.enrollmentStatusId,
           name: studentEnrollment.enrollment.enrollmentStatusName,
         },
+        attendances: studentAttendances.get(studentEnrollment.enrollment.id) || [],
         isExempt: studentEnrollment.enrollment.isExempt,
         createdAt: new Date(studentEnrollment.student.createdAt),
         updatedAt: studentEnrollment.student.updatedAt ? new Date(studentEnrollment.student.updatedAt) : undefined,

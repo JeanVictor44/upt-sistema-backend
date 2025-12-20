@@ -6,6 +6,7 @@ import { ClassRepository } from '@root/domain/academic/applications/repositories
 import { EditionRepository } from '@root/domain/academic/applications/repositories/edition-repository'
 import { EnrollmentQueryRepository } from '@root/domain/academic/applications/repositories/enrollment-query-repository'
 import { EnrollmentRepository } from '@root/domain/academic/applications/repositories/enrollment.repository'
+import { StudentAttendanceRepository } from '@root/domain/academic/applications/repositories/student-attendance.repository'
 import { StudentQueryRepository } from '@root/domain/academic/applications/repositories/student-query-repository'
 import { StudentRepository } from '@root/domain/academic/applications/repositories/student-repository'
 import { AnalyticsQueryRepository } from '@root/domain/analytics/applications/repositories/analytics-repository-query'
@@ -36,6 +37,7 @@ import { DrizzleNeighborhoodQueryRepository } from './drizzle/repositories/drizz
 import { DrizzleNeighborhoodRepository } from './drizzle/repositories/drizzle-neighborhood.repository'
 import { DrizzleRegionsRepository } from './drizzle/repositories/drizzle-regions.repository'
 import { DrizzleResourcesRepository } from './drizzle/repositories/drizzle-resources.repository'
+import { DrizzleStudentAttendanceRepository } from './drizzle/repositories/drizzle-student-attendance.repository'
 import { DrizzleStudentQueryRepository } from './drizzle/repositories/drizzle-student-query.repository'
 import { DrizzleStudentRepository } from './drizzle/repositories/drizzle-student.repository'
 import { DrizzleTeachingPlaceQueryRepository } from './drizzle/repositories/drizzle-teaching-place-query.repository'
@@ -75,6 +77,10 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
       useClass: DrizzleAnalyticsQueryRepository,
       provide: AnalyticsQueryRepository,
     },
+    {
+      useClass: DrizzleStudentAttendanceRepository,
+      provide: StudentAttendanceRepository,
+    },
   ],
   exports: [
     UsersRepository,
@@ -97,6 +103,7 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
     EnrollmentRepository,
     EnrollmentQueryRepository,
     AnalyticsQueryRepository,
+    StudentAttendanceRepository,
   ],
 })
 export class DatabaseModule {}
