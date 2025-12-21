@@ -4,10 +4,6 @@ export interface EnrollmentWithDetailsDTO {
   classEdition: {
     id: number
     enrolledCount: number
-    class: {
-      id: number
-      name: string
-    }
     edition: {
       id: number
       year: number

@@ -11,10 +11,6 @@ import { CreateClassEditionController } from './controllers/academic/class-editi
 import { DeleteClassEditionController } from './controllers/academic/class-edition/delete-class-edition.controller'
 import { EditClassEditionController } from './controllers/academic/class-edition/edit-class-edition.controller'
 import { ListClassEditionsController } from './controllers/academic/class-edition/list-class-edition.controller'
-import { CreateClassController } from './controllers/academic/class/create-class.controller'
-import { DeleteClassController } from './controllers/academic/class/delete-class.controller'
-import { EditClassController } from './controllers/academic/class/edit-class.controller'
-import { ListClassesController } from './controllers/academic/class/list-classes.controller'
 import { CreateEditionController } from './controllers/academic/edition/create-edition.controller'
 import { DeleteEditionController } from './controllers/academic/edition/delete-edition.controller'
 import { EditEditionController } from './controllers/academic/edition/edit-edition.controller'
@@ -112,10 +108,6 @@ import { ExcelGeneratorService } from './services/excel-generator.service'
     DeleteTeachingPlaceController,
     DeleteEditionController,
     EditEditionController,
-    CreateClassController,
-    EditClassController,
-    DeleteClassController,
-    ListClassesController,
     ListShiftsController,
     CreateClassEditionController,
     EditClassEditionController,

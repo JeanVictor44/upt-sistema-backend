@@ -31,11 +31,11 @@ export class EditClassEditionController {
     @Body() body: EditClassEditionBodySwaggerDto,
     @Param('id') id: number,
   ): Promise<EditClassEditionResponseSwaggerDto> {
-    const { classId, editionId, enrolledCount, optionId, shiftId, statusId } = body
+    const { teachingPlaceId, editionId, enrolledCount, optionId, shiftId, statusId } = body
 
     const result = await this.editClassEdition.execute({
       id,
-      classId,
+      teachingPlaceId,
       editionId,
       enrolledCount,
       optionId,

@@ -10,7 +10,6 @@ import { DATABASE_CONNECTION } from '../database-connection'
 import {
   addressSchema,
   classEditionSchema,
-  classSchema,
   editionSchema,
   enrollmentSchema,
   ethnicitySchema,
@@ -96,8 +95,7 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
 
     if (regionId) {
       query = query
-        .leftJoin(classSchema, eq(classSchema.id, classEditionSchema.classId))
-        .leftJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, classSchema.teachingPlaceId))
+        .leftJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, classEditionSchema.teachingPlaceId))
         .leftJoin(neighborhoodSchema, eq(neighborhoodSchema.id, teachingPlaceSchema.neighborhoodId))
     }
 
@@ -161,8 +159,7 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
             statusId: enrollmentSchema.statusId,
             classEdition: {
               id: classEditionSchema.id,
-              className: classSchema.name,
-              classId: classSchema.id,
+
               editionId: editionSchema.id,
               editionYear: editionSchema.year,
               createdAt: classEditionSchema.createdAt,
@@ -172,7 +169,6 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
           .from(enrollmentSchema)
           .innerJoin(classEditionSchema, eq(classEditionSchema.id, enrollmentSchema.classEditionId))
           .innerJoin(editionSchema, eq(editionSchema.id, classEditionSchema.editionId))
-          .innerJoin(classSchema, eq(classSchema.id, classEditionSchema.classId))
           .where(eq(enrollmentSchema.studentId, student.id))
 
         // Buscar a contagem de estudantes matriculados em cada classEdition
@@ -191,10 +187,6 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
               classEdition: {
                 id: enrollment.classEdition.id,
                 enrolledCount: countResult.count,
-                class: {
-                  id: enrollment.classEdition.classId,
-                  name: enrollment.classEdition.className,
-                },
                 edition: {
                   id: enrollment.classEdition.editionId,
                   year: enrollment.classEdition.editionYear,

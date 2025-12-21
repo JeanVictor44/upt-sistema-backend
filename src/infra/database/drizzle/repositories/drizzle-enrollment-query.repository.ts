@@ -8,7 +8,6 @@ import {
   addressSchema,
   citySchema,
   classEditionSchema,
-  classSchema,
   enrollmentSchema,
   enrollmentStatusSchema,
   ethnicitySchema,
@@ -59,8 +58,7 @@ export class DrizzleEnrollmentQueryRepository implements EnrollmentQueryReposito
       .from(enrollmentSchema)
       .innerJoin(studentSchema, eq(enrollmentSchema.studentId, studentSchema.id))
       .innerJoin(classEditionSchema, eq(enrollmentSchema.classEditionId, classEditionSchema.id))
-      .innerJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
-      .innerJoin(teachingPlaceSchema, eq(classSchema.teachingPlaceId, teachingPlaceSchema.id))
+      .innerJoin(teachingPlaceSchema, eq(classEditionSchema.teachingPlaceId, teachingPlaceSchema.id))
       .innerJoin(neighborhoodSchema, eq(teachingPlaceSchema.neighborhoodId, neighborhoodSchema.id))
       .innerJoin(regionSchema, eq(neighborhoodSchema.regionId, regionSchema.id))
       .innerJoin(citySchema, eq(neighborhoodSchema.cityId, citySchema.id))

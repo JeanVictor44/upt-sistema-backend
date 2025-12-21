@@ -1,5 +1,5 @@
 export type ClassEditionProps = {
-  classId: number
+  teachingPlaceId: number
   editionId: number
   shiftId: number
   optionId: number

@@ -9,11 +9,11 @@ import { IsNumber } from 'class-validator'
 
 export class EditClassEditionBodySwaggerDto {
   @ApiProperty({
-    description: 'Unique identifier of the class',
-    type: Number,
+    description: 'teaching place id of the class',
+    example: 1,
   })
   @IsNumber()
-  classId: number
+  teachingPlaceId: number
 
   @ApiProperty({
     description: 'Unique identifier of the edition',

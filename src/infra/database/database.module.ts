@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ClassEditionQueryRepository } from '@root/domain/academic/applications/repositories/class-edition-query-repository'
 import { ClassEditionRepository } from '@root/domain/academic/applications/repositories/class-edition-repository'
-import { ClassQueryRepository } from '@root/domain/academic/applications/repositories/class-query-repository'
-import { ClassRepository } from '@root/domain/academic/applications/repositories/class-repository'
 import { EditionRepository } from '@root/domain/academic/applications/repositories/edition-repository'
 import { EnrollmentQueryRepository } from '@root/domain/academic/applications/repositories/enrollment-query-repository'
 import { EnrollmentRepository } from '@root/domain/academic/applications/repositories/enrollment.repository'
@@ -28,8 +26,6 @@ import { DrizzleAnalyticsQueryRepository } from './drizzle/repositories/drizzle-
 import { DrizzleCityRepository } from './drizzle/repositories/drizzle-city.repository'
 import { DrizzleClassEditionQueryRepository } from './drizzle/repositories/drizzle-class-edition-query.repository'
 import { DrizzleClassEditionRepository } from './drizzle/repositories/drizzle-class-edition.repository'
-import { DrizzleClassQueryRepository } from './drizzle/repositories/drizzle-class-query.repository'
-import { DrizzleClassRepository } from './drizzle/repositories/drizzle-class.repository'
 import { DrizzleEditionRepository } from './drizzle/repositories/drizzle-edition.repository'
 import { DrizzleEnrollmentQueryRepository } from './drizzle/repositories/drizzle-enrollment-query.repository'
 import { DrizzleEnrollmentRepository } from './drizzle/repositories/drizzle-enrollment.repository'
@@ -58,8 +54,6 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
     { useClass: DrizzleTeachingPlaceQueryRepository, provide: TeachingPlaceQueryRepository },
     { useClass: DrizzleEditionRepository, provide: EditionRepository },
     { useClass: DrizzleUserRole, provide: UserRolesRepository },
-    { useClass: DrizzleClassRepository, provide: ClassRepository },
-    { useClass: DrizzleClassQueryRepository, provide: ClassQueryRepository },
     { useClass: DrizzleClassEditionRepository, provide: ClassEditionRepository },
     { useClass: DrizzleClassEditionQueryRepository, provide: ClassEditionQueryRepository },
     { useClass: DrizzleStudentRepository, provide: StudentRepository },
@@ -93,8 +87,6 @@ import { DrizzleUsersRepository } from './drizzle/repositories/drizzle-users.rep
     TeachingPlaceQueryRepository,
     EditionRepository,
     UserRolesRepository,
-    ClassQueryRepository,
-    ClassRepository,
     ClassEditionRepository,
     ClassEditionQueryRepository,
     StudentRepository,

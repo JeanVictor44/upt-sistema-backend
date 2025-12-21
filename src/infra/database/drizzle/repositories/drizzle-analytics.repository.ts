@@ -16,7 +16,7 @@ import { DATABASE_CONNECTION } from '../database-connection'
 import {
   addressSchema,
   classEditionSchema,
-  classSchema,
+  classOptionSchema,
   editionSchema,
   enrollmentSchema,
   enrollmentStatuses,
@@ -25,6 +25,7 @@ import {
   propertyLocationCategorySchema,
   shiftSchema,
   studentSchema,
+  teachingPlaceSchema,
 } from '../schemas'
 import { DrizzleDB } from '../types/drizzle'
 
@@ -160,21 +161,23 @@ export class DrizzleAnalyticsQueryRepository implements AnalyticsQueryRepository
   async topClassEditionsEnrollment(data: FindDataProps): Promise<TopClassEditionEnrollmentDTO[]> {
     const results = await this.db
       .select({
-        className: classSchema.name,
+        teachingPlaceName: teachingPlaceSchema.name,
+        option: classOptionSchema.name,
         year: editionSchema.year,
         enrolledCount: countDistinct(enrollmentSchema.studentId),
       })
       .from(enrollmentSchema)
       .innerJoin(classEditionSchema, eq(classEditionSchema.id, enrollmentSchema.classEditionId))
-      .innerJoin(classSchema, eq(classSchema.id, classEditionSchema.classId))
       .innerJoin(editionSchema, eq(editionSchema.id, classEditionSchema.editionId))
+      .innerJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, classEditionSchema.teachingPlaceId))
+      .innerJoin(classOptionSchema, eq(classOptionSchema.id, classEditionSchema.optionId))
       .where(data.editionId ? eq(classEditionSchema.editionId, data.editionId) : undefined)
-      .groupBy(classEditionSchema.id, classSchema.name, editionSchema.year)
+      .groupBy(classEditionSchema.id, editionSchema.year, classOptionSchema.name, teachingPlaceSchema.name)
       .orderBy(desc(countDistinct(enrollmentSchema.studentId)))
       .limit(5)
 
     return results.map((result) => ({
-      name: `${result.className} - ${result.year}`,
+      name: `${result.teachingPlaceName} - Turma ${result.option} - ${result.year}`,
       value: result.enrolledCount,
     }))
   }

@@ -8,11 +8,11 @@ import { ClassEditionRepository } from '../../repositories/class-edition-reposit
 
 type InputProps = {
   editionId: number
-  classId: number
   enrolledCount: number
   optionId: number
   shiftId: number
   statusId: number
+  teachingPlaceId: number
 }
 
 type OutputProps = Either<ResourceAlreadyExistsError, null>
@@ -22,21 +22,22 @@ export class CreateClassEditionUseCase {
   constructor(private readonly classEditionRepository: ClassEditionRepository) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
-    const { classId, editionId, enrolledCount, optionId, shiftId, statusId } = data
+    const { editionId, enrolledCount, optionId, shiftId, statusId, teachingPlaceId } = data
 
     const classEditionExists = await this.classEditionRepository.findByCompositeKeys({
-      classId,
+      teachingPlaceId,
       editionId,
+      optionId,
     })
     if (classEditionExists) return left(new ResourceAlreadyExistsError())
 
     const classEdition = ClassEdition.create({
-      classId,
       editionId,
       enrolledCount,
       optionId,
       shiftId,
       statusId,
+      teachingPlaceId,
     })
     await this.classEditionRepository.create(classEdition)
 

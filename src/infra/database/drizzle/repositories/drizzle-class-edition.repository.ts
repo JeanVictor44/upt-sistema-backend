@@ -34,7 +34,11 @@ export class DrizzleClassEditionRepository implements ClassEditionRepository {
 
   async findByCompositeKeys(data: FindByCompositeKeysProps): AsyncMaybe<ClassEdition> {
     const classEdition = await this.db.query.classEditionSchema.findFirst({
-      where: and(eq(classEditionSchema.editionId, data.editionId), eq(classEditionSchema.classId, data.classId)),
+      where: and(
+        eq(classEditionSchema.editionId, data.editionId),
+        eq(classEditionSchema.optionId, data.optionId),
+        eq(classEditionSchema.teachingPlaceId, data.teachingPlaceId),
+      ),
     })
 
     if (!classEdition) return null

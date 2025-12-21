@@ -1,5 +1,3 @@
-import { ClassWithDetailsDTO } from './class-with-details.dto'
-
 export interface ClassEditionWithDetailsDTO {
   id: number
   enrolledCount: number
@@ -15,7 +13,31 @@ export interface ClassEditionWithDetailsDTO {
     id: number
     name: string
   }
-  class: ClassWithDetailsDTO
+  teachingPlace: {
+    id: number
+    name: string
+    propertyLocationCategory: {
+      id: number
+      name: string
+    }
+    traditionalCommunityName?: string
+    neighborhood: {
+      id: number
+      name: string
+      city: {
+        id: number
+        name: string
+      }
+      region: {
+        id: number
+        name: string
+      }
+      createdAt: Date
+      updatedAt: Date
+    }
+    createdAt: Date
+    updatedAt: Date
+  }
   edition: {
     id: number
     year: number

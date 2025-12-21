@@ -1,5 +1,5 @@
 {
-  "id": "66d3e0e2-767c-46a9-bf75-8793f3c869df",
+  "id": "6988db3a-5f8a-45cf-a43d-835c9f9b22f6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -800,72 +800,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.class": {
-      "name": "class",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "teaching_place_id": {
-          "name": "teaching_place_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "class_teaching_place_id_teaching_place_id_fk": {
-          "name": "class_teaching_place_id_teaching_place_id_fk",
-          "tableFrom": "class",
-          "tableTo": "teaching_place",
-          "columnsFrom": [
-            "teaching_place_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "class_name_unique": {
-          "name": "class_name_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.student": {
       "name": "student",
       "schema": "",
@@ -1291,8 +1225,8 @@
           "notNull": true,
           "default": 1
         },
-        "class_id": {
-          "name": "class_id",
+        "teaching_place_id": {
+          "name": "teaching_place_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -1371,12 +1305,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "class_edition_class_id_class_id_fk": {
-          "name": "class_edition_class_id_class_id_fk",
+        "class_edition_teaching_place_id_teaching_place_id_fk": {
+          "name": "class_edition_teaching_place_id_teaching_place_id_fk",
           "tableFrom": "class_edition",
-          "tableTo": "class",
+          "tableTo": "teaching_place",
           "columnsFrom": [
-            "class_id"
+            "teaching_place_id"
           ],
           "columnsTo": [
             "id"
@@ -1477,6 +1411,105 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.student_attendance": {
+      "name": "student_attendance",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "enrollment_id": {
+          "name": "enrollment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "month": {
+          "name": "month",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_present": {
+          "name": "is_present",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "marked_by_user_id": {
+          "name": "marked_by_user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "marked_at": {
+          "name": "marked_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "student_attendance_enrollment_id_enrollment_id_fk": {
+          "name": "student_attendance_enrollment_id_enrollment_id_fk",
+          "tableFrom": "student_attendance",
+          "tableTo": "enrollment",
+          "columnsFrom": [
+            "enrollment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "student_attendance_marked_by_user_id_user_id_fk": {
+          "name": "student_attendance_marked_by_user_id_user_id_fk",
+          "tableFrom": "student_attendance",
+          "tableTo": "user",
+          "columnsFrom": [
+            "marked_by_user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "unique_student_attendance": {
+          "name": "unique_student_attendance",
+          "nullsNotDistinct": false,
+          "columns": [
+            "enrollment_id",
+            "year",
+            "month"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

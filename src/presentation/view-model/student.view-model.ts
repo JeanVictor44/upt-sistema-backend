@@ -40,10 +40,6 @@ export class StudentViewModel {
         classEdition: {
           id: enrollment.classEdition.id,
           enrolledCount: enrollment.classEdition.enrolledCount,
-          class: {
-            id: enrollment.classEdition.class.id,
-            name: enrollment.classEdition.class.name,
-          },
           edition: {
             id: enrollment.classEdition.edition.id,
             year: enrollment.classEdition.edition.year,

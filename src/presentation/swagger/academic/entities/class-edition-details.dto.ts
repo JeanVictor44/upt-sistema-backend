@@ -1,9 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { ClassWithDetailsDTO } from '@root/domain/academic/applications/dtos/class-with-details.dto'
 import { Type } from 'class-transformer'
 import { IsDate, IsNumber, IsString } from 'class-validator'
 
-import { ClassDetailsDto } from './class-details.dto'
+import { TeachingPlaceDetailsDto } from '../../location/entities/teaching-place-details.dto'
 import { EditionDto } from './edition.dto'
 
 interface Shift {
@@ -77,11 +76,10 @@ export class ClassEditionDetailsDto {
   id: number
 
   @ApiProperty({
-    description: 'Class details',
-    type: ClassDetailsDto,
+    description: 'Teaching place',
+    type: TeachingPlaceDetailsDto,
   })
-  @Type(() => ClassDetailsDto)
-  class: ClassWithDetailsDTO
+  teachingPlace: TeachingPlaceDetailsDto
 
   @ApiProperty({
     description: 'Edition details',

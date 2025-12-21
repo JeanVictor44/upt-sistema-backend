@@ -1,7 +1,7 @@
 import { BadRequestException, Controller, Delete, HttpCode, NotFoundException, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { ResourceNotFoundError } from '@root/core/errors/errors/resource-not-found-error'
-import { DeleteClassUseCase } from '@root/domain/academic/applications/use-cases/class/delete-class.use-case'
+import { DeleteClassEditionUseCase } from '@root/domain/academic/applications/use-cases/class-edition/delete-class-edition.use-case'
 import {
   DeleteClassEditionResponseSwaggerDto,
   DeleteClassEditionSwaggerDto,
@@ -10,7 +10,7 @@ import {
 @ApiTags('Academic')
 @Controller({ path: '/academic', version: '1' })
 export class DeleteClassEditionController {
-  constructor(private deleteClass: DeleteClassUseCase) {}
+  constructor(private deleteClass: DeleteClassEditionUseCase) {}
 
   @ApiBearerAuth()
   @Delete('/class-editions/:id')

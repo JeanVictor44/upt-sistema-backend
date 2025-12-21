@@ -6,7 +6,7 @@ export class ClassEditionMappers {
   static toDomain(data: ClassEditionSchemaSelectProps): ClassEdition {
     return ClassEdition.create(
       {
-        classId: data.classId,
+        teachingPlaceId: data.teachingPlaceId,
         editionId: data.editionId,
         optionId: data.optionId,
         shiftId: data.shiftId,
@@ -22,7 +22,7 @@ export class ClassEditionMappers {
   static toPersistence(data: ClassEdition): ClassEditionSchemaSchemaInsertProps {
     return {
       id: data.id,
-      classId: data.classId,
+      teachingPlaceId: data.teachingPlaceId,
       editionId: data.editionId,
       optionId: data.optionId,
       shiftId: data.shiftId,

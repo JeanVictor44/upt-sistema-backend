@@ -5,10 +5,6 @@ import { CreateClassEditionUseCase } from './class-edition/create-class-edition.
 import { DeleteClassEditionUseCase } from './class-edition/delete-class-edition.use-case'
 import { EditClassEditionUseCase } from './class-edition/edit-class-edition.use-case'
 import { ListClassEditionsUseCase } from './class-edition/list-class-editions.use-case'
-import { CreateClassUseCase } from './class/create-class.use-case'
-import { DeleteClassUseCase } from './class/delete-class.use-case'
-import { EditClassUseCase } from './class/edit-class.use-case'
-import { ListClassesUseCase } from './class/list-classes.use-case'
 import { CreateEditionUseCase } from './edition/create-edition.use-case'
 import { DeleteEditionUseCase } from './edition/delete-edition.use-case'
 import { EditEditionUseCase } from './edition/edit-edition.use-case'
@@ -30,10 +26,6 @@ import { ListStudentsUseCase } from './student/list-students.use-case'
     ListEditionsUseCase,
     EditEditionUseCase,
     DeleteEditionUseCase,
-    DeleteClassUseCase,
-    EditClassUseCase,
-    ListClassesUseCase,
-    CreateClassUseCase,
     CreateClassEditionUseCase,
     DeleteClassEditionUseCase,
     ListClassEditionsUseCase,
@@ -53,10 +45,6 @@ import { ListStudentsUseCase } from './student/list-students.use-case'
     ListEditionsUseCase,
     EditEditionUseCase,
     DeleteEditionUseCase,
-    DeleteClassUseCase,
-    EditClassUseCase,
-    ListClassesUseCase,
-    CreateClassUseCase,
     CreateClassEditionUseCase,
     DeleteClassEditionUseCase,
     ListClassEditionsUseCase,

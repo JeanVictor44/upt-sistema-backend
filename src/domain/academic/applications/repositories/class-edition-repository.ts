@@ -3,8 +3,9 @@ import { AsyncMaybe } from '@root/core/logic/Maybe'
 import { ClassEdition } from '../../enterprise/entities/class-edition.entity'
 
 export interface FindByCompositeKeysProps {
-  classId: number
+  teachingPlaceId: number
   editionId: number
+  optionId: number
 }
 
 export abstract class ClassEditionRepository {

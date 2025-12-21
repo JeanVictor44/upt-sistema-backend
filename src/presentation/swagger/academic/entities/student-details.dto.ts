@@ -184,13 +184,6 @@ export class ClassEditionDto {
   enrolledCount: number
 
   @ApiProperty({
-    description: 'Class information',
-    type: () => ClassDto,
-  })
-  @Type(() => ClassDto)
-  class: ClassDto
-
-  @ApiProperty({
     description: 'Edition information',
     type: () => EditionDto,
   })

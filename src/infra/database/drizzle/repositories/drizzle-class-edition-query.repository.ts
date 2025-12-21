@@ -11,7 +11,6 @@ import {
   citySchema,
   classEditionSchema,
   classOptionSchema,
-  classSchema,
   classStatusSchema,
   editionSchema,
   neighborhoodSchema,
@@ -37,8 +36,7 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
           createdAt: editionSchema.createdAt,
           updatedAt: editionSchema.updatedAt,
         },
-        classId: classSchema.id,
-        name: classSchema.name,
+
         option: {
           id: classOptionSchema.id,
           name: classOptionSchema.name,
@@ -68,8 +66,6 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
           traditionalCommunityName: teachingPlaceSchema.traditionalCommunityName,
           propertyLocationCategoryName: propertyLocationCategorySchema.name,
         },
-        classCreatedAt: classSchema.createdAt,
-        classUpdatedAt: classSchema.updatedAt,
         createdAt: classEditionSchema.createdAt,
         updatedAt: classEditionSchema.updatedAt,
       })
@@ -80,11 +76,10 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
           data?.regionId ? eq(regionSchema.id, data.regionId) : undefined,
         ),
       )
-      .innerJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
       .innerJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
       .innerJoin(classOptionSchema, eq(classEditionSchema.optionId, classOptionSchema.id))
       .innerJoin(classStatusSchema, eq(classEditionSchema.statusId, classStatusSchema.id))
-      .innerJoin(teachingPlaceSchema, eq(classSchema.teachingPlaceId, teachingPlaceSchema.id))
+      .innerJoin(teachingPlaceSchema, eq(classEditionSchema.teachingPlaceId, teachingPlaceSchema.id))
       .innerJoin(
         propertyLocationCategorySchema,
         eq(teachingPlaceSchema.propertyLocationCategoryId, propertyLocationCategorySchema.id),
@@ -115,36 +110,30 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
         id: cls.shift.id,
         name: cls.shift.name,
       },
-      class: {
-        id: cls.classId,
-        name: cls.name,
-        teachingPlace: {
-          id: cls.teachingPlace.id,
-          name: cls.teachingPlace.name,
-          propertyLocationCategory: {
-            id: cls.teachingPlace.proertyLocationCategoryId,
-            name: cls.teachingPlace.propertyLocationCategoryName,
-          },
-          traditionalCommunityName: cls.teachingPlace.traditionalCommunityName || undefined,
-          neighborhood: {
-            id: cls.teachingPlace.neighborhoodId,
-            name: cls.teachingPlace.neighborhoodName,
-            city: {
-              id: cls.teachingPlace.cityId,
-              name: cls.teachingPlace.cityName,
-            },
-            region: {
-              id: cls.teachingPlace.regionId,
-              name: cls.teachingPlace.regionName,
-            },
-            createdAt: cls.teachingPlace.neighborhoodCreatedAt,
-            updatedAt: cls.teachingPlace.neighborhoodUpdatedAt,
-          },
-          createdAt: cls.teachingPlace.createdAt,
-          updatedAt: cls.teachingPlace.updatedAt,
+      teachingPlace: {
+        id: cls.teachingPlace.id,
+        name: cls.teachingPlace.name,
+        propertyLocationCategory: {
+          id: cls.teachingPlace.proertyLocationCategoryId,
+          name: cls.teachingPlace.propertyLocationCategoryName,
         },
-        createdAt: cls.classCreatedAt,
-        updatedAt: cls.classUpdatedAt,
+        traditionalCommunityName: cls.teachingPlace.traditionalCommunityName || undefined,
+        neighborhood: {
+          id: cls.teachingPlace.neighborhoodId,
+          name: cls.teachingPlace.neighborhoodName,
+          city: {
+            id: cls.teachingPlace.cityId,
+            name: cls.teachingPlace.cityName,
+          },
+          region: {
+            id: cls.teachingPlace.regionId,
+            name: cls.teachingPlace.regionName,
+          },
+          createdAt: cls.teachingPlace.neighborhoodCreatedAt,
+          updatedAt: cls.teachingPlace.neighborhoodUpdatedAt,
+        },
+        createdAt: cls.teachingPlace.createdAt,
+        updatedAt: cls.teachingPlace.updatedAt,
       },
       createdAt: cls.createdAt,
       updatedAt: cls.updatedAt,

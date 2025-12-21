@@ -5,9 +5,10 @@ import { Optional } from '@core/logic/Optional'
 import { ClassEditionProps } from '../interfaces/class-edition'
 
 export class ClassEdition extends Entity<ClassEditionProps> {
-  get classId() {
-    return this.props.classId
+  get teachingPlaceId() {
+    return this.props.teachingPlaceId
   }
+
   get editionId() {
     return this.props.editionId
   }
@@ -31,16 +32,16 @@ export class ClassEdition extends Entity<ClassEditionProps> {
     this.props.shiftId = shiftId
   }
 
+  set teachingPlaceId(teachingPlaceId: number) {
+    this.props.teachingPlaceId = teachingPlaceId
+  }
+
   set optionId(optionId: number) {
     this.props.optionId = optionId
   }
 
   set statusId(statusId: number) {
     this.props.statusId = statusId
-  }
-
-  set classId(classId: number) {
-    this.props.classId = classId
   }
 
   set editionId(editionId: number) {
@@ -66,7 +67,7 @@ export class ClassEdition extends Entity<ClassEditionProps> {
   static create(props: Optional<ClassEditionProps, 'createdAt' | 'updatedAt'>, id?: number) {
     return new ClassEdition(
       {
-        classId: props.classId,
+        teachingPlaceId: props.teachingPlaceId,
         editionId: props.editionId,
         enrolledCount: props.enrolledCount,
         optionId: props.optionId,

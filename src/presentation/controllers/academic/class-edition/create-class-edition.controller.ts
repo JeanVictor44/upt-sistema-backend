@@ -27,10 +27,10 @@ export class CreateClassEditionController {
   @HttpCode(201)
   @CreateClassEditionSwaggerDto()
   async handle(@Body() body: CreateClassEditionBodySwaggerDto): Promise<CreateClassEditionResponseSwaggerDto> {
-    const { classId, editionId, enrolledCount, optionId, shiftId, statusId } = body
+    const { teachingPlaceId, editionId, enrolledCount, optionId, shiftId, statusId } = body
 
     const result = await this.createClassEdition.execute({
-      classId,
+      teachingPlaceId,
       editionId,
       enrolledCount,
       optionId,

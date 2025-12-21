@@ -9,7 +9,6 @@ import { User } from '@domain/authentication/enterprise/entities/user.entity'
 import { DATABASE_CONNECTION } from '@infra/database/drizzle/database-connection'
 import {
   classEditionSchema,
-  classSchema,
   editionSchema,
   regionSchema,
   roleSchema,
@@ -41,7 +40,6 @@ export class DrizzleUsersRepository implements UsersRepository {
         },
         classEdition: {
           id: classEditionSchema.id,
-          name: classSchema.name,
           year: editionSchema.year,
         },
         region: {
@@ -52,7 +50,6 @@ export class DrizzleUsersRepository implements UsersRepository {
       .from(userSchema)
       .leftJoin(userRoleSchema, and(eq(userSchema.id, userRoleSchema.userId), isNull(userRoleSchema.endDate)))
       .leftJoin(classEditionSchema, eq(classEditionSchema.id, userRoleSchema.classEditionId))
-      .leftJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
       .leftJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
       .leftJoin(regionSchema, eq(regionSchema.id, userRoleSchema.regionId))
       .leftJoin(roleSchema, eq(userRoleSchema.roleId, roleSchema.id))
@@ -64,7 +61,6 @@ export class DrizzleUsersRepository implements UsersRepository {
             role: roleSchema.name,
             classEdition: {
               id: classEditionSchema.id,
-              name: classSchema.name,
               year: editionSchema.year,
             },
             region: {
@@ -77,7 +73,6 @@ export class DrizzleUsersRepository implements UsersRepository {
           .from(userRoleSchema)
           .innerJoin(roleSchema, eq(userRoleSchema.roleId, roleSchema.id))
           .leftJoin(classEditionSchema, eq(classEditionSchema.id, userRoleSchema.classEditionId))
-          .leftJoin(classSchema, eq(classEditionSchema.classId, classSchema.id))
           .leftJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
           .leftJoin(regionSchema, eq(regionSchema.id, userRoleSchema.regionId))
           .where(eq(userRoleSchema.userId, user.id))
@@ -91,7 +86,6 @@ export class DrizzleUsersRepository implements UsersRepository {
           classEdition: classEdition.id
             ? {
                 id: classEdition.id || undefined,
-                name: classEdition.name || undefined,
                 year: classEdition.year || undefined,
               }
             : undefined,
@@ -106,7 +100,6 @@ export class DrizzleUsersRepository implements UsersRepository {
             classEdition: roleHistoryItem.classEdition.id
               ? {
                   id: roleHistoryItem.classEdition.id || undefined,
-                  name: roleHistoryItem.classEdition.name || undefined,
                   year: roleHistoryItem.classEdition.year || undefined,
                 }
               : undefined,
