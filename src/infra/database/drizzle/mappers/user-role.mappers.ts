@@ -8,7 +8,7 @@ export class UserRoleMappers {
       {
         userId: data.userId,
         roleId: data.roleId,
-        classEditionId: data.classEditionId || undefined,
+        teachingPlaceId: data.teachingPlaceId || undefined,
         regionId: data.regionId || undefined,
         startDate: data.startDate,
         endDate: data.endDate,
@@ -24,7 +24,7 @@ export class UserRoleMappers {
       id: data.id,
       userId: data.userId,
       roleId: data.roleId,
-      classEditionId: data.classEditionId,
+      teachingPlaceId: data.teachingPlaceId,
       regionId: data.regionId,
       startDate: data.startDate,
       endDate: data.endDate,

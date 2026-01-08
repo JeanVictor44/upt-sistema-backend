@@ -2,7 +2,7 @@ import { ClassEditionWithDetailsDTO } from '../dtos/class-edition-with-details.d
 
 export interface findAllClassEditionsWithDetailsProps {
   regionId?: number
-  classEditionIds?: number[]
+  teachingPlacesIds?: number[]
 }
 export abstract class ClassEditionQueryRepository {
   abstract findAllWithDetails(data?: findAllClassEditionsWithDetailsProps): Promise<ClassEditionWithDetailsDTO[]>

@@ -16,13 +16,13 @@ export class EditUserRoleBodySwaggerDto {
   roleId: number
 
   @ApiProperty({
-    description: 'Class edition ID to be assigned to the user',
+    description: 'Teaching place ID to be assigned to the user',
     example: 1,
     required: false,
   })
   @IsNumber()
   @IsOptional()
-  classEditionId?: number
+  teachingPlaceId?: number
 
   @ApiProperty({
     description: 'Region ID to be assigned to the user',

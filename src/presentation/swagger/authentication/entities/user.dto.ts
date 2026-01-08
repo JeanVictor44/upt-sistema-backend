@@ -37,7 +37,7 @@ export class RegionInfoDto {
   name?: string
 }
 
-export class ClassEditionInfoDto {
+export class TeachingPlaceInfoDto {
   @ApiProperty({
     description: 'Unique identifier of the class edition',
     example: 1,
@@ -47,20 +47,12 @@ export class ClassEditionInfoDto {
   id?: number
 
   @ApiProperty({
-    description: 'Name of the class',
+    description: 'Name of the teaching place',
     example: 'Matemática',
   })
   @IsString()
   @IsOptional()
   name?: string
-
-  @ApiProperty({
-    description: 'Year of the edition',
-    example: 2024,
-  })
-  @IsNumber()
-  @IsOptional()
-  year?: number
 }
 export class RoleHistoryItemDto {
   @ApiProperty({
@@ -72,13 +64,13 @@ export class RoleHistoryItemDto {
   role?: string
 
   @ApiProperty({
-    description: 'class edition associated with the role',
-    type: () => ClassEditionInfoDto,
+    description: 'teaching place associated with the role',
+    type: () => TeachingPlaceInfoDto,
     required: false,
   })
   @IsOptional()
-  @Type(() => ClassEditionInfoDto)
-  classEdition?: ClassEditionInfoDto
+  @Type(() => TeachingPlaceInfoDto)
+  teachingPlace?: TeachingPlaceInfoDto
 
   @ApiProperty({
     description: 'region associated with the role',
@@ -247,13 +239,13 @@ export class UserWithDetailsDto {
   role?: RoleInfoDto
 
   @ApiProperty({
-    description: 'Class Edition information of the user',
-    type: () => ClassEditionInfoDto,
+    description: 'Teaching place information of the user',
+    type: () => TeachingPlaceInfoDto,
     required: false,
   })
   @IsOptional()
-  @Type(() => ClassEditionInfoDto)
-  classEdition?: ClassEditionInfoDto
+  @Type(() => TeachingPlaceInfoDto)
+  teachingPlace?: TeachingPlaceInfoDto
 
   @ApiProperty({
     description: 'Region information of the user',

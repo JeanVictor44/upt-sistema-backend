@@ -1,7 +1,7 @@
 import { StudentWithDetailsDTO } from '../dtos/student-with-details.dto'
 
 export interface FindAllStudentsWithDetailsParams {
-  classEditionId?: number
+  teachingPlaceId?: number
   regionId?: number
 }
 

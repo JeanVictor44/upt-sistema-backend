@@ -8,6 +8,12 @@ export interface EnrollmentWithDetailsDTO {
       id: number
       year: number
     }
+    option: {
+      name: string
+    }
+    teachingPlace: {
+      name: string
+    }
     createdAt: Date
     updatedAt: Date
   }

@@ -1,8 +1,8 @@
 import { integer, pgTable, serial, timestamp } from 'drizzle-orm/pg-core'
 
-import { classEditionSchema } from './class-edition.schema'
 import { regionSchema } from './region.schema'
 import { roleSchema } from './role.schema'
+import { teachingPlaceSchema } from './teaching-place.schema'
 import { userSchema } from './user.schema'
 
 export const userRoleSchema = pgTable('user_role', {
@@ -14,7 +14,7 @@ export const userRoleSchema = pgTable('user_role', {
     .notNull()
     .references(() => roleSchema.id),
   regionId: integer('region_id').references(() => regionSchema.id),
-  classEditionId: integer('class_edition_id').references(() => classEditionSchema.id),
+  teachingPlaceId: integer('teaching_place_id').references(() => teachingPlaceSchema.id),
   startDate: timestamp('start_date').notNull().defaultNow(),
   endDate: timestamp('end_date'),
   createdAt: timestamp('created_at').notNull().defaultNow(),

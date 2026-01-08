@@ -9,10 +9,9 @@ export class UserMappers {
         id?: number
         name?: string
       }
-      classEdition?: {
+      teachingPlace?: {
         id?: number
         name?: string
-        year?: number
       }
       region?: {
         id?: number
@@ -46,7 +45,7 @@ export class UserMappers {
         updatedAt: new Date(data.updatedAt),
         rolesHistory: data.rolesHistory || [],
         role: data.role || undefined,
-        classEdition: data.classEdition || undefined,
+        teachingPlace: data.teachingPlace || undefined,
         region: data.region || undefined,
       },
       data.id,

@@ -168,6 +168,24 @@ export class EditionDto {
   year: number
 }
 
+export class OptionDto {
+  @ApiProperty({
+    description: 'Name of the option',
+    example: 'Turma A',
+  })
+  @IsString()
+  name: string
+}
+
+export class TeachingPlaceDto {
+  @ApiProperty({
+    description: 'Teaching place name',
+    example: 'Unidade Escolar ABC',
+  })
+  @IsString()
+  name: string
+}
+
 export class ClassEditionDto {
   @ApiProperty({
     description: 'Unique identifier of the class edition',
@@ -189,6 +207,20 @@ export class ClassEditionDto {
   })
   @Type(() => EditionDto)
   edition: EditionDto
+
+  @ApiProperty({
+    description: 'Option information',
+    type: () => OptionDto,
+  })
+  @Type(() => OptionDto)
+  option: OptionDto
+
+  @ApiProperty({
+    description: 'Teaching Place information',
+    type: () => TeachingPlaceDto,
+  })
+  @Type(() => TeachingPlaceDto)
+  teachingPlace: TeachingPlaceDto
 
   @ApiProperty({
     description: 'Timestamp of when the class edition was created',

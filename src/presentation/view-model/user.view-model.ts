@@ -12,10 +12,9 @@ export class UserViewModel {
         id: user.role?.id,
         name: user.role?.name,
       },
-      classEdition: {
-        id: user.classEdition?.id,
-        name: user.classEdition?.name,
-        year: user.classEdition?.year,
+      teachingPlace: {
+        id: user.teachingPlace?.id,
+        name: user.teachingPlace?.name,
       },
       region: {
         id: user.region?.id,
@@ -24,11 +23,10 @@ export class UserViewModel {
       rolesHistory:
         user.rolesHistory?.map((roleHistoryItem) => ({
           role: roleHistoryItem?.role,
-          classEdition: roleHistoryItem?.classEdition
+          teachingPlace: roleHistoryItem?.teachingPlace
             ? {
-                id: roleHistoryItem.classEdition.id,
-                name: roleHistoryItem.classEdition.name,
-                year: roleHistoryItem.classEdition.year,
+                id: roleHistoryItem.teachingPlace.id,
+                name: roleHistoryItem.teachingPlace.name,
               }
             : undefined,
           region: roleHistoryItem.region

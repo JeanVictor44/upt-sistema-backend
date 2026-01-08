@@ -24,16 +24,16 @@ export class EditUserRoleController {
     @Param('userId') userId: number,
     @CurrentUser() user: UserPayload,
   ): Promise<EditUserRoleResponseSwaggerDto> {
-    const { roleId, classEditionId, regionId } = body
+    const { roleId, teachingPlaceId, regionId } = body
     const { sub } = user
     const userIdToAssignedRole = Number(userId)
 
     const result = await this.editUserRole.execute({
       userActionId: sub,
       userId: userIdToAssignedRole,
-      roleId: roleId,
-      classEditionId: classEditionId,
-      regionId: regionId,
+      roleId,
+      teachingPlaceId,
+      regionId,
     })
 
     if (result.isLeft()) {

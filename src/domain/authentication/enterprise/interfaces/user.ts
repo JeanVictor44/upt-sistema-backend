@@ -8,10 +8,9 @@ export type UserProps = {
     id?: number
     name?: string
   }
-  classEdition?: {
+  teachingPlace?: {
     id?: number
     name?: string
-    year?: number
   }
   region?: {
     id?: number
@@ -19,10 +18,9 @@ export type UserProps = {
   }
   rolesHistory?: {
     role?: string
-    classEdition?: {
+    teachingPlace?: {
       id?: number
       name?: string
-      year?: number
     }
     region?: {
       id?: number

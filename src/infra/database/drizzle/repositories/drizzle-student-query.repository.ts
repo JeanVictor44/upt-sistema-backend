@@ -10,6 +10,7 @@ import { DATABASE_CONNECTION } from '../database-connection'
 import {
   addressSchema,
   classEditionSchema,
+  classOptionSchema,
   editionSchema,
   enrollmentSchema,
   ethnicitySchema,
@@ -27,7 +28,7 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
   constructor(@Inject(DATABASE_CONNECTION) private db: DrizzleDB) {}
 
   async findAllWithDetails({
-    classEditionId,
+    teachingPlaceId,
     regionId,
   }: FindAllStudentsWithDetailsParams): Promise<StudentWithDetailsDTO[]> {
     // Busca a última edição cadastrada (maior ano)
@@ -86,16 +87,12 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
         eq(propertyLocationCategorySchema.id, addressSchema.propertyLocationCategoryId),
       )
       .leftJoin(enrollmentSchema, eq(enrollmentSchema.studentId, studentSchema.id))
+      .leftJoin(classEditionSchema, eq(classEditionSchema.id, enrollmentSchema.classEditionId))
 
-    if (regionId || classEditionId || lastEdition) {
-      query = query
-        .leftJoin(classEditionSchema, eq(classEditionSchema.id, enrollmentSchema.classEditionId))
-        .leftJoin(editionSchema, eq(editionSchema.id, classEditionSchema.editionId))
-    }
-
-    if (regionId) {
+    if (regionId || teachingPlaceId || lastEdition) {
       query = query
         .leftJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, classEditionSchema.teachingPlaceId))
+        .leftJoin(editionSchema, eq(editionSchema.id, classEditionSchema.editionId))
         .leftJoin(neighborhoodSchema, eq(neighborhoodSchema.id, teachingPlaceSchema.neighborhoodId))
     }
 
@@ -103,7 +100,7 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
     const whereConditions: SQL<unknown>[] = []
 
     // Se não há filtros, é um usuário ADMIN - retorna todos os estudantes
-    const isAdmin = !classEditionId && !regionId
+    const isAdmin = !teachingPlaceId && !regionId
 
     if (isAdmin) {
       // Admin vê todos os estudantes sem restrição
@@ -137,8 +134,8 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
       }
 
       // Adiciona filtro por classEditionId se fornecido
-      if (classEditionId) {
-        whereConditions.push(eq(enrollmentSchema.classEditionId, classEditionId))
+      if (teachingPlaceId) {
+        whereConditions.push(eq(teachingPlaceSchema.id, teachingPlaceId))
       }
 
       // Adiciona filtro por regionId se fornecido
@@ -159,8 +156,9 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
             statusId: enrollmentSchema.statusId,
             classEdition: {
               id: classEditionSchema.id,
-
               editionId: editionSchema.id,
+              optionName: classOptionSchema.name,
+              teachingPlaceName: teachingPlaceSchema.name,
               editionYear: editionSchema.year,
               createdAt: classEditionSchema.createdAt,
               updatedAt: classEditionSchema.updatedAt,
@@ -169,6 +167,8 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
           .from(enrollmentSchema)
           .innerJoin(classEditionSchema, eq(classEditionSchema.id, enrollmentSchema.classEditionId))
           .innerJoin(editionSchema, eq(editionSchema.id, classEditionSchema.editionId))
+          .innerJoin(classOptionSchema, eq(classOptionSchema.id, classEditionSchema.optionId))
+          .innerJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, classEditionSchema.teachingPlaceId))
           .where(eq(enrollmentSchema.studentId, student.id))
 
         // Buscar a contagem de estudantes matriculados em cada classEdition
@@ -187,6 +187,12 @@ export class DrizzleStudentQueryRepository implements StudentQueryRepository {
               classEdition: {
                 id: enrollment.classEdition.id,
                 enrolledCount: countResult.count,
+                option: {
+                  name: enrollment.classEdition.optionName,
+                },
+                teachingPlace: {
+                  name: enrollment.classEdition.teachingPlaceName,
+                },
                 edition: {
                   id: enrollment.classEdition.editionId,
                   year: enrollment.classEdition.editionYear,

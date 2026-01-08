@@ -15,7 +15,7 @@ type InputProps = {
   userActionId: number
   userId: number
   roleId: number
-  classEditionId?: number
+  teachingPlaceId?: number
   regionId?: number
 }
 
@@ -30,7 +30,7 @@ export class EditUserRoleUseCase {
   ) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
-    const { userActionId, userId, roleId, classEditionId, regionId } = data
+    const { userActionId, userId, roleId, teachingPlaceId, regionId } = data
 
     const authorizedResult = await this.authorizationService.isAuthorized(userActionId, [RolesEnum.ADMIN])
     if (authorizedResult.isLeft()) return left(authorizedResult.value)
@@ -41,7 +41,11 @@ export class EditUserRoleUseCase {
 
     const userRole = await this.userRolesRepository.findActiveRoleByUserId(userId)
 
-    if (userRole?.roleId === roleId && userRole?.classEditionId === classEditionId && userRole?.regionId === regionId) {
+    if (
+      userRole?.roleId === roleId &&
+      userRole?.teachingPlaceId === teachingPlaceId &&
+      userRole?.regionId === regionId
+    ) {
       return right(null)
     }
 
@@ -55,7 +59,7 @@ export class EditUserRoleUseCase {
       roleId,
       endDate: null,
       startDate: new Date(),
-      classEditionId: classEditionId ?? undefined,
+      teachingPlaceId: teachingPlaceId ?? undefined,
       regionId: regionId ?? undefined,
     })
 

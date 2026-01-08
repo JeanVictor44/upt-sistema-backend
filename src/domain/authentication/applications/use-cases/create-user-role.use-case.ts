@@ -15,7 +15,7 @@ type InputProps = {
   userActionId: number
   userId: number
   roleId: number
-  classEditionId?: number
+  teachingPlaceId?: number
   regionId?: number
 }
 
@@ -30,7 +30,7 @@ export class CreateUserRoleUseCase {
   ) {}
 
   async execute(data: InputProps): Promise<OutputProps> {
-    const { userActionId, userId, roleId, classEditionId, regionId } = data
+    const { userActionId, userId, roleId, teachingPlaceId, regionId } = data
 
     const authorizedResult = await this.authorizationService.isAuthorized(userActionId, [RolesEnum.ADMIN])
     if (authorizedResult.isLeft()) return left(authorizedResult.value)
@@ -45,7 +45,7 @@ export class CreateUserRoleUseCase {
     const userRole = UserRole.create({
       userId,
       roleId,
-      classEditionId,
+      teachingPlaceId,
       regionId,
       startDate: new Date(),
       endDate: null,

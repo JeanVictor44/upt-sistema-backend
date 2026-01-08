@@ -32,11 +32,12 @@ export class ListStudentsUseCase {
     if (!userRole) return left(new ResourceNotFoundError())
 
     const regionId: number | undefined = userRole.regionId ? userRole.regionId : undefined
-    const classEditionId: number | undefined = userRole.classEditionId ? userRole.classEditionId : undefined
+    const teachingPlaceId: number | undefined = userRole.teachingPlaceId ? userRole.teachingPlaceId : undefined
 
+    console.log({ regionId, teachingPlaceId })
     const students = await this.studentQueryRepository.findAllWithDetails({
       regionId,
-      classEditionId,
+      teachingPlaceId,
     })
 
     return right(students)

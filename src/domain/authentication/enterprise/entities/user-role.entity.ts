@@ -17,8 +17,8 @@ export class UserRole extends Entity<UserRoleProps> {
     return this.props.regionId
   }
 
-  get classEditionId() {
-    return this.props.classEditionId
+  get teachingPlaceId() {
+    return this.props.teachingPlaceId
   }
 
   get startDate() {
@@ -51,7 +51,7 @@ export class UserRole extends Entity<UserRoleProps> {
         userId: props.userId,
         roleId: props.roleId,
         regionId: props.regionId,
-        classEditionId: props.classEditionId,
+        teachingPlaceId: props.teachingPlaceId,
         startDate: props.startDate,
         endDate: props.endDate,
         createdAt: props.createdAt || new Date(),

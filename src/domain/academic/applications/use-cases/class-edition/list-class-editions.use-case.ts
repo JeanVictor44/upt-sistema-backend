@@ -38,8 +38,8 @@ export class ListClassEditionsUseCase {
       return right(classEditions)
     }
 
-    const isRegionManager = role === 'REGION_MANAGER'
-    if (isRegionManager) {
+    const isInteriorManager = role === 'INTERIOR_MANAGER'
+    if (isInteriorManager) {
       const classEditions = await this.classEditionRepository.findAllWithDetails({
         regionId: userRole.regionId,
       })
@@ -47,9 +47,10 @@ export class ListClassEditionsUseCase {
     }
 
     const isSecretary = role === 'SECRETARY'
-    if (isSecretary) {
+    const isCapitalManager = role === 'CAPITAL_MANAGER'
+    if (isSecretary || isCapitalManager) {
       const classEditions = await this.classEditionRepository.findAllWithDetails({
-        classEditionIds: [userRole.classEditionId!],
+        teachingPlacesIds: [userRole.teachingPlaceId!],
       })
       return right(classEditions)
     }

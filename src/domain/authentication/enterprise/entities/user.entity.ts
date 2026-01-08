@@ -71,8 +71,8 @@ export class User extends Entity<UserProps> {
     return this.props.role
   }
 
-  get classEdition() {
-    return this.props.classEdition
+  get teachingPlace() {
+    return this.props.teachingPlace
   }
 
   get region() {
@@ -95,7 +95,7 @@ export class User extends Entity<UserProps> {
         document: props.document,
         telephone: props.telephone,
         role: props.role,
-        classEdition: props.classEdition,
+        teachingPlace: props.teachingPlace,
         region: props.region,
         password: props.password,
         disabledAt: props.disabledAt,

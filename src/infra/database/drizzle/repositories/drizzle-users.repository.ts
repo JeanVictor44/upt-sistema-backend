@@ -8,10 +8,9 @@ import { User } from '@domain/authentication/enterprise/entities/user.entity'
 
 import { DATABASE_CONNECTION } from '@infra/database/drizzle/database-connection'
 import {
-  classEditionSchema,
-  editionSchema,
   regionSchema,
   roleSchema,
+  teachingPlaceSchema,
   userRoleSchema,
   userSchema,
 } from '@infra/database/drizzle/schemas'
@@ -38,9 +37,9 @@ export class DrizzleUsersRepository implements UsersRepository {
           id: roleSchema.id,
           name: roleSchema.name,
         },
-        classEdition: {
-          id: classEditionSchema.id,
-          year: editionSchema.year,
+        teachingPlace: {
+          id: teachingPlaceSchema.id,
+          name: teachingPlaceSchema.name,
         },
         region: {
           id: regionSchema.id,
@@ -49,19 +48,18 @@ export class DrizzleUsersRepository implements UsersRepository {
       })
       .from(userSchema)
       .leftJoin(userRoleSchema, and(eq(userSchema.id, userRoleSchema.userId), isNull(userRoleSchema.endDate)))
-      .leftJoin(classEditionSchema, eq(classEditionSchema.id, userRoleSchema.classEditionId))
-      .leftJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
+      .leftJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, userRoleSchema.teachingPlaceId))
       .leftJoin(regionSchema, eq(regionSchema.id, userRoleSchema.regionId))
       .leftJoin(roleSchema, eq(userRoleSchema.roleId, roleSchema.id))
 
     const usersWithHistory = await Promise.all(
-      users.map(async ({ user, user_role, classEdition, region }) => {
+      users.map(async ({ user, user_role, teachingPlace, region }) => {
         const rolesHistory = await this.db
           .select({
             role: roleSchema.name,
-            classEdition: {
-              id: classEditionSchema.id,
-              year: editionSchema.year,
+            teachingPlace: {
+              id: teachingPlaceSchema.id,
+              name: teachingPlaceSchema.name,
             },
             region: {
               id: regionSchema.id,
@@ -72,8 +70,7 @@ export class DrizzleUsersRepository implements UsersRepository {
           })
           .from(userRoleSchema)
           .innerJoin(roleSchema, eq(userRoleSchema.roleId, roleSchema.id))
-          .leftJoin(classEditionSchema, eq(classEditionSchema.id, userRoleSchema.classEditionId))
-          .leftJoin(editionSchema, eq(classEditionSchema.editionId, editionSchema.id))
+          .leftJoin(teachingPlaceSchema, eq(teachingPlaceSchema.id, userRoleSchema.teachingPlaceId))
           .leftJoin(regionSchema, eq(regionSchema.id, userRoleSchema.regionId))
           .where(eq(userRoleSchema.userId, user.id))
 
@@ -83,10 +80,10 @@ export class DrizzleUsersRepository implements UsersRepository {
             id: user_role?.id,
             name: user_role?.name,
           },
-          classEdition: classEdition.id
+          teachingPlace: teachingPlace?.id
             ? {
-                id: classEdition.id || undefined,
-                year: classEdition.year || undefined,
+                id: teachingPlace?.id || undefined,
+                name: teachingPlace?.name || undefined,
               }
             : undefined,
           region: region?.id
@@ -97,10 +94,10 @@ export class DrizzleUsersRepository implements UsersRepository {
             : undefined,
           rolesHistory: rolesHistory.map((roleHistoryItem) => ({
             role: roleHistoryItem.role,
-            classEdition: roleHistoryItem.classEdition.id
+            teachingPlace: roleHistoryItem?.teachingPlace?.id
               ? {
-                  id: roleHistoryItem.classEdition.id || undefined,
-                  year: roleHistoryItem.classEdition.year || undefined,
+                  id: roleHistoryItem?.teachingPlace?.id || undefined,
+                  name: roleHistoryItem?.teachingPlace?.name || undefined,
                 }
               : undefined,
             region: roleHistoryItem.region?.id

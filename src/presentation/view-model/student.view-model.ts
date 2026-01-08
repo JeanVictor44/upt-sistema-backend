@@ -44,6 +44,12 @@ export class StudentViewModel {
             id: enrollment.classEdition.edition.id,
             year: enrollment.classEdition.edition.year,
           },
+          teachingPlace: {
+            name: enrollment.classEdition.teachingPlace.name,
+          },
+          option: {
+            name: enrollment.classEdition.option.name,
+          },
           createdAt: enrollment.classEdition.createdAt,
           updatedAt: enrollment.classEdition.updatedAt,
         },

@@ -2,7 +2,7 @@ export type UserRoleProps = {
   userId: number
   roleId: number
   regionId?: number
-  classEditionId?: number
+  teachingPlaceId?: number
   startDate: Date
   endDate: Date | null
   createdAt: Date

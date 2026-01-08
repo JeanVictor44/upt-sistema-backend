@@ -62,7 +62,7 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
           createdAt: teachingPlaceSchema.createdAt,
           neighborhoodCreatedAt: neighborhoodSchema.createdAt,
           neighborhoodUpdatedAt: neighborhoodSchema.updatedAt,
-          proertyLocationCategoryId: teachingPlaceSchema.propertyLocationCategoryId,
+          propertyLocationCategoryId: teachingPlaceSchema.propertyLocationCategoryId,
           traditionalCommunityName: teachingPlaceSchema.traditionalCommunityName,
           propertyLocationCategoryName: propertyLocationCategorySchema.name,
         },
@@ -72,7 +72,7 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
       .from(classEditionSchema)
       .where(
         and(
-          data?.classEditionIds?.length ? inArray(classEditionSchema.id, data.classEditionIds) : undefined,
+          data?.teachingPlacesIds?.length ? inArray(teachingPlaceSchema.id, data.teachingPlacesIds) : undefined,
           data?.regionId ? eq(regionSchema.id, data.regionId) : undefined,
         ),
       )
@@ -114,7 +114,7 @@ export class DrizzleClassEditionQueryRepository implements ClassEditionQueryRepo
         id: cls.teachingPlace.id,
         name: cls.teachingPlace.name,
         propertyLocationCategory: {
-          id: cls.teachingPlace.proertyLocationCategoryId,
+          id: cls.teachingPlace.propertyLocationCategoryId,
           name: cls.teachingPlace.propertyLocationCategoryName,
         },
         traditionalCommunityName: cls.teachingPlace.traditionalCommunityName || undefined,
